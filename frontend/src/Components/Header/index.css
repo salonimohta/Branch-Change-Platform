@@ -1,0 +1,57 @@
+.flex-container1{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color:#4d4dff;
+    height: 15vh;
+    padding-left: 2%;/*5vh;*/  
+    width:auto;
+}
+.LogoImg{
+    height: 13vh;
+}
+.image{
+    align-self: center;
+
+}
+.flex-container2{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.heading{
+    align-self: center;
+    color: white;
+    font-size: 5vh;
+    font-weight: normal;
+}
+
+.accIcon{
+    padding: 5vh 5vh 5vh 5vh;
+}
+
+@media all and (max-width: 830px) {
+    .LogoImg{
+        height: 10vh;
+    }
+    .L1{
+        font-size: 3vh;
+    }
+    .L2{
+        font-size: 2vh;
+    }
+    .flex-container1{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        background-color:  #F7F7F7;
+        height: 25vh;
+        padding-left: 3%;/*5vh;*/  
+        width:auto;
+    }
+    .flex-container3{
+        display: flex;
+        flex-direction: column;
+    }
+}
