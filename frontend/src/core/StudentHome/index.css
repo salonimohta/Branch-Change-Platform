@@ -1,0 +1,23 @@
+.box1{
+    margin:auto;
+    box-shadow: -2px 8px 22px 0 rgba(0,0,0,.15);
+    width: 1000px;
+    height: 280px;
+    font-size: 2.8vh;
+}
+
+.box2{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin:auto;
+    width: 1000px;
+    height: 300px;
+    padding: 40px 40px 40px 40px;
+}
+
+.buttonSpace{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
