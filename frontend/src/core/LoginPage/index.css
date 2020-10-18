@@ -1,0 +1,18 @@
+.loginPage{
+    background-color: #4d4dff;
+}
+
+.loginBox{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: white;
+    box-shadow: -2px 8px 22px 0 rgba(0,0,0,.15);
+    height: 500px;
+    width: 100%;
+    font-size: 2.3vh;
+    border-radius: 30px;
+    justify-content: center;
+    align-self: center;
+    position: relative;
+}
