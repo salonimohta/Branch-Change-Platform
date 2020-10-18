@@ -3,16 +3,41 @@
 }
 
 .loginBox{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    
     background-color: white;
     box-shadow: -2px 8px 22px 0 rgba(0,0,0,.15);
     height: 500px;
-    width: 100%;
     font-size: 2.3vh;
     border-radius: 30px;
-    justify-content: center;
-    align-self: center;
-    position: relative;
+    margin: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
+
+.loginForm{
+    width: 100%;
+    margin-left: 300px;
+}
+
+.loginImage{
+    justify-content: center;
+    width: 100px;
+    margin-left: 20px;
+}
+
+.loginHeader{
+    font-weight: bold;
+    color: red;
+    font-size: 5vh;
+    margin-left: 70px;
+    align-content: center;
+}
+
+.vl {
+    border-left: 1px solid grey;
+    height: 300px;
+    align-self: center;
+    position: absolute;
+    left: 28%;
+  }
