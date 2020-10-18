@@ -21,9 +21,8 @@
 }
 
 .loginImage{
-    justify-content: center;
+    align-self: center;
     width: 100px;
-    margin-left: 20px;
 }
 
 .loginHeader{
@@ -41,3 +40,79 @@
     position: absolute;
     left: 28%;
   }
+
+  @media all and (min-width: 700px){
+    .loginBox{
+        height: 100%;
+        margin: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+    .loginForm{
+        width: 100%;
+        margin-left: 0px;
+    }
+    .loginImage{
+        align-self: center;
+        width: 50px;
+        margin-left: -300px;
+    }
+    
+    .loginHeader{
+        font-weight: bold;
+        color: red;
+        font-size: 5vh;
+        margin-left: 70px;
+        align-content: center;
+    }
+    .vl {
+        border-left: 0.25px solid grey;
+        height: 600px;
+        top: 30%;
+        left: 50%;
+        transform: rotate(90deg)
+      }
+}
+
+@media all and (max-width: 700px){
+    .loginBox{
+        height: 100%;
+        margin: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+    .loginForm{
+        width: 100%;
+        margin-left: 0px;
+    }
+    .loginImage{
+        align-self: center;
+        width: 50px;
+        margin-left: -200px;
+    }
+    
+    .loginHeader{
+        font-weight: bold;
+        color: red;
+        font-size: 5vh;
+        margin-left: 70px;
+        align-content: center;
+    }
+    @media all and (max-width:330px){
+        .vl {
+            border-left: 0.25px solid grey;
+            height: 200px;
+            top: 60%;
+            transform: rotate(90deg)
+          }
+    }
+    .vl {
+        border-left: 0.25px solid grey;
+        height: 200px;
+        left: 50%;
+        transform: rotate(90deg)
+      }
+}
+

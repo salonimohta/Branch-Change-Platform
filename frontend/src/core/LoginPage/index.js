@@ -22,7 +22,7 @@ export default class LoginPage extends React.Component{
                   <div className="loginImage">
                     <br/>
                     <div className="loginHeader">Branch Change IIT(ISM)</div>
-                    <br/><br/>
+                    <br/>
                     <img src={require("../../logo.png")} alt="ISM_logo" />
                     </div>
                     <div className="vl" />
@@ -46,7 +46,6 @@ export default class LoginPage extends React.Component{
                       </li>
                     </ul>
                     <div class="tab-content" id="myTabContent2">
-                        {console.log(this.state.activeTab)}
                         {this.state.activeTab==="student" ? <Login username="Admission No." type="Student" /> : <Login username="Email" type="Admin" />}
                     </div>
                   </div>
