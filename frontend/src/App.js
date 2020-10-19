@@ -13,7 +13,7 @@ function App() {
     <div>
       <Header />
       <br/>
-      <ChangeRequestForm />
+      <StudentHome />
       <br/>
       <Footer />
     </div>

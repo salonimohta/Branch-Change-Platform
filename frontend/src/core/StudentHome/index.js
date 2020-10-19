@@ -32,12 +32,12 @@ export default class StudentHome extends React.Component{
             {this.state.requestSubmitted ? 
             <div className="buttonSpace">
             <div>
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn-lg btn-primary">
                 View Request
             </button>
             </div>
             <div>
-            <button type="submit" class="btn btn-primary" disabled>
+            <button type="submit" class="btn-lg btn-primary" disabled>
                 Request Branch Change
             </button>
             </div>
@@ -45,12 +45,12 @@ export default class StudentHome extends React.Component{
             :
             <div className="buttonSpace">
                 <div>
-            <button type="submit" class="btn btn-primary" disabled>
+            <button type="submit" class="btn-lg btn-primary" disabled>
                 View Request
             </button>
             </div>
             <div>
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn-lg btn-primary">
             Request Branch Change
             </button>
             </div>
