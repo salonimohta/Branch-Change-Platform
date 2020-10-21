@@ -1,7 +1,7 @@
-import LoginPage from './../core/LoginPage'
-import StudentHome from './../core/StudentHome'
-import AdminHome from  './../core/AdminHome'
-import ChangeRequestForm from './../Components/ChangeRequestForm'
+import LoginPage from './core/LoginPage'
+import StudentHome from './core/StudentHome'
+import AdminHome from  './core/AdminHome'
+import ChangeRequestForm from './Components/ChangeRequestForm'
 
 const routes=[
     { path: '/', exact: true, name: 'Login' },

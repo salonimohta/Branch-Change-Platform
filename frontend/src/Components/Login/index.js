@@ -1,7 +1,8 @@
 import React from 'react'
 import './index.css'
+import {withRouter} from 'react-router-dom'
 
-export default class Login extends React.Component{
+class Login extends React.Component{
     constructor(props) {
         super(props);
         this.state={
@@ -13,29 +14,7 @@ export default class Login extends React.Component{
         }     
         this.handleChange = this.handleChange.bind(this);
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
-        
        }
-       componentWillMount(){
-       
-       }
-        componentDidMount(){
-        
-        //if (!this.props.buildingBurger && this.props.authRedirectPath !== 'home') {
-        //   this.props.onSetAuthRedirectPath();
-       // }
-/*
-            const data  =localStorage.getItem('tiktok');
-
-            if(data){
-          //    return  history.push(`/`)
-                return  this.props.history.push(`/home`)
-            }else{
-
-              return <Redirect to='/'/>;
-            }
-*/
-
-        }
         handleChange(evt){
       //  alert(evt.target.value);
       //  console.log({[evt.target.name]: evt.target.value});
@@ -56,6 +35,9 @@ export default class Login extends React.Component{
          return false;
        }else{
           this.setState({status:true,error:"",showMsg:false});
+       }
+       if (this.props.type==='Student' && this.state.username.toLowerCase()==='19je0001' && this.state.password==='p'){
+         //this.props.history.push('/studentHome');
        }
     }
     render(){
@@ -125,3 +107,5 @@ export default class Login extends React.Component{
         )
     }
 }
+
+export default Login;

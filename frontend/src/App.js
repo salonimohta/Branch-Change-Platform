@@ -1,18 +1,20 @@
 import React from 'react';
-import Header from './Components/Header'
-import Footer from './Components/Footer'
-import AdminHome from './core/AdminHome'
-import Login from './Components/Login'
-import LoginPage from './core/LoginPage'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import StudentHome from './core/StudentHome'
-import ChangeRequestForm from './Components/ChangeRequestForm'
+import {Switch, Route} from 'react-router-dom';
+import Layout from './core/Layout';
+import LoginPage from './core/LoginPage';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import routes from './Routes';
 
 function App() {
   return (
-    <div>
-      <LoginPage />
-    </div>
+        <Switch>
+          <Route exact path="/" component={LoginPage} />
+          <Layout>
+            {routes.map((route)=>{
+              return <Route path={route.path} exact={route.exact} component={route.component} />
+            })}
+          </Layout>
+      </Switch>
   );
 }
 
