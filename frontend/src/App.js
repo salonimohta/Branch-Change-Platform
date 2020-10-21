@@ -11,11 +11,7 @@ import ChangeRequestForm from './Components/ChangeRequestForm'
 function App() {
   return (
     <div>
-      <Header />
-      <br/>
-      <StudentHome />
-      <br/>
-      <Footer />
+      <LoginPage />
     </div>
   );
 }

@@ -41,7 +41,7 @@
     left: 28%;
   }
 
-  @media all and (min-width: 700px){
+  @media all and (min-width: 700px) and (max-width: 1025px){
     .loginBox{
         height: 100%;
         margin: 30px;
