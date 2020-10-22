@@ -1,5 +1,6 @@
 import React from 'react'
 import './index.css'
+import {Link} from 'react-router-dom'
 
 export default class StudentHome extends React.Component{
     constructor(){
@@ -12,6 +13,10 @@ export default class StudentHome extends React.Component{
             dept: 'Computer Science and Engineering',
             requestSubmitted: false
         };
+        this.requestBranchChange=this.requestBranchChange.bind(this);
+    }
+    requestBranchChange=()=>{
+        this.props.history.push('/branchChangeRequest');
     }
     render(){
         return(
@@ -32,12 +37,12 @@ export default class StudentHome extends React.Component{
             {this.state.requestSubmitted ? 
             <div className="buttonSpace">
             <div>
-            <button type="submit" class="btn-lg btn-primary">
+            <button type="submit" class="btn btn-lg btn-primary">
                 View Request
             </button>
             </div>
             <div>
-            <button type="submit" class="btn-lg btn-primary" disabled>
+            <button type="submit" class="btn btn-lg btn-primary" disabled>
                 Request Branch Change
             </button>
             </div>
@@ -45,12 +50,12 @@ export default class StudentHome extends React.Component{
             :
             <div className="buttonSpace">
                 <div>
-            <button type="submit" class="btn-lg btn-primary" disabled>
+            <button type="submit" class="btn btn-lg btn-primary" disabled>
                 View Request
             </button>
             </div>
             <div>
-            <button type="submit" class="btn-lg btn-primary">
+            <button type="submit" class="btn btn-lg btn-primary" onClick={this.requestBranchChange}>
             Request Branch Change
             </button>
             </div>

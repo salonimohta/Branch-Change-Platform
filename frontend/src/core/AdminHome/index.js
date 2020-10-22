@@ -11,6 +11,7 @@ export default class AdminHome extends React.Component{
             resultDatePassed: false,
             currentTab: "zero"
         };
+        this.changeState=this.changeState.bind(this);
     }
     changeState=(key)=>{
         this.setState({TabSelected:true,currentTab:key});

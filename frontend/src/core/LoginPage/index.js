@@ -8,6 +8,7 @@ export default class LoginPage extends React.Component{
      this.state={
        activeTab: "student"
      };
+     this.handleSelect=this.handleSelect.bind(this);
    }
    handleSelect(type){
      console.log(type);
