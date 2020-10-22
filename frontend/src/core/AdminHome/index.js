@@ -1,6 +1,7 @@
 import React from 'react'
 import './index.css'
 import {Tab,Nav,Row,Col} from 'react-bootstrap'
+import CheckStatus from './../../Components/CheckStatus'
 
 export default class AdminHome extends React.Component{
     constructor(){
@@ -46,7 +47,9 @@ export default class AdminHome extends React.Component{
                                 </ol>
                             }
                         {this.state.currentTab==="first"?    
-                            <h2>Status of Branch Change Requests:</h2>
+                            <div>
+                            <CheckStatus />
+                            </div>
                             : null }
                         
                         {this.state.currentTab==="second"?
