@@ -26,11 +26,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb82ef5b-469d-4f37-a9f9-f2b5fc3d6e3d" name="Default Changelist" comment="IDE files">
-      <change afterPath="$PROJECT_DIR$/branchque/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="fb82ef5b-469d-4f37-a9f9-f2b5fc3d6e3d" name="Default Changelist" comment="IDE files" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -64,7 +60,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1603401522502</updated>
-      <workItem from="1603401523662" duration="1252000" />
+      <workItem from="1603401523662" duration="1718000" />
     </task>
     <task id="LOCAL-00001" summary="auth was misdirecting. so commented it">
       <created>1603401710441</created>
