@@ -7,6 +7,9 @@ const cbcs_departments_database = "cbcs_departments"
 const cbcs_branches_database = "cbcs_branches"
 const user_auth_types_database = "user_auth_types"
 const user_details_database = "user_details"
+const jwtKey = "branchque"
+
+
 module.exports = {
     secretKey,
     user_login_database,
@@ -15,6 +18,9 @@ module.exports = {
     change_branch_log_database,
     cbcs_departments_database,
     cbcs_branches_database,
+    jwtKey,
     user_auth_types_database,
     user_details_database
 }
+
+// @bhijeet@ - earlier used key

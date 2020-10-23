@@ -15,7 +15,8 @@ const Course = require('./models/Course')
 // const taskRouter = require('./routers/task')
 const app = express()
 const port = process.env.PORT
-
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
 
 
 // app.use((req,res, next) => {
@@ -31,7 +32,8 @@ app.use('/api', userRouter)
 app.listen(port, async () => {
     try {
         await sequelize.authenticate();
-        console.log('Connection has been established successfully.');
+        console.log('Connection to the database has been established successfully.');
+
         await UserLogin.sync()
         await UserDetails.sync()
         await AuthType.sync()

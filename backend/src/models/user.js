@@ -230,4 +230,6 @@ const Course = require('./Course')
 
 
 
+
+
 module.exports = {UserLogin, UserDetails, AuthType, BranchDetails, Course, StudentBranchDetails, BranchChangeApplication, DepartmentDetails}

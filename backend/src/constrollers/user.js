@@ -11,13 +11,20 @@ const StudentBranchDetails = require('../models/StudentBranchDetails')
 const DepartmentDetails = require('../models/DepartmentDetails')
 const BranchChangeApplication = require('../models/BranchChangeApplication')
 const Course = require('../models/Course')
+const constants = require('../constants/constants')
+
 module.exports.login = async (req, res) => {
     try {
         // console.log(await UserLogin.findAll())
         const user = await UserLogin.findByCredentials(req.body.username, req.body.password)
         // console.log(user)
-        const token = jwt.sign({_id: user.id, _password: user.hashedPass, _key: '@bhijeet@'}, process.env.JWT_SECRET);
+        const token = jwt.sign({
+            _id: user.id,
+            _password: user.hashedPass,
+            // _key: constants.jwtKey
+        }, process.env.JWT_SECRET);
         const auths = await AuthType.findAll({where: {id: user.id}})
+        res.cookie("t",token, {expire: new Date() + 999})
         if (user.auth_id === 'emp') {
             return res.send({
                 user_details: await UserDetails.findOne({
@@ -29,7 +36,6 @@ module.exports.login = async (req, res) => {
             })
         }
         // console.log(await StudentBranchDetails.findAll())
-        res.cookie("t", token, {expire: new Date() + 999})
         const studentBranchDetails = await StudentBranchDetails.findOne({
             where: {
                 admn_no: user.id
@@ -71,5 +77,14 @@ module.exports.login = async (req, res) => {
         await res.send({studentBranchDetails, branchChangeApplication, auths})
     } catch (e) {
         res.status(400).send(e)
+    }
+}
+
+module.exports.logout = async (req, res) => {
+    try{
+        await res.clearCookie('t')
+        res.send({message: 'we logged you out'})
+    } catch(e) {
+        res.status(500).send('Some internal error occurred')
     }
 }
