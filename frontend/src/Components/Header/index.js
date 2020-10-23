@@ -1,28 +1,8 @@
 import React from 'react';
 import './index.css';
-import {Popover, OverlayTrigger} from 'react-bootstrap';
 
-
-const Overlay = () => {
-	const popover = (
-	  <Popover id="1">
-		<Popover.Title as="h3">Title One</Popover.Title>
-		<Popover.Content>Test Content</Popover.Content>
-	  </Popover>
-	);
-	return popover;
-  };
 
 export default class Header extends React.Component{
-	constructor(){
-		super();
-		this.state={
-			displayLogout: false
-		};
-	}
-	handleClick=()=>{
-		this.setState({displayLogout: !this.state.displayLogout});
-	}
 	render(){
         return (
 			<div>
@@ -42,7 +22,7 @@ export default class Header extends React.Component{
 					</div>
 					<br/>
 					<div class="accIcon">
-					<a href="#" data-toggle="popover-hover" data-img="https://mdbootstrap.com/img/logo/mdb192x192.jpg"><i class="fa fa-user-circle fa-4x"></i></a>
+					<i class="fa fa-user-circle fa-3x" data-container="body" data-trigger="click" data-html="true" data-toggle="popover" data-placement="bottom" data-content="<a href='\'><i class='fas fa-sign-out-alt fa-fw fa-2x' aria-hidden='true'></i> Logout</a>" data-original-title="" title=""></i>
 					</div>
 			</div>
 			</div>
