@@ -37,7 +37,7 @@ class Login extends React.Component{
           this.setState({status:true,error:"",showMsg:false});
        }
        if (this.props.type==='Student' && this.state.username.toLowerCase()==='19je0001' && this.state.password==='p'){
-         this.props.history.push('/studentHome');
+         //this.props.history.push('/studentHome');
        }
     }
     render(){

@@ -1,5 +1,11 @@
 import React from 'react';
 import {Button} from 'react-bootstrap';
+import Select from 'react-select'
+
+const options = [
+  { value: 'approved', label: 'Approved' },
+  { value: 'pending', label: 'Pending' }
+]
 
 class DataRow extends React.Component{
     constructor(){
@@ -25,9 +31,9 @@ class DataRow extends React.Component{
                         }
                     </h5>
                 </td>
-            <td>{RStatus==="approved" ? <Button class="btn-lg btn-primary" disabled>Approve</Button>
+            <td>{RStatus==="approved" ? <button class="btn btn-lg btn-primary disabled" aria-disabled="true" disabled>Approve</button>
             :
-            <Button class="btn-lg btn-primary">Approve</Button>
+            <button class="btn btn-lg btn-primary">Approve</button>
             }
             </td>
             </tr>
@@ -44,7 +50,9 @@ export default class CheckStatus extends React.Component{
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
-                      <div id="table-1_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer"><div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="table-1_length"><label>Show <select name="table-1_length" aria-controls="table-1" class="form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="table-1_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="table-1" /></label></div></div></div><div class="row"><div class="col-sm-12"><table class="table table-striped dataTable no-footer" id="table-1" role="grid" aria-describedby="table-1_info" >
+                      <div id="table-1_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer"><div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="table-1_length"><label>Show <select name="table-1_length" aria-controls="table-1" class="form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="table-1_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="table-1" /></label></div></div></div>
+                      {/*<div class="col-sm-12 col-md-6"><div id="table-1_filter" class="dataTables_filter"><label>Status:<div style={{width: "1000px;"}}><Select name="status" options={options} isMulti className="basic-multi-select" classNamePrefix="select" /></div></label></div></div></div>*/}
+                      <div class="row"><div class="col-sm-12"><table class="table table-striped dataTable no-footer" id="table-1" role="grid" aria-describedby="table-1_info" >
                         <thead>
                           <tr role="row"><th class="text-center sorting" tabindex="0" aria-controls="table-1" rowspan="1" colspan="1" aria-label="
                               #
@@ -60,7 +68,6 @@ export default class CheckStatus extends React.Component{
                     </div>
                   </div>
                 </div>
-                
         )
     }
 }
