@@ -21,14 +21,12 @@ export default class LoginPage extends React.Component{
                 <br/>
                 <div className="loginBox">
                   <div className="loginImage">
-                    <br/>
                     <div className="loginHeader">Branch Change IIT(ISM)</div>
                     <br/>
                     <img src={require("../../logo.png")} alt="ISM_logo" />
                     </div>
                     <div className="vl" />
                   <div className="loginForm">
-                    <br/>
                 <div class="card-body">
                     <ul class="nav nav-pills" id="myTab3" role="tablist">
                       <li class="nav-item">
