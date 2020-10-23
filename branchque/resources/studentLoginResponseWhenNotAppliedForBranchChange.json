@@ -1,0 +1,44 @@
+{
+  "studentBranchDetails": {
+    "id": 180001,
+    "admn_no": "18je0001",
+    "current_dept_id": "cve",
+    "current_course_id": "b.tech",
+    "current_branch_id": "civ",
+    "session": "Monsoon",
+    "session_year": "2020-2021",
+    "acad_status": "P",
+    "acad_id": null,
+    "acad_date_time": null,
+    "timestamp": "2020-06-01T12:01:27.000Z",
+    "ip": null,
+    "user_detail": {
+      "id": "18JE0001",
+      "salutation": "Mr",
+      "first_name": "B",
+      "middle_name": "C",
+      "last_name": "D",
+      "category": "General",
+      "photopath": ""
+    },
+    "branch": {
+      "id": "civ",
+      "name": "Civil Engineering"
+    },
+    "department": {
+      "id": "cve",
+      "name": "Civil Engineering",
+      "type": "academic",
+      "status": 1,
+      "wef": "2019-2020",
+      "wet": "2019-2020"
+    },
+    "course": {
+      "id": "b.tech",
+      "name": "Bachelor of Technology",
+      "duration": 4
+    }
+  },
+  "branchChangeApplication": [],
+  "auths": []
+}
