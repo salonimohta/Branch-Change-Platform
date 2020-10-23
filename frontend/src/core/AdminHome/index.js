@@ -8,7 +8,7 @@ export default class AdminHome extends React.Component{
         super();
         this.state={
             TabSelected: false,
-            resultDatePassed: false,
+            resultDatePassed: true,
             currentTab: "zero"
         };
         this.changeState=this.changeState.bind(this);
@@ -62,7 +62,7 @@ export default class AdminHome extends React.Component{
                             ? 
                             <div>
                                 <h2>Result for year 20xx-xx</h2>
-                                <button type="submit" className="btn btn-primary">Download</button>
+                                <button type="submit" className="btn btn-primary" style={{float: "right;"}}>Download</button>
                             </div> 
                             : "The result has not been declared yet!"
                             : null }

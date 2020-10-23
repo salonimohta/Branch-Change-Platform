@@ -25,9 +25,9 @@ class DataRow extends React.Component{
                         }
                     </h5>
                 </td>
-            <td>{RStatus==="approved" ? <Button class="btn-lg btn-primary" disabled>Approve</Button>
+            <td>{RStatus==="approved" ? <button class="btn btn-lg btn-primary disabled" aria-disabled="true" disabled>Approve</button>
             :
-            <Button class="btn-lg btn-primary">Approve</Button>
+            <button class="btn btn-lg btn-primary">Approve</button>
             }
             </td>
             </tr>

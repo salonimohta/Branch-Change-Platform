@@ -42,7 +42,7 @@ export default class StudentHome extends React.Component{
             </button>
             </div>
             <div>
-            <button type="submit" class="btn btn-lg btn-primary" disabled>
+            <button type="submit" class="btn btn-lg btn-primary disabled" disabled>
                 Request Branch Change
             </button>
             </div>
@@ -50,7 +50,7 @@ export default class StudentHome extends React.Component{
             :
             <div className="buttonSpace">
                 <div>
-            <button type="submit" class="btn btn-lg btn-primary" disabled>
+            <button type="submit" class="btn btn-lg btn-primary disabled" disabled>
                 View Request
             </button>
             </div>
