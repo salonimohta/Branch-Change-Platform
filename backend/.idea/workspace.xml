@@ -24,14 +24,12 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9b5b8813-b208-4f05-961c-caaddfadf164" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/constants/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/constants.js" afterDir="false" />
+    <list default="true" id="9b5b8813-b208-4f05-961c-caaddfadf164" name="Default Changelist" comment="Logout route and authorization middleware added">
+      <change afterPath="$PROJECT_DIR$/resources/Branch Change.postman_collection.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/constrollers/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/constrollers/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middleware/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/BranchChangeApplication.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/BranchChangeApplication.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/UserDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/UserDetails.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/router/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/user.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -40,6 +38,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="1jGrWsGkgBZAT51blll1fn3XcHM" />
@@ -63,8 +66,17 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1603441303595</updated>
-      <workItem from="1603441304865" duration="6439000" />
+      <workItem from="1603441304865" duration="8316000" />
+      <workItem from="1603549118266" duration="4243000" />
     </task>
+    <task id="LOCAL-00001" summary="Logout route and authorization middleware added">
+      <created>1603467998179</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1603467998179</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -80,8 +92,17 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Logout route and authorization middleware added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Logout route and authorization middleware added" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1603468009204">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1603468009204" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1603467034509">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
