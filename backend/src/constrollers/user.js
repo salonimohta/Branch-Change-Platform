@@ -24,7 +24,7 @@ module.exports.login = async (req, res) => {
             // _key: constants.jwtKey
         }, process.env.JWT_SECRET);
         const auths = await AuthType.findAll({where: {id: user.id}})
-        res.cookie("t",token, {expire: new Date() + 999})
+        res.cookie("t", token, {expire: new Date() + 999})
         if (user.auth_id === 'emp') {
             return res.send({
                 user_details: await UserDetails.findOne({
@@ -80,11 +80,52 @@ module.exports.login = async (req, res) => {
     }
 }
 
+module.exports.viewBranchApplication = async (req, res, next) => {
+    try {
+        const studentBranchDetails = await StudentBranchDetails.findOne({
+            where: {
+                admn_no: req.user.id
+            }
+        })
+        if (!studentBranchDetails) {
+            return res.status(404).send()
+        }
+        const branchChangeApplications = await BranchChangeApplication.findAll({
+            where: {
+                cb_log_id: studentBranchDetails.id
+            },
+            raw: true
+        })
+        let completeBranchChangeApplications = []
+
+        for (let i = 0; i < branchChangeApplications.length; i++) {
+            const departmentDetails = await DepartmentDetails.findOne({
+                where: {
+                    id: branchChangeApplications[i].dept_id
+                }
+            })
+            const branchDetails = await BranchDetails.findOne({
+                where: {
+                    id: branchChangeApplications[i].branch_id
+                }
+            })
+            completeBranchChangeApplications.push({
+                departmentDetails,
+                branchDetails,
+                branchChangeApplications: branchChangeApplications[i]
+            })
+        }
+        res.send({completeBranchChangeApplications})
+    } catch (e) {
+        res.status(500).send({e, message: 'Some internal error occurred'})
+    }
+}
+
 module.exports.logout = async (req, res) => {
-    try{
+    try {
         await res.clearCookie('t')
         res.send({message: 'we logged you out'})
-    } catch(e) {
-        res.status(500).send('Some internal error occurred')
+    } catch (e) {
+        res.status(500).send({e, message: 'Some internal error occurred'})
     }
 }
