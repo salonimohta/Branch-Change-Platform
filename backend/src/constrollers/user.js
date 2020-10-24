@@ -80,7 +80,84 @@ module.exports.login = async (req, res) => {
     }
 }
 
-module.exports.viewBranchApplication = async (req, res, next) => {
+const attachDepartmentAndBranchDetails = async function (branchChangeApplications) {
+
+    let completeBranchChangeApplications = []
+
+    for (let i = 0; i < branchChangeApplications.length; i++) {
+        const departmentDetails = await DepartmentDetails.findOne({
+            where: {
+                id: branchChangeApplications[i].dept_id
+            }
+        })
+        const branchDetails = await BranchDetails.findOne({
+            where: {
+                id: branchChangeApplications[i].branch_id
+            }
+        })
+        completeBranchChangeApplications.push({
+            departmentDetails,
+            branchDetails,
+            branchChangeApplication: branchChangeApplications[i]
+        })
+    }
+    return completeBranchChangeApplications
+}
+
+/**
+ * @todo : what to fetch and what not to.
+ * */
+module.exports.viewAllBranchApplications = async (req, res) => {
+    try {
+        const auths = await AuthType.findAll({
+            where: {
+                id: req.user.id
+            }
+        })
+        let isAdmin = false
+        await auths.forEach((auth) => {
+            isAdmin |= auth.auth_id === constants.branch_allocator_admin
+        })
+        // return res.send({isAdmin})
+
+        if (isAdmin === 0) {
+            return res.status(404).send({message: "You might not be the admin"})
+        }
+        // console.log("You")
+        // let u = await BranchChangeApplication.findAll({
+        //     group: ['cb_log_id']
+        // })
+        // res.send({u})
+        let branchChangeApplications = await BranchChangeApplication.findAll({
+            raw: true
+        })
+        branchChangeApplications = await attachDepartmentAndBranchDetails(branchChangeApplications)
+        // let completeBranchChangeApplications = []
+        for (let i = 0; i < branchChangeApplications.length; i++) {
+            // console.log(branchChangeApplications[i].branchChangeApplication.cb_log_id)
+            const studentBranchDetails = await StudentBranchDetails.findOne({
+                where: {
+                    id: branchChangeApplications[i].branchChangeApplication.cb_log_id
+                },
+                raw: true
+            })
+            // console.log(studentBranchDetails)
+            // completeBranchChangeApplications.push({
+            //     studentBranchDetails,
+            //     branchChangeApplication: branchChangeApplications[i]
+            // })
+            branchChangeApplications[i].studentBranchDetails = studentBranchDetails
+        }
+
+            // console.log(branchChangeApplications)
+        // res.send({completeBranchChangeApplications})
+        res.send({branchChangeApplications})
+    } catch (e) {
+        res.status(500).send()
+    }
+}
+
+module.exports.viewBranchApplication = async (req, res) => {
     try {
         const studentBranchDetails = await StudentBranchDetails.findOne({
             where: {
@@ -96,25 +173,7 @@ module.exports.viewBranchApplication = async (req, res, next) => {
             },
             raw: true
         })
-        let completeBranchChangeApplications = []
-
-        for (let i = 0; i < branchChangeApplications.length; i++) {
-            const departmentDetails = await DepartmentDetails.findOne({
-                where: {
-                    id: branchChangeApplications[i].dept_id
-                }
-            })
-            const branchDetails = await BranchDetails.findOne({
-                where: {
-                    id: branchChangeApplications[i].branch_id
-                }
-            })
-            completeBranchChangeApplications.push({
-                departmentDetails,
-                branchDetails,
-                branchChangeApplications: branchChangeApplications[i]
-            })
-        }
+        const completeBranchChangeApplications = await attachDepartmentAndBranchDetails(branchChangeApplications)
         res.send({completeBranchChangeApplications})
     } catch (e) {
         res.status(500).send({e, message: 'Some internal error occurred'})

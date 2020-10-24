@@ -8,7 +8,7 @@ const cbcs_branches_database = "cbcs_branches"
 const user_auth_types_database = "user_auth_types"
 const user_details_database = "user_details"
 const jwtKey = "branchque"
-
+const branch_allocator_admin = "ism_admin"
 
 module.exports = {
     secretKey,
@@ -20,7 +20,8 @@ module.exports = {
     cbcs_branches_database,
     jwtKey,
     user_auth_types_database,
-    user_details_database
+    user_details_database,
+    branch_allocator_admin
 }
 
 // @bhijeet@ - earlier used key
