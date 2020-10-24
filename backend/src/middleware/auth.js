@@ -1,21 +1,29 @@
 const jwt = require('jsonwebtoken')
-// const User = require('../models/user')
+const constants = require('../constants/constants')
+const UserLogin = require('../models/UserLogin')
 
-// const auth = async (req, res, next) => {
-//     try{
-//         const token = req.header('Authorization').replace('Bearer ','')
-//         const decoded = jwt.verify(token, 'branchque')
-//         const user = await User.findOne({_id: decoded._id, 'tokens.token':token})
-//         if(!user){
-//             throw new Error()
-//         }
-//         req.user = user
-//         req.token = token
-//         next()
-//     } catch(e){
-//         res.status(401).send({error: "Authentication required"})
-//     }
-//
-// }
-//
-// module.exports = auth
+
+const auth = async (req, res, next) => {
+    try{
+
+        const token = await req.cookies['t']
+        const decodedToken = await jwt.verify(token, constants.jwtKey)
+        const user = await UserLogin.findOne({
+            where: {
+                id: decodedToken._id,
+                password: decodedToken._password
+            }
+        })
+        if(!user){
+            throw new Error('Authentication failed')
+        }
+        req.user = user
+        req.token = token
+        next()
+    } catch(e){
+        res.status(401).send({error: "Authentication required"})
+    }
+
+}
+
+module.exports = auth
