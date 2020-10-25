@@ -11,8 +11,12 @@ export default class StudentHome extends React.Component{
         this.props.history.push('/branchChangeRequest');
     }
     render(){
-        console.log(this.props.location);
-        const {name,admissionNo,course,branch,imagePath,branchChangeApplied}=this.props.location;
+        const imagePath=localStorage.getItem('imagePath');
+        const name=localStorage.getItem('studentName');
+        const admissionNo=localStorage.getItem('admissionNo');
+        const course=localStorage.getItem('course');
+        const branch=localStorage.getItem('branch');
+        const branchChangeRequestSubmitted=localStorage.getItem('branchChangeRequestSubmitted');
         return(
             <div>
             <div className="box1">
@@ -28,7 +32,7 @@ export default class StudentHome extends React.Component{
                 </div>
                 </div>
             </div><br/><br></br>
-            {branchChangeApplied ? 
+            {branchChangeRequestSubmitted ? 
             <div className="buttonSpace">
             <div>
             <button type="submit" class="btn btn-lg btn-primary">
