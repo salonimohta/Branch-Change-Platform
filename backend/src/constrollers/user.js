@@ -17,7 +17,8 @@ module.exports.login = async (req, res) => {
     try {
         // console.log(await UserLogin.findAll())
         const user = await UserLogin.findByCredentials(req.body.username, req.body.password)
-        // console.log(user)
+        //console.log(user)
+        //return res.send({user})
         const token = jwt.sign({
             _id: user.id,
             _password: user.hashedPass,
@@ -35,7 +36,6 @@ module.exports.login = async (req, res) => {
                 auths
             })
         }
-        // console.log(await StudentBranchDetails.findAll())
         const studentBranchDetails = await StudentBranchDetails.findOne({
             where: {
                 admn_no: user.id

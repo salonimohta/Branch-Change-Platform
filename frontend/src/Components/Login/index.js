@@ -1,6 +1,9 @@
 import React from 'react'
 import './index.css'
 import {withRouter} from 'react-router-dom'
+import axios from "axios"
+import {API} from '../../config'
+
 
 class Login extends React.Component{
     constructor(props) {
@@ -16,29 +19,41 @@ class Login extends React.Component{
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
        }
         handleChange(evt){
-      //  alert(evt.target.value);
-      //  console.log({[evt.target.name]: evt.target.value});
-        let data=[this.setState({ [evt.target.name]: evt.target.value })];
-        //  console.log(data);
+          this.setState({ [evt.target.name]: evt.target.value });
       }
       onSubmitHandler(e){
-         e.preventDefault();
-         if(this.state.username === ''){
-          this.setState({status:false,error:"Please Enter Username",showMsg:true});
-          return false;
-        }else{
-           this.setState({status:true,error:"",showMsg:false});
-        }
+          e.preventDefault();
+          if(this.state.username === ''){
+            this.setState({status:false,error:"Please Enter Username",showMsg:true});
+            return false;
+          }
+          else{
+            this.setState({status:true,error:"",showMsg:false});
+          }
 
-        if(this.state.password === ''){
-         this.setState({status:false,error:"Please Enter password",showMsg:true});
-         return false;
-       }else{
-          this.setState({status:true,error:"",showMsg:false});
-       }
-       if (this.props.type==='Student' && this.state.username.toLowerCase()==='19je0001' && this.state.password==='p'){
-         //this.props.history.push('/studentHome');
-       }
+          if(this.state.password === ''){
+            this.setState({status:false,error:"Please Enter password",showMsg:true});
+            return false;
+          }
+          else{
+           this.setState({status:true,error:"",showMsg:false});
+          }
+          axios({
+            method: 'post',
+            url: `${API}/users/login`,
+            headers: {
+              Accepts:'application/json',
+              "Content-Type":"application/json"
+             },
+            data: {
+               username: this.state.username,
+               password: this.state.password
+              }
+          })
+          .then(response=>{
+            console.log(response.data);
+          })
+
     }
     render(){
         const username=this.props.username;
