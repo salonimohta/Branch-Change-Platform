@@ -1,4 +1,5 @@
 import React from 'react';
+import './index.css'
 
 var branchByCourseCategory = {
     BTech: ["Computer Science and Engineering", "Electronics Engineering", "Tea", "Others"],
@@ -72,6 +73,7 @@ export default class ChangeRequestForm extends React.Component{
       const currCourse=localStorage.getItem('course');
       const currBranch=localStorage.getItem('branch');
         return(
+          <div className="requestForm">
             <div class="card">
                   <div class="card-header">
                     <h4>Branch Change Request Form</h4>
@@ -140,6 +142,7 @@ export default class ChangeRequestForm extends React.Component{
                   </div>
                 </div>
                 </div>
+              </div>
         )
     }
 }
