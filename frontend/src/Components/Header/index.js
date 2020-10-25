@@ -22,7 +22,7 @@ export default class Header extends React.Component{
 					</div>
 					<br/>
 					<div class="accIcon">
-					<i class="fa fa-user-circle fa-3x" data-container="body" data-trigger="click" data-html="true" data-toggle="popover" data-placement="bottom" data-content="<a href='\'><i class='fas fa-sign-out-alt fa-fw fa-2x' aria-hidden='true'></i> Logout</a>" data-original-title="" title=""></i>
+					<a href="#" data-container="body" data-trigger="click" data-html="true" data-toggle="popover" data-placement="bottom" data-content="<a href='\'><i class='fas fa-sign-out-alt fa-fw fa-2x' aria-hidden='true'></i> Logout</a>" data-original-title="" title=""><i class="fa fa-user-circle fa-3x" /></a>
 					</div>
 			</div>
 			</div>
