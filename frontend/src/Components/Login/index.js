@@ -10,21 +10,28 @@ class Login extends React.Component{
         super(props);
         this.state={
           error:'',
-          username:'',
           password:'',
           showMsg:false,
-          loading:false
+          loading:false,
+          rememberMe:localStorage.getItem('rememberMe') === 'true',
+          username: localStorage.getItem('rememberMe') === 'true' ? localStorage.getItem('username') : '' 
         }     
-        Session.clear();
-        localStorage.clear(); 
         this.handleChange = this.handleChange.bind(this);
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
        }
         handleChange(evt){
-          this.setState({ [evt.target.name]: evt.target.value });
+          const input = evt.target;
+          const value = input.type === 'checkbox' ? input.checked : input.value;
+          this.setState({ [input.name]: value });
       }
       onSubmitHandler(e){
           e.preventDefault();
+          console.log(this.state);
+          const { username, rememberMe } = this.state;
+          localStorage.setItem('rememberMe', rememberMe);
+          localStorage.setItem('username', rememberMe ? username : '');
+          console.log(localStorage.getItem('username'));
+          console.log(localStorage.getItem('rememberMe'));
           if(this.state.username === ''){
             this.setState({status:false,error:"Please Enter Username",showMsg:true});
             return false;
@@ -121,7 +128,7 @@ class Login extends React.Component{
                   </div>
                   <div className="form-group">
                     <div className="custom-control custom-checkbox">
-                      <input type="checkbox" name="remember" className="custom-control-input" tabIndex="3" id="remember-me"/>
+                      <input type="checkbox" name="rememberMe" className="custom-control-input" tabIndex="3" id="remember-me" onChange={this.handleChange} checked={this.state.rememberMe} />
                       <label className="custom-control-label" htmlFor="remember-me">Remember Me</label>
                     </div>
                   </div>

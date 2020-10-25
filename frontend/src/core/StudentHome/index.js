@@ -16,7 +16,7 @@ export default class StudentHome extends React.Component{
         const admissionNo=localStorage.getItem('admissionNo');
         const course=localStorage.getItem('course');
         const branch=localStorage.getItem('branch');
-        const branchChangeRequestSubmitted=localStorage.getItem('branchChangeRequestSubmitted');
+        const branchChangeRequestSubmitted=localStorage.getItem('branchChangeRequestSubmitted')==='true';
         return(
             <div>
             <div className="box1">
