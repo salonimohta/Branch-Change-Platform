@@ -5,7 +5,7 @@ const {Sequelize, Model, DataTypes} = require("sequelize");
 const constants = require('../constants/constants')
 
 
-const UserDetails = sequelize.define(constants.user_details, {
+const UserDetails = sequelize.define(constants.user_details_database, {
     id: {
         type: DataTypes.STRING,
         primaryKey: true
