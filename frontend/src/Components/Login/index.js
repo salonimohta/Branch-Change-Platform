@@ -1,6 +1,6 @@
 import React from 'react'
 import './index.css'
-import {withRouter} from 'react-router-dom'
+import {Redirect, withRouter} from 'react-router-dom'
 import axios from "axios"
 import {API} from '../../config'
 
@@ -51,7 +51,32 @@ class Login extends React.Component{
               }
           })
           .then(response=>{
-            console.log(response.data);
+              if (response.status===200){
+                if (this.props.type==="Student"){
+                  //console.log(response.data);
+                  let studentDetails=response.data.studentBranchDetails;
+                  let studentName=studentDetails.user_detail.first_name;
+                  if (studentDetails.user_detail.salutation!=="") studentName=studentDetails.user_detail.salutation+" "+studentName;
+                  if (studentDetails.user_detail.middle_name!=="") studentName=studentName+" "+studentDetails.user_detail.middle_name;
+                  if (studentDetails.user_detail.last_name!=="") studentName=studentName+" "+studentDetails.user_detail.last_name;
+              
+                 console.log(studentDetails.user_detail);
+                 //let branchChangeRequestSubmitted=response.data.branchChangeApplications.length===0?false:true;
+                  this.props.history.push({
+                    pathname: '/studentHome',
+                    admissionNo: studentDetails.user_detail.id,
+                    name: studentName,
+                    imagePath: studentDetails.user_detail.photopath,
+                    course: studentDetails.course.name,
+                    branch: studentDetails.branch.name,
+                   // branchChangeApplied: branchChangeRequestSubmitted
+                  })
+                }
+                else{
+                  this.props.history.push('/adminHome');
+                }
+              }
+              else alert('Please Enter correct Credentials!');
           })
 
     }
@@ -123,4 +148,4 @@ class Login extends React.Component{
     }
 }
 
-export default Login;
+export default withRouter(Login);

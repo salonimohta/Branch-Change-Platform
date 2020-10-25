@@ -5,20 +5,14 @@ import {Link} from 'react-router-dom'
 export default class StudentHome extends React.Component{
     constructor(){
         super();
-        this.state={
-            imageURL: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Frollercoasteryears.com%2Ftop-20-ways-successful-students-succeed-school%2F&psig=AOvVaw3m32iouPOU_bKC57hKwQuo&ust=1602932405539000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPiqzNf6uOwCFQAAAAAdAAAAABAD',
-            name: 'John Doe',
-            admno: '19JE00XXXX',
-            course: 'BTech',
-            dept: 'Computer Science and Engineering',
-            requestSubmitted: false
-        };
         this.requestBranchChange=this.requestBranchChange.bind(this);
     }
     requestBranchChange=()=>{
         this.props.history.push('/branchChangeRequest');
     }
     render(){
+        console.log(this.props.location);
+        const {name,admissionNo,course,branch,imagePath,branchChangeApplied}=this.props.location;
         return(
             <div>
             <div className="box1">
@@ -27,14 +21,14 @@ export default class StudentHome extends React.Component{
                 </div>
                 <div className="box2">
                 <div>
-                <img src={`${this.state.imageURL}`} alt="Student Image" />
+                <img src={`${imagePath}`} alt="Student Image" />
                 </div>
                 <div style={{marginRight: "300px"}}>
-                    {this.state.name}<br/>{this.state.admno}<br/>{this.state.course}<br/>{this.state.dept}
+                {name}<br/>{admissionNo}<br/>{course}<br/>{branch}
                 </div>
                 </div>
             </div><br/><br></br>
-            {this.state.requestSubmitted ? 
+            {branchChangeApplied ? 
             <div className="buttonSpace">
             <div>
             <button type="submit" class="btn btn-lg btn-primary">
