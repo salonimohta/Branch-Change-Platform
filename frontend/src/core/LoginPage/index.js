@@ -25,7 +25,7 @@ export default class LoginPage extends React.Component{
                     <br/>
                     <img src={require("../../logo.png")} alt="ISM_logo" />
                     </div>
-                    <div className="vl" />
+                    {/*<div className="vl" />*/}
                   <div className="loginForm">
                 <div class="card-body">
                     <ul class="nav nav-pills" id="myTab3" role="tablist">
