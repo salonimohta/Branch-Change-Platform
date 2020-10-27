@@ -31,10 +31,6 @@ const logoutSession=()=>{
 
 export default class Header extends React.Component{
 	render(){
-		function showDiv(pageid)
-		{
-   			alert(pageid);
-		}
         return (
 			<div>
 			<div className="flex-container1">

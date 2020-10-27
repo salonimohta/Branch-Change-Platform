@@ -27,7 +27,7 @@ export default class StudentHome extends React.Component{
                 <div>
                 <img src={`${imagePath}`} alt="Student Image" />
                 </div>
-                <div style={{marginRight: "300px"}}>
+                <div className="details">
                 {name}<br/>{admissionNo}<br/>{course}<br/>{branch}
                 </div>
                 </div>
@@ -38,7 +38,7 @@ export default class StudentHome extends React.Component{
             <button type="submit" class="btn btn-lg btn-primary">
                 View Request
             </button>
-            </div>
+            </div><br/>
             <div>
             <button type="submit" class="btn btn-lg btn-primary disabled" disabled>
                 Request Branch Change
@@ -51,7 +51,7 @@ export default class StudentHome extends React.Component{
             <button type="submit" class="btn btn-lg btn-primary disabled" disabled>
                 View Request
             </button>
-            </div>
+            </div><br/>
             <div>
             <button type="submit" class="btn btn-lg btn-primary" onClick={this.requestBranchChange}>
             Request Branch Change
