@@ -3,6 +3,7 @@ import './index.css'
 import {Tab,Nav,Row,Col} from 'react-bootstrap'
 import CheckStatus from './../../Components/CheckStatus'
 import BranchChangeResult from './../../Components/BranchChangeResult'
+import Dashboard from '../../Components/Dashboard'
 
 export default class AdminHome extends React.Component{
     constructor(){
@@ -55,7 +56,12 @@ export default class AdminHome extends React.Component{
                         
                         {this.state.currentTab==="second"?
                             this.state.resultDatePassed
-                            ? <h2>Dashboard for Branch Change Result 20xx-xx</h2> : "The result statistics is not available!"
+                            ?
+                            <div> 
+                            <h2>Dashboard for Branch Change Result 20xx-xx</h2>
+                            <Dashboard />
+                            </div> 
+                            : "The result statistics is not available!"
                             : null }
                         {this.state.currentTab==="third"?
                             this.state.resultDatePassed
