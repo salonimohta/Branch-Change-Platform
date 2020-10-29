@@ -2,6 +2,7 @@ import React from 'react'
 import './index.css'
 import {Tab,Nav,Row,Col} from 'react-bootstrap'
 import CheckStatus from './../../Components/CheckStatus'
+import BranchChangeResult from './../../Components/BranchChangeResult'
 
 export default class AdminHome extends React.Component{
     constructor(){
@@ -38,7 +39,6 @@ export default class AdminHome extends React.Component{
                     <Col sm={9}>
                     <Tab.Content>
                         <div className="tabContents">
-                            
                             {this.state.TabSelected 
                                 ? null : 
                                 <ol>
@@ -62,7 +62,7 @@ export default class AdminHome extends React.Component{
                             ? 
                             <div>
                                 <h2>Result for year 20xx-xx</h2>
-                                <button type="submit" className="btn btn-primary" style={{float: "right;"}}>Download</button>
+                                <BranchChangeResult />
                             </div> 
                             : "The result has not been declared yet!"
                             : null }
