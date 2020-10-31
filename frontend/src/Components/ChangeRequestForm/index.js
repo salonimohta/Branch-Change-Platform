@@ -2,25 +2,26 @@ import React from 'react';
 import './index.css'
 
 var branchByCourseCategory = {
-    BTech: ["Computer Science and Engineering", "Electronics Engineering", "Tea", "Others"],
-    DualDegree: ["Mathematics and Computing", "Computer Science and Engineering", "Water", "Others"]
-}
-
-function changecat(value) {
-    if (value.length == 0) document.getElementById("courseCategory").innerHTML = "<option></option>";
-    else {
-        var catOptions = "";
-        for (var categoryId in branchByCourseCategory[value]) {
-            catOptions += "<option>" + branchByCourseCategory[value][categoryId] + "</option>";
-        }
-        document.getElementById("courseCategory").innerHTML = catOptions;
-    }
+    BTech: ["Computer Science and Engineering", "Electronics Engineering", "Others"],
+    DualDegree: ["Mathematics and Computing", "Computer Science and Engineering", "Others"]
 }
 
 class Preference extends React.Component{
     constructor(props){
         super(props);
+        this.changecat=this.changecat.bind(this);
     };
+    changecat(event) {
+      const value=event.target.value;
+      if (value.length == 0) document.getElementById("courseCategory").innerHTML = "<option></option>";
+      else {
+          var catOptions = "<option value='' disabled selected>Select Branch</option>";
+          for (var categoryId in branchByCourseCategory[value]) {
+              catOptions += "<option>" + branchByCourseCategory[value][categoryId] + "</option>";
+          }
+          document.getElementById("courseCategory").innerHTML = catOptions;
+      }
+  }
     render(){
     return(
         <div>
@@ -29,8 +30,8 @@ class Preference extends React.Component{
         <div class="form-group col-lg-6">
         <label for="inputCourse3" class="col-sm-3 col-form-label">Course</label>
             <div class="col-sm-9">
-            <select class="form-control" id="inputCourse3" onChange="changecat(this.value);">
-                <option value="">Select Course</option>
+            <select class="form-control" id="inputCourse3" onChange={this.changecat}>
+                <option value="" disabled selected>Select Course</option>
             <option value="BTech">Bachelor of Technology</option>
             <option value="DualDegree">Integrated Master of Technology (Dual Degree)</option>
             </select>
@@ -54,7 +55,7 @@ export default class ChangeRequestForm extends React.Component{
     constructor(){
         super();
         this.state={
-            preferences:[<Preference number="1" />,<Preference number="2" />]
+            preferences:[<Preference number="1" />]
         };
     }
     removePreference=()=>{
@@ -124,7 +125,7 @@ export default class ChangeRequestForm extends React.Component{
                             : 
                             <button onClick={this.addPreference} class="btn btn-light">+ Add</button>
                         }
-                        {this.state.preferences.length>2 ? 
+                        {this.state.preferences.length>=2 ? 
                             <button onClick={this.removePreference} class="btn btn-danger float-right">- Remove</button>
                             :
                             null
