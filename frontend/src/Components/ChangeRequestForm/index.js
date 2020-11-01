@@ -6,22 +6,51 @@ var branchByCourseCategory = {
     DualDegree: ["Mathematics and Computing", "Computer Science and Engineering", "Others"]
 }
 
+var branchValuesDropdown = {
+  BTech: ["CSE", "ECE", "Others"],
+  DualDegree: ["MnC", "CSE", "Others"]
+}
+
+var branchesUsed = [];
+var courseFilled=[];
+var courseVal=[];
+
 class Preference extends React.Component{
     constructor(props){
         super(props);
+        this.state={
+          courses: [...courseFilled,false], 
+          courseValues: [...courseVal,''],
+          branchValues: [...branchesUsed,'']
+        };
         this.changecat=this.changecat.bind(this);
+        this.handleChange=this.handleChange.bind(this);
     };
     changecat(event) {
       const value=event.target.value;
-      if (value.length == 0) document.getElementById("courseCategory").innerHTML = "<option></option>";
+      let courseList=[...this.state.courses];
+      courseList[this.props.courseNum]=true;
+      courseFilled=courseList;
+      let courseNames=[...this.state.courseValues];
+      courseNames[this.props.courseNum]=value;
+      courseVal=courseNames;
+      this.setState({courses:courseList,courseValues:courseNames});
+      if (value.length === 0) document.getElementById(`pref${this.props.courseNum}`).innerHTML = "<option></option>";
       else {
           var catOptions = "<option value='' disabled selected>Select Branch</option>";
           for (var categoryId in branchByCourseCategory[value]) {
-              catOptions += "<option>" + branchByCourseCategory[value][categoryId] + "</option>";
+              catOptions += "<option value=\""+ branchValuesDropdown[value][categoryId] + "\">" + branchByCourseCategory[value][categoryId] + "</option>";
           }
-          document.getElementById("courseCategory").innerHTML = catOptions;
+          document.getElementById(`pref${this.props.courseNum}`).innerHTML = catOptions;
       }
-  }
+    }
+    handleChange(event){
+      let branches=[...this.state.branchValues];
+      branches[this.props.courseNum]=event.target.value;
+      this.setState({branchValues:branches});
+      branchesUsed=branches;
+      //alert(`You have filled ${this.props.number} out of 5 choices!`);
+    }
     render(){
     return(
         <div>
@@ -38,11 +67,17 @@ class Preference extends React.Component{
             </div>
         </div>
         <div class="form-group col-lg-6">
-        <label for="inputCourse3" class="col-sm-3 col-form-label">Branch</label>
+        <label for="courseCategory" class="col-sm-3 col-form-label">Branch</label>
             <div class="col-sm-9">
-            <select class="form-control" name="courseCategory" id="courseCategory">
-            <option value="" disabled selected>Select Branch</option>
-        </select>
+            { this.state.courses[this.props.courseNum]===false ?
+              <select class="form-control" name={`pref${this.props.courseNum}`} id={`pref${this.props.courseNum}`} disabled>
+                <option value="" disabled selected>Select Branch</option>
+              </select>
+            :
+              <select class="form-control" name={`pref${this.props.courseNum}`} id={`pref${this.props.courseNum}`} onChange={this.handleChange}>
+                <option value="" disabled selected>Select Branch</option>
+              </select>
+            }
             </div>
         </div>
         </div>
@@ -55,7 +90,7 @@ export default class ChangeRequestForm extends React.Component{
     constructor(){
         super();
         this.state={
-            preferences:[<Preference number="1" />]
+            preferences:[<Preference number="1" courseNum="0" />],
         };
     }
     removePreference=()=>{
@@ -67,7 +102,7 @@ export default class ChangeRequestForm extends React.Component{
     }
     addPreference=()=>{
         const num=this.state.preferences.length+1;
-        this.setState({preferences: [...this.state.preferences,<Preference number={num} />]});
+        this.setState({preferences: [...this.state.preferences,<Preference number={num} courseNum={num-1} />]});
     };
     render(){
       const admissionNo=localStorage.getItem('admissionNo');
