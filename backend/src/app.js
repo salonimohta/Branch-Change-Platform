@@ -12,8 +12,10 @@ const StudentBranchDetails = require('./models/StudentBranchDetails')
 const DepartmentDetails = require('./models/DepartmentDetails')
 const BranchChangeApplication = require('./models/BranchChangeApplication')
 const Course = require('./models/Course')
+var cors = require('cors')
 // const taskRouter = require('./routers/task')
 const app = express()
+app.use(cors())
 const port = process.env.PORT
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());

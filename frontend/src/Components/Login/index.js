@@ -1,44 +1,87 @@
 import React from 'react'
 import './index.css'
-import {withRouter} from 'react-router-dom'
+import {Redirect, withRouter} from 'react-router-dom'
+import axios from "axios"
+import {API} from '../../config'
+import Session from 'react-session-api'
 
 class Login extends React.Component{
     constructor(props) {
         super(props);
         this.state={
           error:'',
-          username:'',
           password:'',
           showMsg:false,
-          loading:false
+          loading:false,
+          rememberMe:localStorage.getItem('rememberMe') === 'true',
+          username: localStorage.getItem('rememberMe') === 'true' ? localStorage.getItem('username') : '' 
         }     
         this.handleChange = this.handleChange.bind(this);
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
        }
         handleChange(evt){
-      //  alert(evt.target.value);
-      //  console.log({[evt.target.name]: evt.target.value});
-        let data=[this.setState({ [evt.target.name]: evt.target.value })];
-        //  console.log(data);
+          const input = evt.target;
+          const value = input.type === 'checkbox' ? input.checked : input.value;
+          this.setState({ [input.name]: value });
       }
       onSubmitHandler(e){
-         e.preventDefault();
-         if(this.state.username === ''){
-          this.setState({status:false,error:"Please Enter Username",showMsg:true});
-          return false;
-        }else{
-           this.setState({status:true,error:"",showMsg:false});
-        }
+          e.preventDefault();
+          console.log(this.state);
+          const { username, rememberMe } = this.state;
+          localStorage.setItem('rememberMe', rememberMe);
+          localStorage.setItem('username', rememberMe ? username : '');
+          console.log(localStorage.getItem('username'));
+          console.log(localStorage.getItem('rememberMe'));
+          if(this.state.username === ''){
+            this.setState({status:false,error:"Please Enter Username",showMsg:true});
+            return false;
+          }
+          else{
+            this.setState({status:true,error:"",showMsg:false});
+          }
 
-        if(this.state.password === ''){
-         this.setState({status:false,error:"Please Enter password",showMsg:true});
-         return false;
-       }else{
-          this.setState({status:true,error:"",showMsg:false});
-       }
-       if (this.props.type==='Student' && this.state.username.toLowerCase()==='19je0001' && this.state.password==='p'){
-         //this.props.history.push('/studentHome');
-       }
+          if(this.state.password === ''){
+            this.setState({status:false,error:"Please Enter password",showMsg:true});
+            return false;
+          }
+          else{
+           this.setState({status:true,error:"",showMsg:false});
+          }
+          axios({
+            method: 'post',
+            url: `${API}/users/login`,
+            headers: {
+              Accepts:'application/json',
+              "Content-Type":"application/json"
+             },
+            data: {
+               username: this.state.username,
+               password: this.state.password
+              }
+          })
+          .then(response=>{
+              if (response.status===200){
+                if (this.props.type==="Student"){
+                  let studentDetails=response.data.studentBranchDetails;
+                  let studentName=studentDetails.user_detail.first_name;
+                  if (studentDetails.user_detail.salutation!=="") studentName=studentDetails.user_detail.salutation+" "+studentName;
+                  if (studentDetails.user_detail.middle_name!=="") studentName=studentName+" "+studentDetails.user_detail.middle_name;
+                  if (studentDetails.user_detail.last_name!=="") studentName=studentName+" "+studentDetails.user_detail.last_name;
+                  localStorage.setItem('studentName',studentName);
+                  localStorage.setItem('admissionNo',studentDetails.user_detail.id);
+                  localStorage.setItem('imagePath',studentDetails.user_detail.photopath);
+                  localStorage.setItem('course',studentDetails.course.name);
+                  localStorage.setItem('branch',studentDetails.branch.name);
+                  localStorage.setItem('branchChangeRequestSubmitted',response.data.branchChangeApplications?false:true);
+                  this.props.history.push('/studentHome');
+                }
+                else{
+                  this.props.history.push('/adminHome');
+                }
+              }
+              else alert('Please Enter correct Credentials!');
+          })
+
     }
     render(){
         const username=this.props.username;
@@ -85,7 +128,7 @@ class Login extends React.Component{
                   </div>
                   <div className="form-group">
                     <div className="custom-control custom-checkbox">
-                      <input type="checkbox" name="remember" className="custom-control-input" tabIndex="3" id="remember-me"/>
+                      <input type="checkbox" name="rememberMe" className="custom-control-input" tabIndex="3" id="remember-me" onChange={this.handleChange} checked={this.state.rememberMe} />
                       <label className="custom-control-label" htmlFor="remember-me">Remember Me</label>
                     </div>
                   </div>
@@ -108,4 +151,4 @@ class Login extends React.Component{
     }
 }
 
-export default Login;
+export default withRouter(Login);

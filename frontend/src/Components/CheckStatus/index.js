@@ -2,11 +2,6 @@ import React from 'react';
 import {Button} from 'react-bootstrap';
 import Select from 'react-select'
 
-const options = [
-  { value: 'approved', label: 'Approved' },
-  { value: 'pending', label: 'Pending' }
-]
-
 class DataRow extends React.Component{
     constructor(){
         super();
@@ -27,13 +22,26 @@ class DataRow extends React.Component{
                     <h5>{RStatus==="pending" ? 
                         <div class="badge badge-pill badge-info badge-shadow"><h6>Pending</h6></div>
                         :
+                        RStatus==="approved" ?
                         <div class="badge badge-pill badge-success badge-shadow"><h6>Approved</h6></div>
-                        }
+                        :
+                        <div class="badge badge-pill badge-danger badge-shadow"><h6>Declined</h6></div>
+                      }
                     </h5>
                 </td>
-            <td>{RStatus==="approved" ? <button class="btn btn-lg btn-primary disabled" aria-disabled="true" disabled>Approve</button>
+            <td>
+              {RStatus==="pending" ?
+              <div>
+              <button class="btn btn-lg btn-success">Approve</button>
+              <button class="btn btn-lg btn-danger">Decline</button>
+              <button class="btn btn-lg btn-info">Details</button>
+              </div>
             :
-            <button class="btn btn-lg btn-primary">Approve</button>
+            <div>
+              <button class="btn btn-lg btn-success disabled" aria-disabled="true" disabled>Approve</button>
+              <button class="btn btn-lg btn-danger disabled" aria-disabled="true" disabled>Decline</button>
+              <button class="btn btn-lg btn-info">Details</button>
+            </div>
             }
             </td>
             </tr>
@@ -51,14 +59,13 @@ export default class CheckStatus extends React.Component{
                   <div class="card-body">
                     <div class="table-responsive">
                       <div id="table-1_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer"><div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="table-1_length"><label>Show <select name="table-1_length" aria-controls="table-1" class="form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="table-1_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="table-1" /></label></div></div></div>
-                      {/*<div class="col-sm-12 col-md-6"><div id="table-1_filter" class="dataTables_filter"><label>Status:<div style={{width: "1000px;"}}><Select name="status" options={options} isMulti className="basic-multi-select" classNamePrefix="select" /></div></label></div></div></div>*/}
                       <div class="row"><div class="col-sm-12"><table class="table table-striped dataTable no-footer" id="table-1" role="grid" aria-describedby="table-1_info" >
                         <thead>
                           <tr role="row"><th class="text-center sorting" tabindex="0" aria-controls="table-1" rowspan="1" colspan="1" aria-label="
                               #
                             : activate to sort column ascending" style={{width: "24px;"}}>
                               #
-                            </th><th class="sorting" tabindex="0" aria-controls="table-1" rowspan="1" colspan="1" aria-label="Task Name: activate to sort column ascending" style={{width: "147px;"}}>Task Name</th><th class="sorting" tabindex="0" aria-controls="table-1" rowspan="1" colspan="1" aria-label="Due Date: activate to sort column ascending" style={{width: "90px;"}}>Due Date</th><th class="sorting_desc" tabindex="0" aria-controls="table-1" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style={{width: "108px;"}} aria-sort="descending">Status</th><th class="sorting" tabindex="0" aria-controls="table-1" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending" style={{width: "75px;"}}>Action</th></tr>
+                            </th><th class="sorting" tabindex="0" aria-controls="table-1" rowspan="1" colspan="1" aria-label="Task Name: activate to sort column ascending" style={{width: "147px;"}}>Admission No.</th><th class="sorting" tabindex="0" aria-controls="table-1" rowspan="1" colspan="1" aria-label="Due Date: activate to sort column ascending" style={{width: "90px;"}}>Date Submitted</th><th class="sorting_desc" tabindex="0" aria-controls="table-1" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style={{width: "108px;"}} aria-sort="descending">Status</th><th class="sorting" tabindex="0" aria-controls="table-1" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending" style={{width: "75px;"}}>Action</th></tr>
                         </thead>
                         <tbody>
                         <DataRow number="1" name="abc" dateSubmitted="22/10/2020" status="approved" /> 

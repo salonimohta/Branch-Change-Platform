@@ -2,6 +2,9 @@ import React from 'react'
 import './index.css'
 import {Tab,Nav,Row,Col} from 'react-bootstrap'
 import CheckStatus from './../../Components/CheckStatus'
+import BranchChangeResult from './../../Components/BranchChangeResult'
+import Dashboard from '../../Components/Dashboard'
+import ChangeDatesAdmin from '../../Components/ChangeDatesAdmin'
 
 export default class AdminHome extends React.Component{
     constructor(){
@@ -25,6 +28,9 @@ export default class AdminHome extends React.Component{
                     <Col sm={3}>
                     <Nav variant="pills" className="flex-column">
                         <Nav.Item>
+                        <Nav.Link eventKey="dateChange" className="navTab" onSelect={()=>this.changeState("dateChange")}>Change Date</Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
                         <Nav.Link eventKey="first" className="navTab" onSelect={()=>this.changeState("first")}>Check Status</Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
@@ -38,7 +44,6 @@ export default class AdminHome extends React.Component{
                     <Col sm={9}>
                     <Tab.Content>
                         <div className="tabContents">
-                            
                             {this.state.TabSelected 
                                 ? null : 
                                 <ol>
@@ -47,6 +52,11 @@ export default class AdminHome extends React.Component{
                                     <li>To download the branch change result, click on the third tab titled <span style={{color:"red"}}>Download Result</span></li>
                                 </ol>
                             }
+                        {this.state.currentTab==="dateChange"?    
+                            <div>
+                            <ChangeDatesAdmin />
+                            </div>
+                            : null }
                         {this.state.currentTab==="first"?    
                             <div>
                             <CheckStatus />
@@ -55,14 +65,19 @@ export default class AdminHome extends React.Component{
                         
                         {this.state.currentTab==="second"?
                             this.state.resultDatePassed
-                            ? <h2>Dashboard for Branch Change Result 20xx-xx</h2> : "The result statistics is not available!"
+                            ?
+                            <div> 
+                            <h2>Dashboard for Branch Change Result 20xx-xx</h2>
+                            <Dashboard />
+                            </div> 
+                            : "The result statistics is not available!"
                             : null }
                         {this.state.currentTab==="third"?
                             this.state.resultDatePassed
                             ? 
                             <div>
                                 <h2>Result for year 20xx-xx</h2>
-                                <button type="submit" className="btn btn-primary" style={{float: "right;"}}>Download</button>
+                                <BranchChangeResult />
                             </div> 
                             : "The result has not been declared yet!"
                             : null }
