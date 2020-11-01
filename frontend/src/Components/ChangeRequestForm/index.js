@@ -33,6 +33,7 @@ class Preference extends React.Component{
           courseNames: [...courseVal,''],
           branchNames: [...branchVal,'']
         };
+        courseFilled.push(false);
         this.changecat=this.changecat.bind(this);
         this.handleChange=this.handleChange.bind(this);
     };
@@ -96,6 +97,7 @@ class Preference extends React.Component{
         <div class="form-group col-lg-6">
         <label for="courseCategory" class="col-sm-3 col-form-label">Branch</label>
             <div class="col-sm-9">
+              {console.log(this.props.courseNum,this.state.courses[this.props.courseNum])}
             { this.state.courses[this.props.courseNum]===false ?
               <select class="form-control" name={`pref${this.props.courseNum}`} id={`pref${this.props.courseNum}`} disabled>
                 <option value="" disabled selected>Select Branch</option>
@@ -185,6 +187,7 @@ export default class ChangeRequestForm extends React.Component{
                     <div>
                         <h5>Branch Change Preferences:</h5>
                         <h6>(The branch/course in Preference 1 will be considered first and so on..)</h6>
+                        
                         {this.state.preferences}
                         {this.state.preferences.length===5 ? 
                             <button onClick={this.addPreference} disabled class="btn btn-light">+ Add</button>
