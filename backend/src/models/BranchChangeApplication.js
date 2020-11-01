@@ -8,7 +8,9 @@ const constants = require('../constants/constants')
 const BranchChangeApplication = sequelize.define(constants.change_branch_option_database, {
     id: {
         type: DataTypes.STRING,
-        primaryKey: true
+        primaryKey: true,
+        // notNull: true,
+        // autoIncrementIdentity: true,
     },
     cb_log_id: {
         type: DataTypes.INTEGER
@@ -23,6 +25,9 @@ const BranchChangeApplication = sequelize.define(constants.change_branch_option_
         type: DataTypes.STRING,
         // references: 'cbcs_branches',
         // referencesKey: 'id'
+    },
+    course_id: {
+        type: DataTypes.STRING,
     },
     offered: {
         type: DataTypes.ENUM('0', '1')
