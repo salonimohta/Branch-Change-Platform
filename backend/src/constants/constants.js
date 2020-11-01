@@ -9,6 +9,7 @@ const user_auth_types_database = "user_auth_types"
 const user_details_database = "user_details"
 const jwtKey = "branchque"
 const branch_allocator_admin = "ism_admin"
+// const student_branch_change_option_priority_database = "branch_priority"
 
 module.exports = {
     secretKey,
@@ -21,7 +22,8 @@ module.exports = {
     jwtKey,
     user_auth_types_database,
     user_details_database,
-    branch_allocator_admin
+    branch_allocator_admin,
+    // student_branch_change_option_priority_database
 }
 
 // @bhijeet@ - earlier used key
