@@ -11,17 +11,27 @@ var branchValuesDropdown = {
   DualDegree: ["MnC", "CSE", "Others"]
 }
 
-var branchesUsed = [];
 var courseFilled=[];
 var courseVal=[];
+var branchVal=[];
+const admissionNo=localStorage.getItem('admissionNo');
+const currCourse=localStorage.getItem('course');
+const currBranch=localStorage.getItem('branch');
+const currCourseValue=currCourse.toLowerCase().includes("bachelor")?"BTech":"DualDegree";
+
+var BTechBranchesUsed=[];
+var DDBranchesUsed=[];
+
+if (currCourseValue==="BTech") BTechBranchesUsed.push(currBranch);
+else if (currCourseValue==="DualDegree") DDBranchesUsed.push(currBranch);
 
 class Preference extends React.Component{
     constructor(props){
         super(props);
         this.state={
           courses: [...courseFilled,false], 
-          courseValues: [...courseVal,''],
-          branchValues: [...branchesUsed,'']
+          courseNames: [...courseVal,''],
+          branchNames: [...branchVal,'']
         };
         this.changecat=this.changecat.bind(this);
         this.handleChange=this.handleChange.bind(this);
@@ -29,27 +39,44 @@ class Preference extends React.Component{
     changecat(event) {
       const value=event.target.value;
       let courseList=[...this.state.courses];
+      let courseNameList=[...this.state.courseNames];
+      let branchNameList=[...this.state.branchNames];
       courseList[this.props.courseNum]=true;
+      courseNameList[this.props.courseNum]=value;
       courseFilled=courseList;
-      let courseNames=[...this.state.courseValues];
-      courseNames[this.props.courseNum]=value;
-      courseVal=courseNames;
-      this.setState({courses:courseList,courseValues:courseNames});
+      courseVal=courseNameList;
+      branchVal=branchNameList;
+      this.setState({courses:courseList,courseNames:courseNameList,branchNames:branchNameList});
       if (value.length === 0) document.getElementById(`pref${this.props.courseNum}`).innerHTML = "<option></option>";
       else {
+        console.log(BTechBranchesUsed);
           var catOptions = "<option value='' disabled selected>Select Branch</option>";
           for (var categoryId in branchByCourseCategory[value]) {
+            if ((value==="BTech" && BTechBranchesUsed.includes(branchValuesDropdown[value][categoryId]) || (value==="DualDegree" && DDBranchesUsed.includes(branchValuesDropdown[value][categoryId])))){
+              catOptions += "<option value=\""+ branchValuesDropdown[value][categoryId] + "\" disabled>" + branchByCourseCategory[value][categoryId] + "</option>";
+            }
+            else{
               catOptions += "<option value=\""+ branchValuesDropdown[value][categoryId] + "\">" + branchByCourseCategory[value][categoryId] + "</option>";
+            }
           }
           document.getElementById(`pref${this.props.courseNum}`).innerHTML = catOptions;
       }
     }
     handleChange(event){
-      let branches=[...this.state.branchValues];
-      branches[this.props.courseNum]=event.target.value;
-      this.setState({branchValues:branches});
-      branchesUsed=branches;
-      //alert(`You have filled ${this.props.number} out of 5 choices!`);
+      let branchNameList=[...this.state.branchNames];
+      let courseNameList=[...this.state.courseNames];
+      if (this.props.number===branchNameList.length){
+        if (courseNameList[this.props.courseNum]==="BTech") BTechBranchesUsed.push(event.target.value);
+        else DDBranchesUsed.push(event.target.value);
+      }
+      else{
+        if (courseNameList[this.props.courseNum]==="BTech") BTechBranchesUsed[this.props.courseNum]=event.target.value;
+        else DDBranchesUsed[this.props.courseNum]=event.target.value;
+      }
+      branchNameList[this.props.courseNum]=event.target.value;
+      branchVal=branchNameList;
+      this.setState({branchNames:branchNameList});
+      alert(`You have filled ${this.props.number} out of 5 choices!`);
     }
     render(){
     return(
@@ -94,20 +121,24 @@ export default class ChangeRequestForm extends React.Component{
         };
     }
     removePreference=()=>{
-        //console.log(this.state.preferences.length);
         let preferenceList=[...this.state.preferences];
+        if (preferenceList.length===courseVal.length){
+          courseFilled.pop();
+          let course=courseVal.pop();
+          let branch=branchVal.pop();
+          if (branch.length>0){
+            if (course==="BTech") BTechBranchesUsed.pop();
+            else DDBranchesUsed.pop();
+          }
+        }
         preferenceList.pop();
         this.setState({preferences:preferenceList});
-        //console.log(this.state.preferences.length);
     }
     addPreference=()=>{
         const num=this.state.preferences.length+1;
         this.setState({preferences: [...this.state.preferences,<Preference number={num} courseNum={num-1} />]});
     };
     render(){
-      const admissionNo=localStorage.getItem('admissionNo');
-      const currCourse=localStorage.getItem('course');
-      const currBranch=localStorage.getItem('branch');
         return(
           <div className="requestForm">
             <div class="card">
@@ -136,9 +167,9 @@ export default class ChangeRequestForm extends React.Component{
                     <div class="form-group row">
                     <label for="inputCurrCourse3" class="col-sm-3 col-form-label">Current Course</label>
                       <div class="col-sm-9">
-                      <select class="form-control" id="inputCurrCourse3" value="BTech" disabled>
+                      <select class="form-control" id="inputCurrCourse3" value={currCourseValue} disabled>
                         <option value="BTech">Bachelor of Technology</option>
-                        <option value="BTech+MTech">Integrated Master of Technology (Dual Degree)</option>
+                        <option value="DualDegree">Integrated Master of Technology (Dual Degree)</option>
                       </select>
                       </div>
                     </div>
