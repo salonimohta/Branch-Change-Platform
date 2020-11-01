@@ -232,12 +232,9 @@ module.exports.submitApplication = async (req, res) => {
         // }))
 
 
-        const u = await BranchChangeApplication.bulkCreate(optionsArray, {
+        const insertedData = await BranchChangeApplication.bulkCreate(optionsArray, {})
 
-        })
-
-        res.send({msg: "Successfully submitted application",u})
-
+        res.send({msg: "Successfully submitted application", insertedData})
 
 
     } catch
