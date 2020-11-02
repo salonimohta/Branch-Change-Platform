@@ -132,10 +132,11 @@ module.exports.viewAllBranchApplications = async (req, res) => {
         let isAdmin = false
         await auths.forEach((auth) => {
             isAdmin |= auth.auth_id === constants.branch_allocator_admin
+            // console.log(auth.auth_id)
         })
         // return res.send({isAdmin})
 
-        if (isAdmin === 0) {
+        if (isAdmin === false) {
             return res.status(404).send({message: "You might not be the admin"})
         }
         // console.log("You")
