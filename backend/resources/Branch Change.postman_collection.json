@@ -13,9 +13,7 @@
 					"script": {
 						"id": "96789303-e82b-45b8-8235-16a2757f6122",
 						"exec": [
-							"if(pm.response.code === 200){\r",
-							"    pm.environment.set('authTokenStudent', pm.response.json().token)\r",
-							"}"
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -64,9 +62,7 @@
 					"script": {
 						"id": "70b6d8ef-0890-46bf-9717-e66e8f05ca8c",
 						"exec": [
-							"if(pm.response.code === 200){\r",
-							"    pm.environment.set('authTokenAdmin', pm.response.json().token)\r",
-							"}"
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -88,6 +84,66 @@
 					}
 				},
 				"url": {
+					"raw": "{{url}}/users/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Student Login Not Applied",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5e1d10a6-5629-4bb0-9b01-e373833d0c21",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"18JE0001\",\r\n    \"password\":\"p\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
 					"raw": "{{url}}/users/logout",
 					"host": [
 						"{{url}}"
@@ -101,34 +157,81 @@
 			"response": []
 		},
 		{
-			"name": "Student Login Not Applied",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": ""
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "logout",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": ""
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "View Application",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": ""
+					"raw": "{{url}}/users/view-branch-application",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"view-branch-application"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "view-all-branch-applications",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/view-all-branch-applications",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"view-all-branch-applications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Branches",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/branches",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"branches"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Submit application",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"options\":[\r\n        {\r\n            \"dept_id\": \"cse\",\r\n            \"branch_id\": \"cse\",\r\n            \"course_id\": \"b.tech\"\r\n        },{\r\n            \"dept_id\": \"ee\",\r\n            \"branch_id\": \"ee\",\r\n            \"course_id\": \"b.tech\"\r\n        },{\r\n            \"dept_id\": \"ece\",\r\n            \"branch_id\": \"ece\",\r\n            \"course_id\": \"b.tech\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/submit-application",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"submit-application"
+					]
 				}
 			},
 			"response": []
@@ -168,12 +271,12 @@
 	],
 	"variable": [
 		{
-			"id": "3c3a833f-5709-40cd-93c0-bac67cc0201b",
+			"id": "92bf4640-bb67-4f0f-816c-94d7ef5f3192",
 			"key": "url",
 			"value": "http://localhost:3001/api"
 		},
 		{
-			"id": "18136e6b-503e-414b-b849-8189ed1d5782",
+			"id": "026fd712-e5a3-419b-91c9-d3a35759d88e",
 			"key": "authToken",
 			"value": ""
 		}

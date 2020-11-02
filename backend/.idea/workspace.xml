@@ -15,21 +15,14 @@
         <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
       </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:temp" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
     </expand>
     <select />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9b5b8813-b208-4f05-961c-caaddfadf164" name="Default Changelist" comment="Prototype of Admin's view api added">
+      <change afterPath="$PROJECT_DIR$/resources/ul.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/constants/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/constants.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/constrollers/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/constrollers/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/BranchChangeApplication.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/BranchChangeApplication.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/user.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,6 +68,8 @@
       <workItem from="1603441304865" duration="8316000" />
       <workItem from="1603549118266" duration="4243000" />
       <workItem from="1604235048757" duration="8872000" />
+      <workItem from="1604258088130" duration="834000" />
+      <workItem from="1604314931760" duration="683000" />
     </task>
     <task id="LOCAL-00001" summary="Logout route and authorization middleware added">
       <created>1603467998179</created>
