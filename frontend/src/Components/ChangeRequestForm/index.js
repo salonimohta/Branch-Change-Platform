@@ -17,11 +17,11 @@ var branchVal=[];
 const admissionNo=localStorage.getItem('admissionNo');
 const currCourse=localStorage.getItem('course');
 const currBranch=localStorage.getItem('branch');
-const currCourseValue=currCourse.toLowerCase().includes("bachelor")?"BTech":"DualDegree";
+const currCourseValue=''//=currCourse.toLowerCase().includes("bachelor")?"BTech":"DualDegree";
 
 var BTechBranchesUsed=[];
 var DDBranchesUsed=[];
-
+var count=0;
 if (currCourseValue==="BTech") BTechBranchesUsed.push(currBranch);
 else if (currCourseValue==="DualDegree") DDBranchesUsed.push(currBranch);
 
@@ -50,7 +50,6 @@ class Preference extends React.Component{
       this.setState({courses:courseList,courseNames:courseNameList,branchNames:branchNameList});
       if (value.length === 0) document.getElementById(`pref${this.props.courseNum}`).innerHTML = "<option></option>";
       else {
-        console.log(BTechBranchesUsed);
           var catOptions = "<option value='' disabled selected>Select Branch</option>";
           for (var categoryId in branchByCourseCategory[value]) {
             if ((value==="BTech" && BTechBranchesUsed.includes(branchValuesDropdown[value][categoryId]) || (value==="DualDegree" && DDBranchesUsed.includes(branchValuesDropdown[value][categoryId])))){
@@ -77,6 +76,7 @@ class Preference extends React.Component{
       branchNameList[this.props.courseNum]=event.target.value;
       branchVal=branchNameList;
       this.setState({branchNames:branchNameList});
+      count+=1;
       alert(`You have filled ${this.props.number} out of 5 choices!`);
     }
     render(){
@@ -97,7 +97,7 @@ class Preference extends React.Component{
         <div class="form-group col-lg-6">
         <label for="courseCategory" class="col-sm-3 col-form-label">Branch</label>
             <div class="col-sm-9">
-              {console.log(this.props.courseNum,this.state.courses[this.props.courseNum])}
+
             { this.state.courses[this.props.courseNum]===false ?
               <select class="form-control" name={`pref${this.props.courseNum}`} id={`pref${this.props.courseNum}`} disabled>
                 <option value="" disabled selected>Select Branch</option>
@@ -187,7 +187,37 @@ export default class ChangeRequestForm extends React.Component{
                     <div>
                         <h5>Branch Change Preferences:</h5>
                         <h6>(The branch/course in Preference 1 will be considered first and so on..)</h6>
-                        
+                        <div class="card l-bg-cyan preferenceBar">
+                  <div class="card-statistic-3">
+                    <div class="card-icon card-icon-large"><i class="fa fa-briefcase"></i></div>
+                    <div class="card-content">
+                      <h4 class="card-title">Preferences Filled</h4>
+                      <span>{this.state.preferences.length}/5</span>
+                      <div class="progress mt-1 mb-1" data-height="8" style={{height: "8px;"}}>
+                        {this.state.preferences.length===1?
+                        <div class="progress-bar l-bg-orange" role="progressbar" data-width="50%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style={{width: "20%;"}}></div>
+                      :
+                          this.state.preferences.length===2?
+                          <div class="progress-bar l-bg-orange" role="progressbar" data-width="40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style={{width: "40%;"}}></div>
+                          :
+                          this.state.preferences.length===3?
+                          <div class="progress-bar l-bg-orange" role="progressbar" data-width="60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style={{width: "60%;"}}></div>
+                          :
+                          this.state.preferences.length===4?
+                          <div class="progress-bar l-bg-orange" role="progressbar" data-width="80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style={{width: "80%;"}}></div>
+                          :
+                          this.state.preferences.length===5?
+                          <div class="progress-bar l-bg-orange" role="progressbar" data-width="100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style={{width: "100%;"}}></div>
+                          :
+                          null
+                      }
+                      </div>
+                      <p class="mb-0 text-sm">
+                        <span class="text-nowrap">{5-this.state.preferences.length} more left</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
                         {this.state.preferences}
                         {this.state.preferences.length===5 ? 
                             <button onClick={this.addPreference} disabled class="btn btn-light">+ Add</button>

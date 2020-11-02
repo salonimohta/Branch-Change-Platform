@@ -13,8 +13,8 @@ class Login extends React.Component{
           password:'',
           showMsg:false,
           loading:false,
-          rememberMe:localStorage.getItem('rememberMe') === 'true',
-          username: localStorage.getItem('rememberMe') === 'true' ? localStorage.getItem('username') : '' 
+          rememberMe:localStorage.getItem(`${this.props.type.toLowerCase()}rememberMe`) === 'true',
+          username: localStorage.getItem(`${this.props.type.toLowerCase()}rememberMe`) === 'true' ? localStorage.getItem(`${this.props.type.toLowerCase()}username`) : '' 
         }     
         this.handleChange = this.handleChange.bind(this);
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
@@ -26,12 +26,13 @@ class Login extends React.Component{
       }
       onSubmitHandler(e){
           e.preventDefault();
-          console.log(this.state);
+          //console.log(this.state);
           const { username, rememberMe } = this.state;
-          localStorage.setItem('rememberMe', rememberMe);
-          localStorage.setItem('username', rememberMe ? username : '');
-          console.log(localStorage.getItem('username'));
-          console.log(localStorage.getItem('rememberMe'));
+          localStorage.setItem(`${this.props.type.toLowerCase()}rememberMe`, rememberMe);
+          localStorage.setItem(`${this.props.type.toLowerCase()}username`, rememberMe ? username : '');
+          
+          //console.log(localStorage.getItem(`${this.props.type.toLowerCase()}username`));
+          //console.log(localStorage.getItem(`${this.props.type.toLowerCase()}rememberMe`));
           if(this.state.username === ''){
             this.setState({status:false,error:"Please Enter Username",showMsg:true});
             return false;
@@ -86,6 +87,7 @@ class Login extends React.Component{
     render(){
         const username=this.props.username;
         const userType=this.props.type;
+        console.log(this.state.username,userType);
         return(
             <div id="app">
     <section className="section">
