@@ -62,7 +62,7 @@ class Login extends React.Component{
           })
           .then(response=>{
               if (response.status===200){
-                console.log(response);
+                Session.set("token",response.data.token);
                 if (this.props.type==="Student"){
                   let studentDetails=response.data.studentBranchDetails;
                   let studentName=studentDetails.user_detail.first_name;
@@ -88,7 +88,6 @@ class Login extends React.Component{
     render(){
         const username=this.props.username;
         const userType=this.props.type;
-        console.log(this.state.username,userType);
         return(
             <div id="app">
     <section className="section">

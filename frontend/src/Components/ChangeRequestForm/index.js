@@ -1,5 +1,8 @@
 import React from 'react';
 import './index.css'
+import axios from "axios"
+import {API} from '../../config'
+import Session from 'react-session-api'
 
 var branchByCourseCategory = {
     BTech: ["Computer Science and Engineering", "Electronics Engineering", "Others"],
@@ -17,7 +20,7 @@ var branchVal=[];
 const admissionNo=localStorage.getItem('admissionNo');
 const currCourse=localStorage.getItem('course');
 const currBranch=localStorage.getItem('branch');
-const currCourseValue=''//=currCourse.toLowerCase().includes("bachelor")?"BTech":"DualDegree";
+const currCourseValue=currCourse.toLowerCase().includes("bachelor")?"BTech":"DualDegree";
 
 var BTechBranchesUsed=[];
 var DDBranchesUsed=[];
@@ -121,6 +124,24 @@ export default class ChangeRequestForm extends React.Component{
         this.state={
             preferences:[<Preference number="1" courseNum="0" />],
         };
+        this.submitForm=this.submitForm.bind(this);
+    }
+    submitForm=()=>{
+      //validate fields before submitting
+
+      axios({
+        method: 'post',
+        url: `${API}/users/submit-application`,
+        headers: {
+          Accepts:'application/json',
+          "Content-Type":"application/json",
+          Authorization: 'Bearer ' +Session.get('token')
+         },
+        data: {
+           /*username: this.state.username,
+           password: this.state.password*/
+          }
+      })
     }
     removePreference=()=>{
         let preferenceList=[...this.state.preferences];
@@ -238,7 +259,7 @@ export default class ChangeRequestForm extends React.Component{
                       </div>
                     </div>
                   <div class="card-footer">
-                    <button type="submit" class="btn btn-success">Submit</button>
+                    <button type="submit" class="btn btn-success" onSubmit={this.submitForm}>Submit</button>
                   </div>
                 </div>
                 </div>

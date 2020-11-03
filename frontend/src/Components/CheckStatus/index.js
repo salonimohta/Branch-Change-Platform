@@ -2,6 +2,9 @@ import React from 'react';
 import {Button} from 'react-bootstrap';
 import Select from 'react-select'
 import PopUp from './../PopUp';
+import axios from "axios"
+import {API} from '../../config'
+import Session from 'react-session-api'
 
 class DataRow extends React.Component{
   constructor(){
@@ -63,6 +66,18 @@ export default class CheckStatus extends React.Component{
     }
     componentDidMount(){
       //api request to view all submissions
+      axios({
+        method: 'get',
+        url: `${API}/users/view-all-branch-applications`,
+        headers: {
+          Accepts:'application/json',
+          "Content-Type":"application/json",
+          Authorization: 'Bearer ' +Session.get('token')
+         }
+      })
+      .then(response=>{
+        console.log(response);
+      });
     }
     render(){
         return(
