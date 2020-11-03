@@ -19,12 +19,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9b5b8813-b208-4f05-961c-caaddfadf164" name="Default Changelist" comment="Prototype of Admin's view api added">
-      <change afterPath="$PROJECT_DIR$/src/middleware/validate.js" afterDir="false" />
+    <list default="true" id="9b5b8813-b208-4f05-961c-caaddfadf164" name="Default Changelist" comment="Admin can now approve a request and set and get(students too) deadline">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/ul.sql" beforeDir="false" afterPath="$PROJECT_DIR$/resources/ul.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constrollers/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/constrollers/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middleware/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/auth.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +69,8 @@
       <workItem from="1603549118266" duration="4243000" />
       <workItem from="1604235048757" duration="8872000" />
       <workItem from="1604258088130" duration="834000" />
-      <workItem from="1604314931760" duration="5595000" />
+      <workItem from="1604314931760" duration="5945000" />
+      <workItem from="1604410573851" duration="10634000" />
     </task>
     <task id="LOCAL-00001" summary="Logout route and authorization middleware added">
       <created>1603467998179</created>
@@ -94,7 +93,21 @@
       <option name="project" value="LOCAL" />
       <updated>1604315802565</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Validation added while submitting application.">
+      <created>1604320657274</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1604320657274</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Admin can now approve a request and set and get(students too) deadline">
+      <created>1604426197979</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1604426197979</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -116,13 +129,19 @@
     <MESSAGE value="Logout route and authorization middleware added" />
     <MESSAGE value="Prototype of Admin's view api added" />
     <MESSAGE value="Resources updated and bug fixed for view all applications" />
-    <option name="LAST_COMMIT_MESSAGE" value="Resources updated and bug fixed for view all applications" />
+    <MESSAGE value="Validation added while submitting application." />
+    <MESSAGE value="Admin can now approve a request and set and get(students too) deadline" />
+    <option name="LAST_COMMIT_MESSAGE" value="Admin can now approve a request and set and get(students too) deadline" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1604315810926">
+    <state x="688" y="222" key="RollbackChangesDialog" timestamp="1604320595695">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1604315810926" />
+    <state x="688" y="222" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604320595695" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1604426203514">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1604426203514" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1603467034509">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

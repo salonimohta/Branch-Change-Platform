@@ -13,8 +13,30 @@ const StudentBranchDetails = require('../models/StudentBranchDetails')
 const DepartmentDetails = require('../models/DepartmentDetails')
 const BranchChangeApplication = require('../models/BranchChangeApplication')
 const Course = require('../models/Course')
-// const StudentBranchChangeOptionPriority = require('../models/StudentBranchChangeOptionPriority')
+const SubmissionDeadline = require('../models/SubmissionDeadline')
 const constants = require('../constants/constants')
+
+const checkAdmin = async (req, res) => {
+    const auths = await AuthType.findAll({
+        where: {
+            id: req.user.id
+        }
+    })
+    let isAdmin = false
+    await auths.forEach((auth) => {
+        isAdmin |= auth.auth_id === constants.branch_allocator_admin
+        // console.log(auth.auth_id)
+    })
+    // console.log(isAdmin)
+    return isAdmin
+    // return res.send({isAdmin})
+    //
+    // if (isAdmin === false) {
+    //     res.status(404).send({message: "You might not be the admin"})
+    //
+    // }
+}
+
 
 module.exports.login = async (req, res) => {
     try {
@@ -26,7 +48,7 @@ module.exports.login = async (req, res) => {
             // _key: constants.jwtKey
         }, process.env.JWT_SECRET);
         const auths = await AuthType.findAll({where: {id: user.id}})
-        res.cookie("t", token, {expire: new Date() + 999})
+        // res.cookie("t", token, {expire: new Date() + 999})
         if (user.auth_id === 'emp') {
             return res.send({
                 user_details: await UserDetails.findOne({
@@ -34,7 +56,8 @@ module.exports.login = async (req, res) => {
                         id: user.id
                     }
                 }),
-                auths
+                auths,
+                token
             })
         }
         const studentBranchDetails = await StudentBranchDetails.findOne({
@@ -77,7 +100,7 @@ module.exports.login = async (req, res) => {
             }
         })
 
-        await res.send({studentBranchDetails, branchChangeApplication, auths})
+        await res.send({studentBranchDetails, branchChangeApplication, auths, token})
     } catch (e) {
         res.status(400).send(e)
     }
@@ -124,17 +147,18 @@ module.exports.branches = async (req, res) => {
  * */
 module.exports.viewAllBranchApplications = async (req, res) => {
     try {
-        const auths = await AuthType.findAll({
-            where: {
-                id: req.user.id
-            }
-        })
-        let isAdmin = false
-        await auths.forEach((auth) => {
-            isAdmin |= auth.auth_id === constants.branch_allocator_admin
-            // console.log(auth.auth_id)
-        })
-        // return res.send({isAdmin})
+        const isAdmin = await checkAdmin(req)
+        // const auths = await AuthType.findAll({
+        //     where: {
+        //         id: req.user.id
+        //     }
+        // })
+        // let isAdmin = false
+        // await auths.forEach((auth) => {
+        //     isAdmin |= auth.auth_id === constants.branch_allocator_admin
+        //     // console.log(auth.auth_id)
+        // })
+        // // return res.send({isAdmin})
 
         if (isAdmin === false) {
             return res.status(404).send({message: "You might not be the admin"})
@@ -198,9 +222,92 @@ module.exports.viewBranchApplication = async (req, res) => {
     }
 }
 
+module.exports.getSubmissionDeadline = async (req, res) => {
+    try {
+        // const isAdmin = await checkAdmin(req)
+        //
+        // // const auths = await AuthType.findAll({
+        // //     where: {
+        // //         id: req.user.id
+        // //     }
+        // // })
+        // // let isAdmin = false
+        // // await auths.forEach((auth) => {
+        // //     isAdmin |= auth.auth_id === constants.branch_allocator_admin
+        // //     // console.log(auth.auth_id)
+        // // })
+        // // // return res.send({isAdmin})
+        //
+        // if (isAdmin === false) {
+        //     return res.status(404).send({message: "You might not be the admin"})
+        // }
+        const deadline = await SubmissionDeadline.findOne({
+            order: [['timestamp', 'DESC']]
+        })
+        res.send({deadline})
+    } catch (e) {
+        res.status(500).send({e})
+    }
+}
+
+
+module.exports.setSubmissionDeadline = async (req, res) => {
+    try {
+        const isAdmin = await checkAdmin(req)
+        // console.log(isAdmin)
+        if (isAdmin === false) {
+            return res.status(404).send({message: "You might not be the admin"})
+        }
+        //     const auths = await AuthType.findAll({
+        //         where: {
+        //             id: req.user.id
+        //         }
+        //     })
+        //     let isAdmin = false
+        //     await auths.forEach((auth) => {
+        //         isAdmin |= auth.auth_id === constants.branch_allocator_admin
+        //         // console.log(auth.auth_id)
+        //     })
+        //     // return res.send({isAdmin})
+        //
+        //     if (isAdmin === false) {
+        //         return res.status(404).send({message: "You might not be the admin"})
+        //     }
+        // console.log("yeo")
+        // console.log(req.body.deadline)
+        const d1 = new Date(Date.now())
+        const d2 = new Date(req.body.deadline.toString())
+        // if (Date.now() > req.body.deadline) {
+        //     throw new Error("History")
+        // }
+        // console.log(d1, d2)
+        if (d1 > d2) {
+            // console.log("less")
+            throw new Error("History")
+        }
+        const deadline = await SubmissionDeadline.create({
+            timestamp: Date.now(),
+            deadline: req.body.deadline
+            // deadline: Date.now()
+        })
+        res.send({deadline})
+    } catch (e) {
+        res.status(500).send({e, msg: e.toString()})
+    }
+}
+
 
 module.exports.submitApplication = async (req, res) => {
     try {
+        const allRecords = await StudentBranchDetails.findAll({
+            where: {
+                admn_no: req.user.id
+            }
+        })
+        // console.log(allRecords)
+        if (allRecords.length >= 2) {
+            throw new Error("You have already been offered a branch.")
+        }
         const studentBranchDetails = await StudentBranchDetails.findOne({
             where: {
                 admn_no: req.user.id
@@ -238,9 +345,8 @@ module.exports.submitApplication = async (req, res) => {
         res.send({msg: "Successfully submitted application", insertedData})
 
 
-    } catch
-        (e) {
-        res.status(500).send(e)
+    } catch (e) {
+        res.status(500).send({e: e, msg: e.toString()})
     }
 }
 
@@ -250,5 +356,60 @@ module.exports.logout = async (req, res) => {
         res.send({message: 'we logged you out'})
     } catch (e) {
         res.status(500).send({e, message: 'Some internal error occurred'})
+    }
+}
+
+
+module.exports.setOffered = async (req, res) => {
+    try {
+        const isAdmin = await checkAdmin(req)
+        if (isAdmin === false) {
+            return res.status(404).send({message: "You might not be the admin"})
+        }
+        const branchChangeApplication = await BranchChangeApplication.findOne({
+            where: {
+                id: parseInt(req.body.id)
+            }
+        })
+        if (branchChangeApplication === null) {
+            throw new Error("No record found for the offered choice.")
+        }
+        // console.log(branchChangeApplication)
+        const isAlreadyOffered = await BranchChangeApplication.findOne({
+            where: {
+                cb_log_id: branchChangeApplication.cb_log_id,
+                offered: '1'
+            }
+        }).then((r) => r !== null)
+        // console.log(isAlreadyOffered)
+        if (isAlreadyOffered) {
+            throw new Error("Student already offered a course of their choice")
+        }
+        await BranchChangeApplication.update({
+            offered: '1'
+        }, {
+            where: {
+                id: parseInt(req.body.id)
+            }
+        })
+        const newStudentBranchDetails = await StudentBranchDetails.findOne({
+            where: {
+                id: branchChangeApplication.cb_log_id
+            },
+            order: [['timestamp', 'DESC']],
+
+            raw: true,
+            nest: false
+        })
+        newStudentBranchDetails.current_dept_id = branchChangeApplication.dept_id
+        newStudentBranchDetails.current_course_id = branchChangeApplication.course_id
+        newStudentBranchDetails.current_branch_id = branchChangeApplication.branch_id
+        newStudentBranchDetails.timestamp = await Date.now()
+        newStudentBranchDetails.id = null
+        const offeredBranchDetails = await StudentBranchDetails.build(newStudentBranchDetails)
+        await offeredBranchDetails.save()
+        res.send({msg: "done", offeredBranchDetails})
+    } catch (e) {
+        res.status(500).send({e: e.toString(), msg: e})
     }
 }

@@ -12,6 +12,7 @@ const StudentBranchDetails = require('./models/StudentBranchDetails')
 const DepartmentDetails = require('./models/DepartmentDetails')
 const BranchChangeApplication = require('./models/BranchChangeApplication')
 const Course = require('./models/Course')
+const SubmissionDeadline = require('./models/SubmissionDeadline')
 var cors = require('cors')
 // const taskRouter = require('./routers/task')
 const app = express()
@@ -44,7 +45,7 @@ app.listen(port, async () => {
         await DepartmentDetails.sync()
         await StudentBranchDetails.sync()
         await BranchChangeApplication.sync()
-
+        await SubmissionDeadline.sync()
         await BranchChangeApplication.belongsTo(BranchDetails, {foreignKey: 'branch_id', targetKey: 'id'})
         await BranchDetails.hasMany(BranchChangeApplication, {foreignKey: 'branch_id', sourceKey: 'id'})
 
