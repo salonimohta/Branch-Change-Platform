@@ -9,6 +9,7 @@ const user_auth_types_database = "user_auth_types"
 const user_details_database = "user_details"
 const jwtKey = "branchque"
 const branch_allocator_admin = "ism_admin"
+const submission_deadline_database = "submission_deadline"
 // const student_branch_change_option_priority_database = "branch_priority"
 
 module.exports = {
@@ -23,6 +24,7 @@ module.exports = {
     user_auth_types_database,
     user_details_database,
     branch_allocator_admin,
+    submission_deadline_database
     // student_branch_change_option_priority_database
 }
 
