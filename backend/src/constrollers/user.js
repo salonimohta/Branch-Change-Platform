@@ -48,7 +48,7 @@ module.exports.login = async (req, res) => {
             // _key: constants.jwtKey
         }, process.env.JWT_SECRET);
         const auths = await AuthType.findAll({where: {id: user.id}})
-        res.cookie("t", token, {expire: new Date() + 999})
+        // res.cookie("t", token, {expire: new Date() + 999})
         if (user.auth_id === 'emp') {
             return res.send({
                 user_details: await UserDetails.findOne({
@@ -56,7 +56,8 @@ module.exports.login = async (req, res) => {
                         id: user.id
                     }
                 }),
-                auths
+                auths,
+                token
             })
         }
         const studentBranchDetails = await StudentBranchDetails.findOne({
@@ -99,7 +100,7 @@ module.exports.login = async (req, res) => {
             }
         })
 
-        await res.send({studentBranchDetails, branchChangeApplication, auths})
+        await res.send({studentBranchDetails, branchChangeApplication, auths, token})
     } catch (e) {
         res.status(400).send(e)
     }
@@ -274,6 +275,16 @@ module.exports.setSubmissionDeadline = async (req, res) => {
         //     }
         // console.log("yeo")
         // console.log(req.body.deadline)
+        const d1 = new Date(Date.now())
+        const d2 = new Date(req.body.deadline.toString())
+        // if (Date.now() > req.body.deadline) {
+        //     throw new Error("History")
+        // }
+        // console.log(d1, d2)
+        if (d1 > d2) {
+            // console.log("less")
+            throw new Error("History")
+        }
         const deadline = await SubmissionDeadline.create({
             timestamp: Date.now(),
             deadline: req.body.deadline
@@ -281,7 +292,7 @@ module.exports.setSubmissionDeadline = async (req, res) => {
         })
         res.send({deadline})
     } catch (e) {
-        res.status(500).send({e})
+        res.status(500).send({e, msg: e.toString()})
     }
 }
 
@@ -294,7 +305,7 @@ module.exports.submitApplication = async (req, res) => {
             }
         })
         // console.log(allRecords)
-        if(allRecords.length >= 2) {
+        if (allRecords.length >= 2) {
             throw new Error("You have already been offered a branch.")
         }
         const studentBranchDetails = await StudentBranchDetails.findOne({
@@ -360,7 +371,7 @@ module.exports.setOffered = async (req, res) => {
                 id: parseInt(req.body.id)
             }
         })
-        if(branchChangeApplication === null) {
+        if (branchChangeApplication === null) {
             throw new Error("No record found for the offered choice.")
         }
         // console.log(branchChangeApplication)

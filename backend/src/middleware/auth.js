@@ -4,9 +4,10 @@ const UserLogin = require('../models/UserLogin')
 
 
 const auth = async (req, res, next) => {
-    try{
+    try {
 
-        const token = await req.cookies['t']
+        // const token = await req.cookies['t']
+        const token = req.header('Authorization').replace('Bearer ','')
         const decodedToken = await jwt.verify(token, constants.jwtKey)
         const user = await UserLogin.findOne({
             where: {
@@ -14,13 +15,13 @@ const auth = async (req, res, next) => {
                 password: decodedToken._password
             }
         })
-        if(!user){
+        if (!user) {
             throw new Error('Authentication failed')
         }
         req.user = user
         req.token = token
         next()
-    } catch(e){
+    } catch (e) {
         res.status(401).send({error: "Authentication required"})
     }
 
