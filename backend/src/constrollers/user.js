@@ -141,7 +141,7 @@ module.exports.branches = async (req, res) => {
 
 }
 
-
+/*
 module.exports.viewAllBranchApplications = async (req, res) => {
     try {
         const isAdmin = await checkAdmin(req)
@@ -196,6 +196,79 @@ module.exports.viewAllBranchApplications = async (req, res) => {
         res.send({branchChangeApplications})
     } catch (e) {
         res.status(500).send()
+    }
+}
+*/
+
+module.exports.viewAllBranchApplications = async (req, res) => {
+    try {
+        const isAdmin = await checkAdmin(req)
+        if (isAdmin === false) {
+            return res.status(404).send({message: "You might not be the admin"})
+        }
+        const allIds = await BranchChangeApplication.findAll({
+            attributes: [
+                [Sequelize.fn('DISTINCT', Sequelize.col('cb_log_id')), 'cb_log_id'],
+            ],
+            raw: true
+        })
+        let branchChangeApplications = []
+        for (let i = 0; i < allIds.length; i++) {
+            branchChangeApplications.push({})
+            branchChangeApplications[i].applications = await BranchChangeApplication.findAll({
+                where: {
+                    cb_log_id: allIds[i].cb_log_id
+                },
+                raw: true
+            })
+            for (let j = 0; j < branchChangeApplications[i].applications.length; j++) {
+                branchChangeApplications[i].applications[j].branchDetails = await BranchDetails.findOne({
+                    where: {
+                        id: branchChangeApplications[i].applications[j].branch_id
+                    }
+                })
+                branchChangeApplications[i].applications[j].departmentDetails = await DepartmentDetails.findOne({
+                    where: {
+                        id: branchChangeApplications[i].applications[j].dept_id
+                    }
+                })
+            }
+            const studentDetails = await StudentBranchDetails.findOne({
+                where: {
+                    id: allIds[i].cb_log_id
+                }
+            })
+            if (!studentDetails) {
+                continue
+            }
+            const studentBranch = await StudentBranchDetails.findAll({
+                where: {
+                    admn_no: studentDetails.admn_no
+                },
+                order: [['timestamp', 'DESC']],
+                raw: true
+
+            })
+            branchChangeApplications[i].approvedFlag = studentBranch.length >= 2
+            branchChangeApplications[i].currentDetails = await studentBranch[0]
+            console.log(branchChangeApplications[i].currentDetails.current_branch_id)
+            branchChangeApplications[i].currentDetails.branchDetails = await BranchDetails.findOne({
+                where: {
+                    id: branchChangeApplications[i].currentDetails.current_branch_id
+                }
+            })
+            branchChangeApplications[i].currentDetails.departmentDetails = await DepartmentDetails.findOne({
+                where: {
+                    id: branchChangeApplications[i].currentDetails.current_dept_id
+                }
+            })
+        }
+        res.send({branchChangeApplications})
+    } catch (e) {
+        res.status(500).send({
+            error: e,
+            msg: e.toString()
+        })
     }
 }
 
