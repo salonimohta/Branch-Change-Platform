@@ -75,7 +75,7 @@ class Login extends React.Component{
                   localStorage.setItem('course',studentDetails.course.name);
                   localStorage.setItem('branch',studentDetails.branch.name);
                   localStorage.setItem('dept',studentDetails.department.name);
-                  localStorage.setItem('branchChangeRequestSubmitted',response.data.branchChangeApplications?false:true);
+                  localStorage.setItem('branchChangeRequestSubmitted',response.data.branchChangeApplication.length>0?true:false);
                   this.props.history.push('/studentHome');
                 }
                 else{

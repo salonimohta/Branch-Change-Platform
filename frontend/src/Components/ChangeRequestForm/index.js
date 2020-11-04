@@ -20,9 +20,9 @@ var BTechBranchesUsed=[];
 var DDBranchesUsed=[];
 var IntMTechBranchesUsed=[];
 
-if (currCourseValue==="BTech") BTechBranchesUsed.push(currBranch);
-else if (currCourseValue==="DualDegree") DDBranchesUsed.push(currBranch);
-else if (currCourseValue==="Int_MTech") IntMTechBranchesUsed.push(currBranch);
+if (currCourseValue==="BTech") BTechBranchesUsed.push(currBranchValue);
+else if (currCourseValue==="DualDegree") DDBranchesUsed.push(currBranchValue);
+else if (currCourseValue==="Int_MTech") IntMTechBranchesUsed.push(currBranchValue);
 
 class Preference extends React.Component{
     constructor(props){
@@ -212,11 +212,11 @@ export default class ChangeRequestForm extends React.Component{
          },
         data: {
             options: options,
-            number_of_options: this.state.countCourse
+            number_of_options: Number(this.state.countCourse)
           }
         })
         .then(response=>{
-          alert(response.data);
+          console.log(response);
         })
       }
     }
