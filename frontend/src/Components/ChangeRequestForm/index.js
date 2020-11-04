@@ -28,17 +28,6 @@ var branchValuesDropdown = {
   Int_MTech: {mnc:["mnc"],agl:["agl"],agp:["agp"]}
 }
 
-var optionInfo={
-  courseFilled: false,
-  deptFilled: false,
-  course: '',
-  course_id: '',
-  branch: '',
-  branch_id: '',
-  dept: '',
-  dept_id: ''
-}
-
 var optionsFilled=[];
 
 const admissionNo=localStorage.getItem('admissionNo');
@@ -112,8 +101,6 @@ class Preference extends React.Component{
     } 
     }
     changeBranch(event){
-      /*let branchNameList=[...this.state.branchNamesFilled];
-      let courseNameList=[...this.state.courseNamesFilled];*/
       if (this.props.number===this.state.preferenceFilled.length){
         if (this.state.preferenceFilled[this.props.courseNum].course==="BTech") BTechBranchesUsed.push(event.target.value);
         else if (this.state.preferenceFilled[this.props.courseNum].course==="DualDegree") DDBranchesUsed.push(event.target.value);
@@ -190,8 +177,9 @@ class Preference extends React.Component{
 export default class ChangeRequestForm extends React.Component{
     constructor(){
         super();
+        const num=1;
         this.state={
-            preferences:[<Preference number="1" courseNum="0" />],
+            preferences:[<Preference number={num} courseNum={num-1} />],
         };
         this.submitForm=this.submitForm.bind(this);
     }
