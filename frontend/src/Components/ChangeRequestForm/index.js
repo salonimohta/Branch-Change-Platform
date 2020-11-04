@@ -3,37 +3,18 @@ import './index.css'
 import axios from "axios"
 import {API} from '../../config'
 import Session from 'react-session-api'
-
-var deptByCourseCategory = {
-  BTech: ["Computer Science and Engineering","Electronic Engineering","Electrical Engineering"],
-  DualDegree: ["Computer Science and Engineering"],
-  Int_MTech: ["Mathematics and Computing","Applied Geology","Applied Geophysics"]
-}
-
-var deptValuesDropdown = {
-  BTech: ["cse","ece","ee"],
-  DualDegree: ["cse"],
-  Int_MTech: ["mnc","agl","agp"]
-}
-
-var branchByCourseAndDeptCategory = {
-    BTech: {cse:["Computer Science and Engineering"],ece:["Electronics Engineering"],ee:["Electrical Engineering"]},
-    DualDegree: {cse:["Computer Science and Engineering+Computer Science and Engineering"]},
-    Int_MTech: {mnc:["Mathematics and Computing"],agl:["Applied Geology"],agp:["Applied Geophysics"]}
-}
-
-var branchValuesDropdown = {
-  BTech: {cse:["cse"],ece:["ece"],ee:["ee"]},
-  DualDegree: {cse:["cse+cse"]},
-  Int_MTech: {mnc:["mnc"],agl:["agl"],agp:["agp"]}
-}
+import {NameToIdMapping,getKeyByValue,deptNameValueMapping,deptValuesDropdown,branchNameValueMapping,branchByCourseAndDeptCategory,branchValuesDropdown,deptByCourseCategory} from '../../requiredData';
 
 var optionsFilled=[];
 
+const studentName=localStorage.getItem('studentName');
 const admissionNo=localStorage.getItem('admissionNo');
 const currCourse=localStorage.getItem('course');
 const currBranch=localStorage.getItem('branch');
 const currCourseValue=currCourse.toLowerCase().includes("bachelor")?"BTech":currCourse.toLowerCase().includes("master")?"Int_MTech":"DualDegree";
+const currBranchValue=getKeyByValue(branchNameValueMapping,currBranch.toLowerCase());
+const currDept=localStorage.getItem('dept');
+const currDeptValue=getKeyByValue(deptNameValueMapping,currDept.toLowerCase());
 
 var BTechBranchesUsed=[];
 var DDBranchesUsed=[];
@@ -59,6 +40,7 @@ class Preference extends React.Component{
       let preferences=[...this.state.preferenceFilled];
       preferences[this.props.courseNum].courseFilled=true;
       preferences[this.props.courseNum].course=value;
+      preferences[this.props.courseNum].courseId=NameToIdMapping[value];
       optionsFilled=preferences;
       this.setState({preferenceFilled:preferences});
       if (this.state.preferenceFilled[this.props.courseNum].courseFilled===true){
@@ -79,6 +61,8 @@ class Preference extends React.Component{
       let preferences=[...this.state.preferenceFilled]; 
       preferences[this.props.courseNum].deptFilled=true;
       preferences[this.props.courseNum].dept=value;
+      if (value==="mnc") preferences[this.props.courseNum].deptId="m&c";
+      else preferences[this.props.courseNum].deptId=value;
       optionsFilled=preferences; 
       this.setState({preferenceFilled:preferences}); 
       if (this.state.preferenceFilled[this.props.courseNum].courseFilled&&this.state.preferenceFilled[this.props.courseNum].deptFilled===true){
@@ -101,18 +85,21 @@ class Preference extends React.Component{
     } 
     }
     changeBranch(event){
+      const value=event.target.value;
       if (this.props.number===this.state.preferenceFilled.length){
-        if (this.state.preferenceFilled[this.props.courseNum].course==="BTech") BTechBranchesUsed.push(event.target.value);
-        else if (this.state.preferenceFilled[this.props.courseNum].course==="DualDegree") DDBranchesUsed.push(event.target.value);
-        else IntMTechBranchesUsed.push(event.target.value);
+        if (this.state.preferenceFilled[this.props.courseNum].course==="BTech") BTechBranchesUsed.push(value);
+        else if (this.state.preferenceFilled[this.props.courseNum].course==="DualDegree") DDBranchesUsed.push(value);
+        else IntMTechBranchesUsed.push(value);
       }
       else{
-        if (this.state.preferenceFilled[this.props.courseNum].course==="BTech") BTechBranchesUsed[this.props.courseNum]=event.target.value;
-        else if (this.state.preferenceFilled[this.props.courseNum].course==="DualDegree") DDBranchesUsed[this.props.courseNum]=event.target.value;
-        else IntMTechBranchesUsed[this.props.courseNum]=event.target.value;
+        if (this.state.preferenceFilled[this.props.courseNum].course==="BTech") BTechBranchesUsed[this.props.courseNum]=value;
+        else if (this.state.preferenceFilled[this.props.courseNum].course==="DualDegree") DDBranchesUsed[this.props.courseNum]=value;
+        else IntMTechBranchesUsed[this.props.courseNum]=value;
       }
       let preferences=[...this.state.preferenceFilled];
-      preferences[this.props.courseNum].branch=event.target.value;
+      preferences[this.props.courseNum].branch=value;
+      if (value==="mnc") preferences[this.props.courseNum].branchId="m&c";
+      else preferences[this.props.courseNum].branchId=value;
       optionsFilled=preferences;
       this.setState({preferenceFilled:preferences});
       if (this.props.number===this.state.preferenceFilled.length){
@@ -179,13 +166,42 @@ export default class ChangeRequestForm extends React.Component{
         super();
         const num=1;
         this.state={
+            name: studentName,
+            admissionNo: admissionNo,
+            currCourse: currCourse,
+            currBranch: currBranch,
+            currDept: currDept,
+            countCourse: 1,
             preferences:[<Preference number={num} courseNum={num-1} />],
         };
         this.submitForm=this.submitForm.bind(this);
+        this.handleChange=this.handleChange.bind(this);
+    }
+    handleChange=(event)=>{
+      this.setState({[event.target.id]: event.target.value})
     }
     submitForm=()=>{
       //validate fields before submitting
-
+      if (this.state.admissionNo!==admissionNo){
+        alert('Invalid admission No.!');
+      } 
+      else if(this.state.currBranch!==currBranch){
+        alert('Invalid value for current branch!');
+      }
+      else if(this.state.currCourse!==currCourse){
+        alert('Invalid value for current course!');
+      } 
+      else if(this.state.currDept!==currDept){
+        alert('Invalid value for current department!');
+      }
+      else if(this.state.countCourse!==optionsFilled.length.toString()){
+        alert('No of courses opted does not match with number of preferences filled!');
+      }
+      else{
+        let options=[];
+        for (var item in optionsFilled){
+          options.push({dept_id:optionsFilled[item].deptId,branch_id:optionsFilled[item].branchId,course_id:optionsFilled[item].courseId});
+        }
       axios({
         method: 'post',
         url: `${API}/users/submit-application`,
@@ -195,10 +211,14 @@ export default class ChangeRequestForm extends React.Component{
           Authorization: 'Bearer ' +Session.get('token')
          },
         data: {
-           /*username: this.state.username,
-           password: this.state.password*/
+            options: options,
+            number_of_options: this.state.countCourse
           }
-      })
+        })
+        .then(response=>{
+          alert(response.data);
+        })
+      }
     }
     removePreference=()=>{
         let preferenceList=[...this.state.preferences];
@@ -228,38 +248,44 @@ export default class ChangeRequestForm extends React.Component{
                   </div>
                   <div class="card-body">
                     <div class="form-group row">
-                      <label for="inputName3" class="col-sm-3 col-form-label">Name</label>
+                      <label for="name" class="col-sm-3 col-form-label">Name</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="inputName3" placeholder="Your Name.." />
+                        <input type="text" class="form-control" id="name" value={studentName} onChange={this.handleChange} readonly="" />
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="inputAdm3" class="col-sm-3 col-form-label">Admission No</label>
+                      <label for="admissionNo" class="col-sm-3 col-form-label">Admission No</label>
                       <div class="col-sm-9">
-                        <input class="form-control" id="inputAdm3" value={admissionNo} readonly="" />
+                        <input class="form-control" id="admissionNo" value={admissionNo} onChange={this.handleChange} readonly="" />
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="inputEmail3" class="col-sm-3 col-form-label">Email</label>
+                    <label for="currCourse" class="col-sm-3 col-form-label">Current Course</label>
                       <div class="col-sm-9">
-                        <input class="form-control" id="inputEmail3" value="sample@email.com" readonly="" />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                    <label for="inputCurrCourse3" class="col-sm-3 col-form-label">Current Course</label>
-                      <div class="col-sm-9">
-                      <select class="form-control" id="inputCurrCourse3" value={currCourseValue} disabled>
+                      <select class="form-control" id="currCourse" value={currCourseValue} onChange={this.handleChange} disabled>
                         <option value="BTech">Bachelor of Technology</option>
-                        <option value="DualDegree">Integrated Master of Technology (Dual Degree)</option>
+                        <option value="DualDegree">Dual Degree</option>
+                        <option value="Int_MTech">Integrated Master of Technology</option>
                       </select>
                       </div>
                     </div>
                     <div class="form-group row">
-                    <label for="inputCurrCourse3" class="col-sm-3 col-form-label">Current Branch</label>
+                    <label for="currDept" class="col-sm-3 col-form-label">Current Department</label>
                       <div class="col-sm-9">
-                      <select class="form-control" id="inputCurrCourse3" value="CSE" disabled>
-                        <option value="cse">Computer Science and Engineering</option>
-                        <option value="ee">Electronics Engineering</option>
+                      <select class="form-control" id="currDept" value={currDeptValue} onChange={this.handleChange} disabled>
+                        {Object.keys(deptNameValueMapping).map(function(key, index) {
+                          return <option value={key}>{deptNameValueMapping[key]}</option>
+                        })}
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                    <label for="currBranch" class="col-sm-3 col-form-label">Current Branch</label>
+                      <div class="col-sm-9">
+                      <select class="form-control" id="currBranch" value={currBranchValue} onChange={this.handleChange} disabled>
+                      {Object.keys(branchNameValueMapping).map(function(key, index) {
+                          return <option value={key}>{branchNameValueMapping[key]}</option>
+                        })}
                       </select>
                       </div>
                     </div>
@@ -311,13 +337,13 @@ export default class ChangeRequestForm extends React.Component{
                     </div>
                     <br/>
                     <div class="form-group row">
-                      <label for="inputCount3" class="col-sm-3 col-form-label">No of courses opted</label>
+                      <label for="countCourse" class="col-sm-3 col-form-label">No of courses opted</label>
                       <div class="col-sm-9">
-                        <input type="number" class="form-control-sm" id="inputCount3" min="1" max="5" />
+                        <input type="number" class="form-control-sm" id="countCourse" min="1" max="5" onChange={this.handleChange} />
                       </div>
                     </div>
                   <div class="card-footer">
-                    <button type="submit" class="btn btn-success" onSubmit={this.submitForm}>Submit</button>
+                    <button type="submit" class="btn btn-success" onClick={this.submitForm}>Submit</button>
                   </div>
                 </div>
                 </div>
