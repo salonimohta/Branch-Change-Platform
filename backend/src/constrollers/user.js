@@ -142,9 +142,6 @@ module.exports.branches = async (req, res) => {
 }
 
 
-/**
- * @todo : what to fetch and what not to.
- * */
 module.exports.viewAllBranchApplications = async (req, res) => {
     try {
         const isAdmin = await checkAdmin(req)
@@ -182,16 +179,20 @@ module.exports.viewAllBranchApplications = async (req, res) => {
                 order: [['timestamp', 'DESC']],
                 raw: true
             })
-            // console.log(studentBranchDetails)
-            // completeBranchChangeApplications.push({
-            //     studentBranchDetails,
-            //     branchChangeApplication: branchChangeApplications[i]
-            // })
+
+            if (branchChangeApplications[i].branchChangeApplication.offered === '1') {
+                for (let j = 0; j < branchChangeApplications.length; j++) {
+                    if (branchChangeApplications[i].branchChangeApplication.cb_log_id === branchChangeApplications[j].branchChangeApplication.cb_log_id) {
+                        branchChangeApplications[j].flag = true
+                    }
+
+                }
+            }
+            else if(!branchChangeApplications[i].flag) {
+                branchChangeApplications[i].flag = false
+            }
             branchChangeApplications[i].studentBranchDetails = studentBranchDetails
         }
-
-        // console.log(branchChangeApplications)
-        // res.send({completeBranchChangeApplications})
         res.send({branchChangeApplications})
     } catch (e) {
         res.status(500).send()

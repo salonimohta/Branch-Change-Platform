@@ -19,10 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9b5b8813-b208-4f05-961c-caaddfadf164" name="Default Changelist" comment="Admin can now approve a request and set and get(students too) deadline">
+    <list default="true" id="9b5b8813-b208-4f05-961c-caaddfadf164" name="Default Changelist" comment="Validation on setting dates and cookies removed. Using tokens now.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/constrollers/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/constrollers/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middleware/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/auth.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +69,7 @@
       <workItem from="1604235048757" duration="8872000" />
       <workItem from="1604258088130" duration="834000" />
       <workItem from="1604314931760" duration="5945000" />
-      <workItem from="1604410573851" duration="10634000" />
+      <workItem from="1604410573851" duration="12104000" />
     </task>
     <task id="LOCAL-00001" summary="Logout route and authorization middleware added">
       <created>1603467998179</created>
@@ -107,7 +106,14 @@
       <option name="project" value="LOCAL" />
       <updated>1604426197979</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Validation on setting dates and cookies removed. Using tokens now.">
+      <created>1604428917466</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1604428917466</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -131,17 +137,18 @@
     <MESSAGE value="Resources updated and bug fixed for view all applications" />
     <MESSAGE value="Validation added while submitting application." />
     <MESSAGE value="Admin can now approve a request and set and get(students too) deadline" />
-    <option name="LAST_COMMIT_MESSAGE" value="Admin can now approve a request and set and get(students too) deadline" />
+    <MESSAGE value="Validation on setting dates and cookies removed. Using tokens now." />
+    <option name="LAST_COMMIT_MESSAGE" value="Validation on setting dates and cookies removed. Using tokens now." />
   </component>
   <component name="WindowStateProjectService">
     <state x="688" y="222" key="RollbackChangesDialog" timestamp="1604320595695">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="688" y="222" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604320595695" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1604426203514">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1604428924909">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1604426203514" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1604428924909" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1603467034509">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
