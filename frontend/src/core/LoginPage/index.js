@@ -10,10 +10,10 @@ export default class LoginPage extends React.Component{
      };
      this.handleSelect=this.handleSelect.bind(this);
    }
-   componentDidMount(){
+   /*componentDidMount(){
      localStorage.clear();
      sessionStorage.clear();
-   }
+   }*/
    handleSelect(type){
      this.setState({activeTab:type});
    }

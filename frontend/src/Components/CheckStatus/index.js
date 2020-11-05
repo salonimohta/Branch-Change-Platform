@@ -21,8 +21,8 @@ class DataRow extends React.Component{
     render(){
         const RNo=this.props.number;
         const RAdmNo=this.props.admNo;
-        const RDateSubmitted=this.props.dateSubmitted;
-        const RStatus=this.props.status;
+        const RDateSubmitted=this.props.dateSubmitted.split('T')[0].split('-').reverse().join('/');
+        const RStatus=this.props.status ? "approved" : "pending";
         return(
             <tr role="row" class={(RNo & 1) ? "odd" : "even"}>
                 <td class="">
@@ -58,11 +58,18 @@ export default class CheckStatus extends React.Component{
       super();
       this.state = {
         seen: false,
-        admNo: ''
+        admNo: '',
+        branchChangeApplications: [],
+        displayApplication: {}
       };
+      this.getStudentApplications=this.getStudentApplications.bind(this);
     }
     togglePop=(admNo)=>{
-      this.setState({seen:!this.state.seen,admNo:admNo});
+      let currentApplication=this.state.branchChangeApplications.filter((application)=>application.currentDetails.admn_no===admNo);
+      this.setState({seen:!this.state.seen,admNo:admNo,displayApplication:currentApplication[0]});
+    }
+    getStudentApplications=(application)=>{
+      return application.currentDetails;
     }
     componentDidMount(){
       //api request to view all submissions
@@ -76,7 +83,9 @@ export default class CheckStatus extends React.Component{
          }
       })
       .then(response=>{
-        console.log(response);
+          let applications=response.data.branchChangeApplications.filter(this.getStudentApplications);
+          this.setState({branchChangeApplications:applications});
+          console.log(applications);
       });
     }
     render(){
@@ -97,13 +106,14 @@ export default class CheckStatus extends React.Component{
                             </th><th class="sorting" tabindex="0" aria-controls="table-1" rowspan="1" colspan="1" aria-label="Task Name: activate to sort column ascending" style={{width: "147px;"}}>Admission No.</th><th class="sorting" tabindex="0" aria-controls="table-1" rowspan="1" colspan="1" aria-label="Due Date: activate to sort column ascending" style={{width: "90px;"}}>Date Submitted</th><th class="sorting_desc" tabindex="0" aria-controls="table-1" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style={{width: "108px;"}} aria-sort="descending">Status</th><th class="sorting" tabindex="0" aria-controls="table-1" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending" style={{width: "75px;"}}>Action</th></tr>
                         </thead>
                         <tbody>
-                        <DataRow number="1" admNo="abc" dateSubmitted="22/10/2020" status="approved" togglePop={this.togglePop.bind(this)} /> 
-                        <DataRow number="2" admNo="def" dateSubmitted="22/10/2020" status="pending" togglePop={this.togglePop.bind(this)} /> 
+                          {this.state.branchChangeApplications.map((application,index)=>{
+                              return (<DataRow number={index+1} admNo={application.currentDetails.admn_no} dateSubmitted={application.currentDetails.timestamp} status={application.approvedFlag} togglePop={this.togglePop.bind(this)} />);
+                          })}
                         </tbody>
                       </table></div></div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="table-1_info" role="status" aria-live="polite">Showing 1 to 10 of 12 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="table-1_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="table-1_previous"><a href="#" aria-controls="table-1" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="table-1" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="table-1" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item next" id="table-1_next"><a href="#" aria-controls="table-1" data-dt-idx="3" tabindex="0" class="page-link">Next</a></li></ul></div></div></div></div>
                     </div>
                   </div>
-                  {this.state.seen===true ? <PopUp admNo={this.state.admNo} toggle={this.togglePop.bind(this)} /> : null}
+                  {this.state.seen===true ? <PopUp admNo={this.state.admNo} toggle={this.togglePop.bind(this)} applicationInfo={this.state.displayApplication} /> : null}
                 </div>
         )
     }

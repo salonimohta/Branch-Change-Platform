@@ -7,11 +7,18 @@ export function getKeyByValue(object, value) {
     } 
   } 
 
-export const NameToIdMapping={
+export const courseValueToIdMapping={
   BTech: "b.tech",
   Int_MTech: "int.m.tech",
   DualDegree: "dualdegree"
 }
+
+export const courseValueToNameMapping={
+  BTech: "Bachelor Of Technology",
+  Int_MTech: "Integrated Master Of Technology",
+  DualDegree: "Dual Degree"
+}
+
   
 export const deptByCourseCategory = {
     BTech: ["Computer Science and Engineering","Electronics Engineering","Electrical Engineering","Civil Engineering"],

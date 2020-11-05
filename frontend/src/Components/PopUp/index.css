@@ -11,3 +11,7 @@
   .closePopUp{
     margin-left: 84%;
   }
+
+  .popupLabel{
+    color: red;
+  }

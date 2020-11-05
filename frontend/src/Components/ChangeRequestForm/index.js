@@ -3,7 +3,7 @@ import './index.css'
 import axios from "axios"
 import {API} from '../../config'
 import Session from 'react-session-api'
-import {NameToIdMapping,getKeyByValue,deptNameValueMapping,deptValuesDropdown,branchNameValueMapping,branchByCourseAndDeptCategory,branchValuesDropdown,deptByCourseCategory} from '../../requiredData';
+import {courseValueToIdMapping,getKeyByValue,deptNameValueMapping,deptValuesDropdown,branchNameValueMapping,branchByCourseAndDeptCategory,branchValuesDropdown,deptByCourseCategory} from '../../requiredData';
 
 var optionsFilled=[];
 
@@ -40,7 +40,7 @@ class Preference extends React.Component{
       let preferences=[...this.state.preferenceFilled];
       preferences[this.props.courseNum].courseFilled=true;
       preferences[this.props.courseNum].course=value;
-      preferences[this.props.courseNum].courseId=NameToIdMapping[value];
+      preferences[this.props.courseNum].courseId=courseValueToIdMapping[value];
       optionsFilled=preferences;
       this.setState({preferenceFilled:preferences});
       if (this.state.preferenceFilled[this.props.courseNum].courseFilled===true){
