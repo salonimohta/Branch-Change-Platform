@@ -11,10 +11,10 @@ const studentName=localStorage.getItem('studentName');
 const admissionNo=localStorage.getItem('admissionNo');
 const currCourse=localStorage.getItem('course');
 const currBranch=localStorage.getItem('branch');
-const currCourseValue=currCourse.toLowerCase().includes("bachelor")?"BTech":currCourse.toLowerCase().includes("master")?"Int_MTech":"DualDegree";
-const currBranchValue=getKeyByValue(branchNameValueMapping,currBranch.toLowerCase());
+const currCourseValue=currCourse ? currCourse.toLowerCase().includes("bachelor")?"BTech":currCourse.toLowerCase().includes("master")?"Int_MTech":"DualDegree" : "";
+const currBranchValue=currBranch ? getKeyByValue(branchNameValueMapping,currBranch.toLowerCase()) : "";
 const currDept=localStorage.getItem('dept');
-const currDeptValue=getKeyByValue(deptNameValueMapping,currDept.toLowerCase());
+const currDeptValue=currDept ? getKeyByValue(deptNameValueMapping,currDept.toLowerCase()) : "";
 
 var BTechBranchesUsed=[];
 var DDBranchesUsed=[];

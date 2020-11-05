@@ -14,11 +14,27 @@ class Login extends React.Component{
           showMsg:false,
           loading:false,
           rememberMe:localStorage.getItem(`${this.props.type.toLowerCase()}rememberMe`) === 'true',
-          username: localStorage.getItem(`${this.props.type.toLowerCase()}rememberMe`) === 'true' ? localStorage.getItem(`${this.props.type.toLowerCase()}username`) : '' 
+          username: localStorage.getItem(`${this.props.type.toLowerCase()}rememberMe`) === 'true' ? localStorage.getItem(`${this.props.type.toLowerCase()}username`) : '',
+          userType: ''
         }     
         this.handleChange = this.handleChange.bind(this);
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
        }
+       
+      componentDidUpdate(prevProps) {
+        // Typical usage (don't forget to compare props):
+        if (this.props.type !== prevProps.type) {
+          this.setState({
+            error:'',
+            password:'',
+            showMsg:false,
+            loading:false,
+            rememberMe:localStorage.getItem(`${this.props.type.toLowerCase()}rememberMe`) === 'true',
+            username: localStorage.getItem(`${this.props.type.toLowerCase()}rememberMe`) === 'true' ? localStorage.getItem(`${this.props.type.toLowerCase()}username`) : '',
+            userType: this.props.type
+          });
+        }
+      }
         handleChange(evt){
           const input = evt.target;
           const value = input.type === 'checkbox' ? input.checked : input.value;
@@ -26,13 +42,10 @@ class Login extends React.Component{
       }
       onSubmitHandler(e){
           e.preventDefault();
-          //console.log(this.state);
           const { username, rememberMe } = this.state;
           localStorage.setItem(`${this.props.type.toLowerCase()}rememberMe`, rememberMe);
           localStorage.setItem(`${this.props.type.toLowerCase()}username`, rememberMe ? username : '');
           
-          //console.log(localStorage.getItem(`${this.props.type.toLowerCase()}username`));
-          //console.log(localStorage.getItem(`${this.props.type.toLowerCase()}rememberMe`));
           if(this.state.username === ''){
             this.setState({status:false,error:"Please Enter Username",showMsg:true});
             return false;
@@ -88,7 +101,6 @@ class Login extends React.Component{
     }
     render(){
         const username=this.props.username;
-        const userType=this.props.type;
         return(
             <div id="app">
     <section className="section">
@@ -97,7 +109,7 @@ class Login extends React.Component{
           <div className="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
             <div className="card card-primary">
               <div className="card-header">
-        <h4>Login as {userType}</h4>
+        <h4>Login as {this.state.userType}</h4>
               </div>
               {  this.props.error ?
        <div className= {this.props.error  ? "alert alert-danger" : "alert alert-success"} role="alert">
