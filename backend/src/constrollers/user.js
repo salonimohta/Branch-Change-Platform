@@ -300,6 +300,74 @@ module.exports.viewBranchApplication = async (req, res) => {
     }
 }
 
+
+module.exports.getResults = async (req, res) => {
+    try {
+        const studentBranchDetails = await StudentBranchDetails.findAll({
+            where: {
+                admn_no: req.user.id
+            },
+            order: [['timestamp', 'DESC']]
+        })
+        if (studentBranchDetails.length < 2) {
+            return res.status(404).send({error: "Result has not been declared or you might not have been allotted any new branch"})
+        }
+        let result = {
+            admn_no: req.user.id,
+            // offeredBranch: studentBranchDetails[0].current_branch_id,
+            // previousBranch: studentBranchDetails[1].current_branch_id,
+            // offeredDepartment: studentBranchDetails[0].current_dept_id,
+            // previousDepartment: studentBranchDetails[1].current_dept_id,
+            // offeredCourse: studentBranchDetails[0].current_course_id,
+            // previousCourse: studentBranchDetails[0].current_course_id
+        }
+        result.offeredBranch = await BranchDetails.findOne({
+            where: {
+                id: studentBranchDetails[0].current_branch_id
+            }
+        })
+
+        result.previousBranch = await BranchDetails.findOne({
+            where: {
+                id: studentBranchDetails[1].current_branch_id
+            }
+        })
+
+        result.offeredDepartment = await DepartmentDetails.findOne({
+            where: {
+                id: studentBranchDetails[0].current_dept_id
+            }
+        })
+        result.previousDepartment = await DepartmentDetails.findOne({
+            where: {
+                id: studentBranchDetails[1].current_dept_id
+            }
+        })
+        result.offeredCourse = await Course.findOne({
+            where: {
+                id: studentBranchDetails[0].current_course_id
+            }
+        })
+        result.previousCourse = await Course.findOne({
+            where: {
+                id: studentBranchDetails[0].current_course_id
+            }
+        })
+        result.branchChangeApplication = await BranchChangeApplication.findAll({
+            where: {
+                cb_log_id: studentBranchDetails[1].id
+            }
+        })
+        res.send({result})
+    } catch (e) {
+        res.status(500).send({
+            error: e,
+            msg: e.toString()
+        })
+    }
+}
+
+
 module.exports.getSubmissionDeadline = async (req, res) => {
     try {
         // const isAdmin = await checkAdmin(req)

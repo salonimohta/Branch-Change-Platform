@@ -16,6 +16,8 @@ router.post('/users/submit-application', [auth, validate], controller.submitAppl
 router.get('/users/submission-deadline', auth, controller.getSubmissionDeadline)
 router.post('/users/submission-deadline', auth, controller.setSubmissionDeadline)
 router.post('/users/set-offered', auth, controller.setOffered)
+router.get('/users/get-results', auth, controller.getResults)
+
 // router.post('/users/submit-application', auth, controller.submitApplication)
 
 module.exports = router
