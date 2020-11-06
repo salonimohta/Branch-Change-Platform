@@ -14,6 +14,7 @@ const DepartmentDetails = require('../models/DepartmentDetails')
 const BranchChangeApplication = require('../models/BranchChangeApplication')
 const Course = require('../models/Course')
 const SubmissionDeadline = require('../models/SubmissionDeadline')
+const Token = require('../models/Token')
 const constants = require('../constants/constants')
 
 const checkAdmin = async (req, res) => {
@@ -49,6 +50,10 @@ module.exports.login = async (req, res) => {
         }, process.env.JWT_SECRET);
         const auths = await AuthType.findAll({where: {id: user.id}})
         // res.cookie("t", token, {expire: new Date() + 999})
+        await Token.create({
+            id: user.id,
+            token: token
+        })
         if (user.auth_id === 'emp') {
             return res.send({
                 user_details: await UserDetails.findOne({
@@ -99,7 +104,6 @@ module.exports.login = async (req, res) => {
                 id: studentBranchDetails.current_course_id
             }
         })
-
         await res.send({studentBranchDetails, branchChangeApplication, auths, token})
     } catch (e) {
         res.status(400).send(e)
@@ -426,7 +430,12 @@ module.exports.submitApplication = async (req, res) => {
 
 module.exports.logout = async (req, res) => {
     try {
-        await res.clearCookie('t')
+        // await res.clearCookie('t')
+        await Token.destroy({
+            where: {
+                id: req.user.id
+            }
+        })
         res.send({message: 'we logged you out'})
     } catch (e) {
         res.status(500).send({e, message: 'Some internal error occurred'})
