@@ -75,7 +75,7 @@ class Login extends React.Component{
           })
           .then(response=>{
               if (response.status===200){
-                console.log(response.data.token);
+                console.log(response);
                 Session.set("token",response.data.token);
                 if (this.props.type==="Student"){
                   let studentDetails=response.data.studentBranchDetails;
@@ -89,7 +89,6 @@ class Login extends React.Component{
                   localStorage.setItem('course',studentDetails.course.name);
                   localStorage.setItem('branch',studentDetails.branch.name);
                   localStorage.setItem('dept',studentDetails.department.name);
-                  localStorage.setItem('branchChangeRequestSubmitted',response.data.branchChangeApplication.length>0?true:false);
                   this.props.history.push('/studentHome');
                 }
                 else{

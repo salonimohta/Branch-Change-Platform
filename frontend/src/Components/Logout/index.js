@@ -22,6 +22,7 @@ export default function Logout() {
     };
   
     const logoutSession=()=>{
+      //console.log(Session.get('token'));
         axios({
             method: 'post',
             url: `${API}/users/logout`,

@@ -341,7 +341,7 @@ export default class ChangeRequestForm extends React.Component{
                     <div class="form-group row">
                       <label for="countCourse" class="col-sm-3 col-form-label">No of courses opted</label>
                       <div class="col-sm-9">
-                        <input type="number" class="form-control-sm" id="countCourse" min="1" max="5" onChange={this.handleChange} />
+                        <input type="number" class="form-control-sm" id="countCourse" min="1" max="5" onChange={this.handleChange} placeholder="1" />
                       </div>
                     </div>
                   <div class="card-footer">

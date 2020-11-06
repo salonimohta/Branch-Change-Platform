@@ -7,26 +7,39 @@ import Session from 'react-session-api'
 export default class StudentHome extends React.Component{
     constructor(){
         super();
+        this.state={
+            errorMsg: '',
+            error: false,
+            branchChangeRequestSubmitted: false,
+            branchChangeApplication: []
+        }
         this.requestBranchChange=this.requestBranchChange.bind(this);
         this.viewRequest=this.viewRequest.bind(this);
     }
     requestBranchChange=()=>{
         this.props.history.push('/branchChangeRequest');
     }
-    viewRequest=()=>{
+    componentDidMount(){
         axios({
             method: 'get',
             url: `${API}/users/view-branch-application`,
             headers: {
               Accepts:'application/json',
               "Content-Type":"application/json",
-              Authorization: 'Bearer '+Session.get('token')
+              Authentication: 'Bearer '+Session.get('token')
              }
           })
           .then(response=>{
-              console.log(response);
-          })
-          .catch(error => alert(error))
+              if (response.data.completeBranchChangeApplications.length>0){
+                  this.setState({branchChangeRequestSubmitted: true,branchChangeApplication: response.data.completeBranchChangeApplications});
+                }
+                else{
+                    this.setState({branchChangeRequestSubmitted: false,branchChangeApplication: []});
+                }
+          }) 
+    }
+    viewRequest=()=>{
+        
     }
     render(){
         const imagePath=localStorage.getItem('imagePath');
@@ -34,7 +47,6 @@ export default class StudentHome extends React.Component{
         const admissionNo=localStorage.getItem('admissionNo');
         const course=localStorage.getItem('course');
         const branch=localStorage.getItem('branch');
-        const branchChangeRequestSubmitted=localStorage.getItem('branchChangeRequestSubmitted')==='true';
         return(
             <div>
             <div className="box1">
@@ -50,7 +62,7 @@ export default class StudentHome extends React.Component{
                 </div>
                 </div>
             </div><br/><br></br>
-            {branchChangeRequestSubmitted ? 
+            {this.state.branchChangeRequestSubmitted ? 
             <div className="buttonSpace">
             <div>
             <button type="submit" class="btn btn-lg btn-primary" onClick={this.viewRequest}>
