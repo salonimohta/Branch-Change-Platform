@@ -11,6 +11,7 @@ const jwtKey = "branchque"
 const branch_allocator_admin = "ism_admin"
 const submission_deadline_database = "submission_deadline"
 // const student_branch_change_option_priority_database = "branch_priority"
+const token_database = 'token'
 
 module.exports = {
     secretKey,
@@ -24,8 +25,10 @@ module.exports = {
     user_auth_types_database,
     user_details_database,
     branch_allocator_admin,
-    submission_deadline_database
+    submission_deadline_database,
+    token_database
     // student_branch_change_option_priority_database
+
 }
 
 // @bhijeet@ - earlier used key
