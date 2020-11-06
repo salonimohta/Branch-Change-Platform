@@ -433,7 +433,7 @@ module.exports.logout = async (req, res) => {
         // await res.clearCookie('t')
         await Token.destroy({
             where: {
-                id: req.user.id
+                token: req.token
             }
         })
         res.send({message: 'we logged you out'})
