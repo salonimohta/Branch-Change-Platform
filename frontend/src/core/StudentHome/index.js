@@ -31,13 +31,17 @@ export default class StudentHome extends React.Component{
           })
           .then(response=>{
               console.log(response);
+              if (response.status===200){
               if (response.data.completeBranchChangeApplications.length>0){
                   this.setState({branchChangeRequestSubmitted: true,branchChangeApplication: response.data.completeBranchChangeApplications});
                 }
                 else{
                     this.setState({branchChangeRequestSubmitted: false,branchChangeApplication: []});
                 }
+            }
+            else alert('We could not fetch the branch application!');
           }) 
+          .catch(error => alert(error))
     }
     render(){
         const imagePath=localStorage.getItem('imagePath');

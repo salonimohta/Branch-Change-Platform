@@ -16,6 +16,26 @@ export default class AdminHome extends React.Component{
         };
         this.changeState=this.changeState.bind(this);
     }
+    componentDidMount(){
+        axios({
+            method: 'get',
+            url: `${API}/users/submission-deadline`,
+            headers: {
+              Accepts:'application/json',
+              "Content-Type":"application/json",
+              Authorization: 'Bearer '+Session.get('token')
+             }
+        })
+        .then(response=>{
+            if (response.status===200){
+                let currDate=new Date();
+                let submissionDate=response.data.deadline;
+                if (currDate>submissionDate) this.setState({resultDatePassed:true});
+                else this.setState({resultDatePassed:false});
+            }
+        })
+        .catch(error => alert(error))
+    }
     changeState=(key)=>{
         this.setState({TabSelected:true,currentTab:key});
         
