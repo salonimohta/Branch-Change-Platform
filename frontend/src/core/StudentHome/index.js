@@ -1,14 +1,32 @@
 import React from 'react'
 import './index.css'
-import {Link} from 'react-router-dom'
+import axios from "axios"
+import {API} from '../../config'
+import Session from 'react-session-api'
 
 export default class StudentHome extends React.Component{
     constructor(){
         super();
         this.requestBranchChange=this.requestBranchChange.bind(this);
+        this.viewRequest=this.viewRequest.bind(this);
     }
     requestBranchChange=()=>{
         this.props.history.push('/branchChangeRequest');
+    }
+    viewRequest=()=>{
+        axios({
+            method: 'get',
+            url: `${API}/users/view-branch-application`,
+            headers: {
+              Accepts:'application/json',
+              "Content-Type":"application/json",
+              Authorization: 'Bearer '+Session.get('token')
+             }
+          })
+          .then(response=>{
+              console.log(response);
+          })
+          .catch(error => alert(error))
     }
     render(){
         const imagePath=localStorage.getItem('imagePath');
@@ -35,7 +53,7 @@ export default class StudentHome extends React.Component{
             {branchChangeRequestSubmitted ? 
             <div className="buttonSpace">
             <div>
-            <button type="submit" class="btn btn-lg btn-primary">
+            <button type="submit" class="btn btn-lg btn-primary" onClick={this.viewRequest}>
                 View Request
             </button>
             </div><br/>

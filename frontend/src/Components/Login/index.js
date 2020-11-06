@@ -13,12 +13,28 @@ class Login extends React.Component{
           password:'',
           showMsg:false,
           loading:false,
-          rememberMe:localStorage.getItem('rememberMe') === 'true',
-          username: localStorage.getItem('rememberMe') === 'true' ? localStorage.getItem('username') : '' 
+          rememberMe:localStorage.getItem(`${this.props.type.toLowerCase()}rememberMe`) === 'true',
+          username: localStorage.getItem(`${this.props.type.toLowerCase()}rememberMe`) === 'true' ? localStorage.getItem(`${this.props.type.toLowerCase()}username`) : '',
+          userType: ''
         }     
         this.handleChange = this.handleChange.bind(this);
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
        }
+       
+      componentDidUpdate(prevProps) {
+        // Typical usage (don't forget to compare props):
+        if (this.props.type !== prevProps.type) {
+          this.setState({
+            error:'',
+            password:'',
+            showMsg:false,
+            loading:false,
+            rememberMe:localStorage.getItem(`${this.props.type.toLowerCase()}rememberMe`) === 'true',
+            username: localStorage.getItem(`${this.props.type.toLowerCase()}rememberMe`) === 'true' ? localStorage.getItem(`${this.props.type.toLowerCase()}username`) : '',
+            userType: this.props.type
+          });
+        }
+      }
         handleChange(evt){
           const input = evt.target;
           const value = input.type === 'checkbox' ? input.checked : input.value;
@@ -26,12 +42,10 @@ class Login extends React.Component{
       }
       onSubmitHandler(e){
           e.preventDefault();
-          console.log(this.state);
           const { username, rememberMe } = this.state;
-          localStorage.setItem('rememberMe', rememberMe);
-          localStorage.setItem('username', rememberMe ? username : '');
-          console.log(localStorage.getItem('username'));
-          console.log(localStorage.getItem('rememberMe'));
+          localStorage.setItem(`${this.props.type.toLowerCase()}rememberMe`, rememberMe);
+          localStorage.setItem(`${this.props.type.toLowerCase()}username`, rememberMe ? username : '');
+          
           if(this.state.username === ''){
             this.setState({status:false,error:"Please Enter Username",showMsg:true});
             return false;
@@ -61,6 +75,8 @@ class Login extends React.Component{
           })
           .then(response=>{
               if (response.status===200){
+                console.log(response.data.token);
+                Session.set("token",response.data.token);
                 if (this.props.type==="Student"){
                   let studentDetails=response.data.studentBranchDetails;
                   let studentName=studentDetails.user_detail.first_name;
@@ -72,7 +88,8 @@ class Login extends React.Component{
                   localStorage.setItem('imagePath',studentDetails.user_detail.photopath);
                   localStorage.setItem('course',studentDetails.course.name);
                   localStorage.setItem('branch',studentDetails.branch.name);
-                  localStorage.setItem('branchChangeRequestSubmitted',response.data.branchChangeApplications?false:true);
+                  localStorage.setItem('dept',studentDetails.department.name);
+                  localStorage.setItem('branchChangeRequestSubmitted',response.data.branchChangeApplication.length>0?true:false);
                   this.props.history.push('/studentHome');
                 }
                 else{
@@ -81,11 +98,15 @@ class Login extends React.Component{
               }
               else alert('Please Enter correct Credentials!');
           })
+          /*.catch(error => console.error(error),
+               this.setState({status:false,error:'Something went wrong',showMsg:true})
+          )*/
+          .catch(error => alert(error))
+
 
     }
     render(){
         const username=this.props.username;
-        const userType=this.props.type;
         return(
             <div id="app">
     <section className="section">
@@ -94,11 +115,11 @@ class Login extends React.Component{
           <div className="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
             <div className="card card-primary">
               <div className="card-header">
-        <h4>Login as {userType}</h4>
+        <h4>Login as {this.state.userType}</h4>
               </div>
-              {  this.props.error ?
-       <div className= {this.props.error  ? "alert alert-danger" : "alert alert-success"} role="alert">
-       <i className="fa fa-frown-o mr-2" aria-hidden="true"></i>{this.props.error}</div>
+              {  this.state.error ?
+       <div className= {this.state.error  ? "alert alert-danger" : "alert alert-success"} role="alert">
+       <i className="fa fa-frown-o mr-2" aria-hidden="true"></i>{this.state.error}</div>
        :
        <div></div>
 

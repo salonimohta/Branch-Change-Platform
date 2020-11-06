@@ -1,0 +1,17 @@
+.modal {
+    display: block;
+    position: fixed;
+    z-index: 100;
+    top: 70%;
+    left: 55%;
+    transform: translate(-50%,-50%);
+    width: 70%;
+  }
+
+  .closePopUp{
+    margin-left: 84%;
+  }
+
+  .popupLabel{
+    color: red;
+  }

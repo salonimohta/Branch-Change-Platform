@@ -10,8 +10,11 @@ export default class LoginPage extends React.Component{
      };
      this.handleSelect=this.handleSelect.bind(this);
    }
+   /*componentDidMount(){
+     localStorage.clear();
+     sessionStorage.clear();
+   }*/
    handleSelect(type){
-     console.log(type);
      this.setState({activeTab:type});
    }
     render(){
@@ -45,7 +48,7 @@ export default class LoginPage extends React.Component{
                       </li>
                     </ul>
                     <div class="tab-content" id="myTabContent2">
-                        {this.state.activeTab==="student" ? <Login username="Admission No." type="Student" /> : <Login username="Email" type="Admin" />}
+                        {this.state.activeTab==="student" ? <Login username="Admission No." type="Student" /> : <Login username="User Id" type="Admin" />}
                     </div>
                   </div>
                   </div>
