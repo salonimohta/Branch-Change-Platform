@@ -86,8 +86,8 @@ export default class CheckStatus extends React.Component{
           let applications=response.data.branchChangeApplications.filter(this.getStudentApplications);
           this.setState({branchChangeApplications:applications});
           console.log(applications);
-      });
-      .catch(error => alert(error))
+      })
+      .catch(error => alert(error));
 
     }
     render(){
