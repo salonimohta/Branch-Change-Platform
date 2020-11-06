@@ -7,10 +7,11 @@ const constants = require('../constants/constants')
 const Token = sequelize.define(constants.token_database, {
     id: {
         type: DataTypes.STRING,
-        primaryKey: true
     },
     token: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        primaryKey: true
+
     }
 }, {
     timestamps: false
