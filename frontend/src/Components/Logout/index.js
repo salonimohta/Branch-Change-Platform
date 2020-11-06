@@ -12,8 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Logout() {
-
+export default function Logout(){
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
   
@@ -29,13 +28,12 @@ export default function Logout() {
             headers: {
               Accepts:'application/json',
               "Content-Type":"application/json",
-              Authentication: 'Bearer '+Session.get('token')
+              Authorization: 'Bearer '+Session.get('token')
              },
           })
           .then(response=>{
               if (response.status===200){
-                  Session.clear();
-                  localStorage.clear();
+
                   this.props.history.push('/');
                   this.props.history[0]=this.props.history[this.props.history.length-1];
                   this.props.history.length=1;

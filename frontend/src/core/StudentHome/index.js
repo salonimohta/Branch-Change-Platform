@@ -3,6 +3,7 @@ import './index.css'
 import axios from "axios"
 import {API} from '../../config'
 import Session from 'react-session-api'
+import viewRequestGeneratePDF from './../../Components/viewRequestPDFGenerator'
 
 export default class StudentHome extends React.Component{
     constructor(){
@@ -14,7 +15,6 @@ export default class StudentHome extends React.Component{
             branchChangeApplication: []
         }
         this.requestBranchChange=this.requestBranchChange.bind(this);
-        this.viewRequest=this.viewRequest.bind(this);
     }
     requestBranchChange=()=>{
         this.props.history.push('/branchChangeRequest');
@@ -26,10 +26,11 @@ export default class StudentHome extends React.Component{
             headers: {
               Accepts:'application/json',
               "Content-Type":"application/json",
-              Authentication: 'Bearer '+Session.get('token')
+              Authorization: 'Bearer '+Session.get('token')
              }
           })
           .then(response=>{
+              console.log(response);
               if (response.data.completeBranchChangeApplications.length>0){
                   this.setState({branchChangeRequestSubmitted: true,branchChangeApplication: response.data.completeBranchChangeApplications});
                 }
@@ -37,9 +38,6 @@ export default class StudentHome extends React.Component{
                     this.setState({branchChangeRequestSubmitted: false,branchChangeApplication: []});
                 }
           }) 
-    }
-    viewRequest=()=>{
-        
     }
     render(){
         const imagePath=localStorage.getItem('imagePath');
@@ -65,7 +63,7 @@ export default class StudentHome extends React.Component{
             {this.state.branchChangeRequestSubmitted ? 
             <div className="buttonSpace">
             <div>
-            <button type="submit" class="btn btn-lg btn-primary" onClick={this.viewRequest}>
+            <button type="submit" class="btn btn-lg btn-primary" onClick={()=>viewRequestGeneratePDF(this.state.branchChangeApplication)}>
                 View Request
             </button>
             </div><br/>
