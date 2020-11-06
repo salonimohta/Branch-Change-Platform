@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Logout() {
+
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
   
@@ -29,9 +30,6 @@ export default function Logout() {
               "Content-Type":"application/json",
               Authentication: 'Bearer '+Session.get('token')
              },
-            data: {
-               username: this.state.username
-              }
           })
           .then(response=>{
               if (response.status===200){
@@ -43,6 +41,7 @@ export default function Logout() {
               }
               else alert('We could not log you out due to some internal error!');
           })
+          .catch(error => alert(error))
     
     }
   
@@ -55,7 +54,6 @@ export default function Logout() {
   
     return (
       <div>
-        {/*<a aria-describedby={id} variant="contained" color="primary" onClick={handleClick}>*/}
         <a href="#" aria-describedby={id} onClick={handleClick}><i class="fa fa-user-circle fa-3x" /></a>
         <Popover
           id={id}

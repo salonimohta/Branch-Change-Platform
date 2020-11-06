@@ -98,6 +98,11 @@ class Login extends React.Component{
               }
               else alert('Please Enter correct Credentials!');
           })
+          /*.catch(error => console.error(error),
+               this.setState({status:false,error:'Something went wrong',showMsg:true})
+          )*/
+          .catch(error => alert(error))
+
 
     }
     render(){
@@ -112,9 +117,9 @@ class Login extends React.Component{
               <div className="card-header">
         <h4>Login as {this.state.userType}</h4>
               </div>
-              {  this.props.error ?
-       <div className= {this.props.error  ? "alert alert-danger" : "alert alert-success"} role="alert">
-       <i className="fa fa-frown-o mr-2" aria-hidden="true"></i>{this.props.error}</div>
+              {  this.state.error ?
+       <div className= {this.state.error  ? "alert alert-danger" : "alert alert-success"} role="alert">
+       <i className="fa fa-frown-o mr-2" aria-hidden="true"></i>{this.state.error}</div>
        :
        <div></div>
 

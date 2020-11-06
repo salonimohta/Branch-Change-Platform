@@ -218,6 +218,8 @@ export default class ChangeRequestForm extends React.Component{
         .then(response=>{
           console.log(response);
         })
+        .catch(error => alert(error))
+
       }
     }
     removePreference=()=>{

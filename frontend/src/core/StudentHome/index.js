@@ -26,6 +26,7 @@ export default class StudentHome extends React.Component{
           .then(response=>{
               console.log(response);
           })
+          .catch(error => alert(error))
     }
     render(){
         const imagePath=localStorage.getItem('imagePath');
