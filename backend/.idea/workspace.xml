@@ -19,10 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9b5b8813-b208-4f05-961c-caaddfadf164" name="Default Changelist" comment="Multiple device login bug resolved">
+    <list default="true" id="9b5b8813-b208-4f05-961c-caaddfadf164" name="Default Changelist" comment="get student results">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/constrollers/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/constrollers/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/user.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +71,7 @@
       <workItem from="1604314931760" duration="5945000" />
       <workItem from="1604410573851" duration="12104000" />
       <workItem from="1604498312333" duration="4473000" />
-      <workItem from="1604656329011" duration="5085000" />
+      <workItem from="1604656329011" duration="8941000" />
     </task>
     <task id="LOCAL-00001" summary="Logout route and authorization middleware added">
       <created>1603467998179</created>
@@ -137,7 +136,14 @@
       <option name="project" value="LOCAL" />
       <updated>1604659572849</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="get student results">
+      <created>1604677059077</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1604677059077</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -165,17 +171,18 @@
     <MESSAGE value="view-all-applications sends grouped data" />
     <MESSAGE value="Logout bug cleared" />
     <MESSAGE value="Multiple device login bug resolved" />
-    <option name="LAST_COMMIT_MESSAGE" value="Multiple device login bug resolved" />
+    <MESSAGE value="get student results" />
+    <option name="LAST_COMMIT_MESSAGE" value="get student results" />
   </component>
   <component name="WindowStateProjectService">
     <state x="688" y="222" key="RollbackChangesDialog" timestamp="1604320595695">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="688" y="222" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604320595695" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1604659610953">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1604677069373">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1604659610953" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1604677069373" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1603467034509">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
