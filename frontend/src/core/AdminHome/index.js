@@ -5,6 +5,9 @@ import CheckStatus from './../../Components/CheckStatus'
 import BranchChangeResult from './../../Components/BranchChangeResult'
 import Dashboard from '../../Components/Dashboard'
 import ChangeDatesAdmin from '../../Components/ChangeDatesAdmin'
+import axios from "axios"
+import {API} from '../../config'
+import Session from 'react-session-api'
 
 export default class AdminHome extends React.Component{
     constructor(){
@@ -12,33 +15,58 @@ export default class AdminHome extends React.Component{
         this.state={
             TabSelected: false,
             resultDatePassed: true,
-            currentTab: "zero"
+            currentTab: "zero",
+            branchChangeApplications: [],
+            results: []
         };
         this.changeState=this.changeState.bind(this);
+        this.getStudentApplications=this.getStudentApplications.bind(this);
     }
     componentDidMount(){
-        axios({
-            method: 'get',
-            url: `${API}/users/submission-deadline`,
-            headers: {
-              Accepts:'application/json',
-              "Content-Type":"application/json",
-              Authorization: 'Bearer '+Session.get('token')
-             }
-        })
-        .then(response=>{
-            if (response.status===200){
-                let currDate=new Date();
-                let submissionDate=response.data.deadline;
-                if (currDate>submissionDate) this.setState({resultDatePassed:true});
-                else this.setState({resultDatePassed:false});
-            }
-        })
-        .catch(error => alert(error))
-    }
-    changeState=(key)=>{
-        this.setState({TabSelected:true,currentTab:key});
         
+    }
+    getStudentApplications=(application)=>{
+        return application.currentDetails;
+      }
+    changeState=(key)=>{
+        Session.set('token',localStorage.getItem('token'));
+        if (key==="first"){
+            axios({
+                method: 'get',
+                url: `${API}/users/view-all-branch-applications`,
+                headers: {
+                Accepts:'application/json',
+                "Content-Type":"application/json",
+                Authorization: 'Bearer ' +Session.get('token')
+                }
+            })
+            .then(response=>{
+                let applications=response.data.branchChangeApplications.filter(this.getStudentApplications);
+                this.setState({branchChangeApplications:applications});
+                //console.log(applications);
+            })
+            .catch(error => alert(error));
+        }
+        else if (key==="third"){
+            axios({
+                method: 'get',
+                url: `${API}/users/get-results`,
+                headers: {
+                  Accepts:'application/json',
+                  "Content-Type":"application/json",
+                  Authorization: 'Bearer ' +Session.get('token')
+                 }
+              })
+              .then(response=>{
+                  if (response.status===200){
+                    console.log(response);
+                    this.setState({results:response.data.results});
+                  }
+                  else alert('Something went wrong!');
+              })
+              .catch(error=>alert(error));
+        }
+        this.setState({TabSelected:true,currentTab:key});
     };
     render(){
         return(
@@ -79,7 +107,7 @@ export default class AdminHome extends React.Component{
                             : null }
                         {this.state.currentTab==="first"?    
                             <div>
-                            <CheckStatus />
+                            <CheckStatus branchChangeApplications={this.state.branchChangeApplications} />
                             </div>
                             : null }
                         
@@ -97,7 +125,7 @@ export default class AdminHome extends React.Component{
                             ? 
                             <div>
                                 <h2>Result for year 20xx-xx</h2>
-                                <BranchChangeResult />
+                                <BranchChangeResult results={this.state.results} />
                             </div> 
                             : "The result has not been declared yet!"
                             : null }

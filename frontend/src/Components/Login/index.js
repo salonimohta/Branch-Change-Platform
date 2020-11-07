@@ -76,6 +76,7 @@ class Login extends React.Component{
           .then(response=>{
               if (response.status===200){
                 console.log(response);
+                localStorage.setItem('token',response.data.token);
                 Session.set("token",response.data.token);
                 if (this.props.type==="Student"){
                   let studentDetails=response.data.studentBranchDetails;

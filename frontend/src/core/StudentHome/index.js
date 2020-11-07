@@ -3,7 +3,7 @@ import './index.css'
 import axios from "axios"
 import {API} from '../../config'
 import Session from 'react-session-api'
-import viewRequestGeneratePDF from './../../Components/viewRequestPDFGenerator'
+import {viewRequestGeneratePDF} from './../../Components/viewRequestPDFGenerator'
 
 export default class StudentHome extends React.Component{
     constructor(){
@@ -20,6 +20,7 @@ export default class StudentHome extends React.Component{
         this.props.history.push('/branchChangeRequest');
     }
     componentDidMount(){
+        Session.set('token',localStorage.getItem('token'));
         axios({
             method: 'get',
             url: `${API}/users/view-branch-application`,

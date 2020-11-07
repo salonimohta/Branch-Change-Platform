@@ -2,9 +2,7 @@ import React from 'react';
 import {Button} from 'react-bootstrap';
 import Select from 'react-select'
 import PopUp from './../PopUp';
-import axios from "axios"
-import {API} from '../../config'
-import Session from 'react-session-api'
+
 
 class DataRow extends React.Component{
   constructor(){
@@ -59,38 +57,18 @@ export default class CheckStatus extends React.Component{
       this.state = {
         seen: false,
         admNo: '',
-        branchChangeApplications: [],
         displayApplication: {}
       };
-      this.getStudentApplications=this.getStudentApplications.bind(this);
     }
     togglePop=(admNo)=>{
-      let currentApplication=this.state.branchChangeApplications.filter((application)=>application.currentDetails.admn_no===admNo);
+      let currentApplication=this.props.branchChangeApplications.filter((application)=>application.currentDetails.admn_no===admNo);
       this.setState({seen:!this.state.seen,admNo:admNo,displayApplication:currentApplication[0]});
-    }
-    getStudentApplications=(application)=>{
-      return application.currentDetails;
     }
     componentDidMount(){
       //api request to view all submissions
-      axios({
-        method: 'get',
-        url: `${API}/users/view-all-branch-applications`,
-        headers: {
-          Accepts:'application/json',
-          "Content-Type":"application/json",
-          Authorization: 'Bearer ' +Session.get('token')
-         }
-      })
-      .then(response=>{
-          let applications=response.data.branchChangeApplications.filter(this.getStudentApplications);
-          this.setState({branchChangeApplications:applications});
-          console.log(applications);
-      })
-      .catch(error => alert(error));
-
     }
     render(){
+      console.log(this.props.branchChangeApplications);
         return(
             <div class="card">
                   <div class="card-header">
@@ -108,7 +86,7 @@ export default class CheckStatus extends React.Component{
                             </th><th class="sorting" tabindex="0" aria-controls="table-1" rowspan="1" colspan="1" aria-label="Task Name: activate to sort column ascending" style={{width: "147px;"}}>Admission No.</th><th class="sorting" tabindex="0" aria-controls="table-1" rowspan="1" colspan="1" aria-label="Due Date: activate to sort column ascending" style={{width: "90px;"}}>Date Submitted</th><th class="sorting_desc" tabindex="0" aria-controls="table-1" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style={{width: "108px;"}} aria-sort="descending">Status</th><th class="sorting" tabindex="0" aria-controls="table-1" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending" style={{width: "75px;"}}>Action</th></tr>
                         </thead>
                         <tbody>
-                          {this.state.branchChangeApplications.map((application,index)=>{
+                          {this.props.branchChangeApplications.map((application,index)=>{
                               return (<DataRow number={index+1} admNo={application.currentDetails.admn_no} dateSubmitted={application.currentDetails.timestamp} status={application.approvedFlag} togglePop={this.togglePop.bind(this)} />);
                           })}
                         </tbody>

@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import {API} from '../../config'
 import Session from 'react-session-api'
 import axios from "axios"
+import {browserHistory, Redirect} from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
   typography: {
@@ -21,7 +22,8 @@ export default function Logout(){
     };
   
     const logoutSession=()=>{
-      //console.log(Session.get('token'));
+        Session.set('token',localStorage.getItem('token'));
+        console.log(Session.get('token'));
         axios({
             method: 'post',
             url: `${API}/users/logout`,
@@ -33,10 +35,8 @@ export default function Logout(){
           })
           .then(response=>{
               if (response.status===200){
-
-                  this.props.history.push('/');
-                  this.props.history[0]=this.props.history[this.props.history.length-1];
-                  this.props.history.length=1;
+                console.log(response);
+                return (<Redirect to="/" />);    
               }
               else alert('We could not log you out due to some internal error!');
           })
