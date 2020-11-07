@@ -202,6 +202,7 @@ export default class ChangeRequestForm extends React.Component{
         for (var item in optionsFilled){
           options.push({dept_id:optionsFilled[item].deptId,branch_id:optionsFilled[item].branchId,course_id:optionsFilled[item].courseId});
         }
+        Session.set('token',localStorage.getItem('token'));
       axios({
         method: 'post',
         url: `${API}/users/submit-application`,

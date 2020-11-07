@@ -23,7 +23,6 @@ export default function Logout(){
   
     const logoutSession=()=>{
         Session.set('token',localStorage.getItem('token'));
-        console.log(Session.get('token'));
         axios({
             method: 'post',
             url: `${API}/users/logout`,
