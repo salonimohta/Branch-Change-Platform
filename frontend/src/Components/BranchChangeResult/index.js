@@ -3,6 +3,8 @@ import './index.css';
 import {generateStudentPDF} from './../viewRequestPDFGenerator';
 import exportToCSV from './../excelGenerator';
 
+
+/* This component is used in the AdminHome page under the Download Result tab, the api response of the results is passed as props here */
 export default class BranchChangeResult extends React.Component{
   constructor(props){
     super(props);
@@ -10,6 +12,8 @@ export default class BranchChangeResult extends React.Component{
       csvData: []
     };
   }
+  /* With change in props passed to the component, BranchChangeResult component updates it's state which is a temporary storage 
+  for the csv data to be downloaded when the download button is selected */
   componentDidUpdate(prevProps){
     if (this.props.results!==prevProps.results){
     let csvdata=[];
@@ -40,6 +44,7 @@ export default class BranchChangeResult extends React.Component{
                         </tr>
                       </thead>
                       <tbody>
+                        {/* The detail button here generates a pdf of the details of the student's current and previous branches after branch change */}
                         {this.props.results.map((result,index)=>{
                           return(
                           <tr>
