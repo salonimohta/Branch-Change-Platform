@@ -5,6 +5,14 @@ import axios from "axios"
 import {API} from '../../config'
 import Session from 'react-session-api'
 
+/* The PopUp component comes up when the admin presses detail button along a student's application,
+  the details of the student, that is admission no, current branch, dept, course and gpa and session is 
+  displayed, along with the preferences the student has opted for in his/her application
+  in the form of checkboxes out of which only one can be selected by the Admin, to approve the request.
+  Two buttons Approve and Decline are present in the popup, approve approves the request and makes the changes in 
+  database by calling the respective API, whereas Decline is non functional as of now
+*/
+
 export default class PopUp extends Component {
   constructor(props){
     super(props);
@@ -12,15 +20,19 @@ export default class PopUp extends Component {
     this.onlyOne=this.onlyOne.bind(this);
     this.approveRequest=this.approveRequest.bind(this);
   }
+  //handleClick method calls the function toggle present in parent class (CheckStatus)
   handleClick = () => {
     this.props.toggle();
   };
+  //onlyOne allows only option to be selected from all the options the student has specified
   onlyOne=(id)=>{
     var checkboxes = document.getElementsByName('check');
     checkboxes.forEach((item) => {  
       if (Number(item.id) !== id) item.checked = false;
     })
   };
+  /* approveRequest is called when the admin clicks on the Approve button, it sends a post request to the server 
+  about the request being approved */
   approveRequest=()=>{
     var checkboxes = document.getElementsByName('check');
     var checkboxOffered=null;
@@ -45,7 +57,7 @@ export default class PopUp extends Component {
   };
 
 render() {
-  console.log(this.props.applicationInfo);
+  //console.log(this.props.applicationInfo);
   const applications=this.props.applicationInfo.applications;
   const currCourseId=this.props.applicationInfo.currentDetails.current_course_id;
   const currBranch=this.props.applicationInfo.currentDetails.branchDetails.name;
