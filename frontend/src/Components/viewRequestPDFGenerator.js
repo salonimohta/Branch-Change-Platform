@@ -3,7 +3,7 @@ import "jspdf-autotable";
 import {getKeyByValue,courseValueToNameMapping,courseValueToIdMapping} from './../requiredData';
 
 
-// define a generatePDF function that accepts a tickets argument
+// define a generatePDF function that accepts a application argument
 export const viewRequestGeneratePDF = applications => {
   // initialize jsPDF
   const doc = new jsPDF();
@@ -13,7 +13,7 @@ export const viewRequestGeneratePDF = applications => {
   // define an empty array of rows
   const tableRows = [];
 
-  // for each ticket pass all its data into an array
+  // for each application pass all its data into an array
   applications.forEach((application,index) => {
     const applicationData = [
       index+1,
@@ -21,14 +21,14 @@ export const viewRequestGeneratePDF = applications => {
       application.branchDetails.name,
       application.departmentDetails.name
     ];
-    // push each tickcet's info into a row
+    // push each application's info into a row
     tableRows.push(applicationData);
   });
 
 
   // startY is basically margin-top
   doc.autoTable(tableColumn, tableRows, { startY: 20 });
-  // ticket title. and margin-top + margin-left
+  // pdf title. and margin-top + margin-left
   doc.text("Your Branch Preferences", 14, 15);
   const admissionNo=localStorage.getItem('admissionNo');
   // we define the name of our PDF file.
@@ -44,12 +44,8 @@ export const generateStudentPDF = detail => {
   // define an empty array of rows
   const tableRows = [];
 
-  // for each ticket pass all its data into an array
     const studentData = [
       detail.admn_no,
-      //courseValueToNameMapping[getKeyByValue(courseValueToIdMapping,application.branchChangeApplication.course_id)],
-      //application.branchDetails.name,
-      //application.departmentDetails.name
       detail.offeredCourse,
       detail.offeredBranch,
       detail.offeredDepartment,
@@ -63,7 +59,7 @@ export const generateStudentPDF = detail => {
 
   // startY is basically margin-top
   doc.autoTable(tableColumn, tableRows, { startY: 20 });
-  // ticket title. and margin-top + margin-left
+  // pdf title. and margin-top + margin-left
   doc.text("Student Result", 14, 15);
   const admissionNo=detail.admn_no;
   // we define the name of our PDF file.
