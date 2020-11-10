@@ -2,7 +2,7 @@ import React from 'react';
 import './index.css';
 import Logout from './../Logout'
 
-
+/* the Header is implemented as a flex box with row orientation */
 export default class Header extends React.Component{
 	render(){
         return (
