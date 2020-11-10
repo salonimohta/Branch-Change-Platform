@@ -5,8 +5,10 @@ import {API} from '../../config'
 import Session from 'react-session-api'
 import {courseValueToIdMapping,getKeyByValue,deptNameValueMapping,deptValuesDropdown,branchNameValueMapping,branchByCourseAndDeptCategory,branchValuesDropdown,deptByCourseCategory} from '../../requiredData';
 
+//a global variable to keep track of the options filled by the student till now
 var optionsFilled=[];
 
+//necessary constant variables for the form
 const studentName=localStorage.getItem('studentName');
 const admissionNo=localStorage.getItem('admissionNo');
 const currCourse=localStorage.getItem('course');
@@ -16,14 +18,22 @@ const currBranchValue=currBranch ? getKeyByValue(branchNameValueMapping,currBran
 const currDept=localStorage.getItem('dept');
 const currDeptValue=currDept ? getKeyByValue(deptNameValueMapping,currDept.toLowerCase()) : "";
 
+//variables to know which branches have been used so that they will not be allowed to be selected again if present in these arrays
 var BTechBranchesUsed=[];
 var DDBranchesUsed=[];
 var IntMTechBranchesUsed=[];
 
+//pushes current branch into the arrays, so that current branch will not be selected as any option in the form
 if (currCourseValue==="BTech") BTechBranchesUsed.push(currBranchValue);
 else if (currCourseValue==="DualDegree") DDBranchesUsed.push(currBranchValue);
 else if (currCourseValue==="Int_MTech") IntMTechBranchesUsed.push(currBranchValue);
 
+/*
+The Preference component is used to handle the selection of only those preferences which has not been filled earlier.
+For each such component, the dept and branch is disabled. 
+If the student fills the course, then the department is enabled to be filled, and when the department is filled,
+the branch is enabled to be filled 
+*/
 class Preference extends React.Component{
     constructor(props){
         super(props);
@@ -35,6 +45,7 @@ class Preference extends React.Component{
         this.changeDept=this.changeDept.bind(this);
         this.changeBranch=this.changeBranch.bind(this);
     };
+    //when the student selects a course
     changeCourse(event) {
       const value=event.target.value;
       let preferences=[...this.state.preferenceFilled];
@@ -43,6 +54,9 @@ class Preference extends React.Component{
       preferences[this.props.courseNum].courseId=courseValueToIdMapping[value];
       optionsFilled=preferences;
       this.setState({preferenceFilled:preferences});
+      /*here only those options will be appended to the array for department which belong to the course chosen
+        for eg, for BTech Computer science, electronics etc are displayed, but for dual degree only cse is displayed and so on
+      */
       if (this.state.preferenceFilled[this.props.courseNum].courseFilled===true){
         let courseName=this.state.preferenceFilled[this.props.courseNum].course;
         if (courseName.length===0) document.getElementById(`deptPref${this.props.courseNum}`).innerHTML = "<option></option>";
@@ -56,15 +70,20 @@ class Preference extends React.Component{
         }
     }
     }
+    //when the student selects a department
     changeDept(event){
       const value=event.target.value;
       let preferences=[...this.state.preferenceFilled]; 
       preferences[this.props.courseNum].deptFilled=true;
       preferences[this.props.courseNum].dept=value;
+      //m&c was not a valid key for the key-value objects defined in requiredData.js hence mnc is used
       if (value==="mnc") preferences[this.props.courseNum].deptId="m&c";
       else preferences[this.props.courseNum].deptId=value;
       optionsFilled=preferences; 
       this.setState({preferenceFilled:preferences}); 
+      /*here only those options will be appended to the array for branch which belong to the course and dept already filled, 
+      and also all those branches among these will be available to select which has not seen the combination of branch+course+dept earlier
+      */
       if (this.state.preferenceFilled[this.props.courseNum].courseFilled&&this.state.preferenceFilled[this.props.courseNum].deptFilled===true){
         let courseName=this.state.preferenceFilled[this.props.courseNum].course;
         let deptName=this.state.preferenceFilled[this.props.courseNum].dept;
@@ -84,6 +103,7 @@ class Preference extends React.Component{
         }
     } 
     }
+     //when the student selects a branch, the branch value is updated as per the index of the preference filled
     changeBranch(event){
       const value=event.target.value;
       if (this.props.number===this.state.preferenceFilled.length){
@@ -102,6 +122,7 @@ class Preference extends React.Component{
       else preferences[this.props.courseNum].branchId=value;
       optionsFilled=preferences;
       this.setState({preferenceFilled:preferences});
+      //after a preference is filled, the user is alerted of the same
       if (this.props.number===this.state.preferenceFilled.length){
         alert(`You have filled ${this.props.number} out of 5 choices!`);
       }
@@ -161,6 +182,9 @@ class Preference extends React.Component{
     }
 }
 
+/* ChangeRequestForm is the parent component of the Preference where the actual branch change form resides
+  Most of the values are readonly, and only the preferences have to be filled
+*/
 export default class ChangeRequestForm extends React.Component{
     constructor(){
         super();
@@ -205,6 +229,7 @@ export default class ChangeRequestForm extends React.Component{
       }
       else{
         let options=[];
+        //all the options as an array of objects are made and then sent to the post request
         for (var item in optionsFilled){
           options.push({dept_id:optionsFilled[item].deptId,branch_id:optionsFilled[item].branchId,course_id:optionsFilled[item].courseId});
         }
@@ -229,6 +254,7 @@ export default class ChangeRequestForm extends React.Component{
 
       }
     }
+    //removes the last preference filled, 1 preference is mandatory
     removePreference=()=>{
         let preferenceList=[...this.state.preferences];
         if (preferenceList.length===optionsFilled.length){
@@ -244,6 +270,7 @@ export default class ChangeRequestForm extends React.Component{
         preferenceList.pop();
         this.setState({preferences:preferenceList});
     }
+    //adds another preference, only upto 5 preferences
     addPreference=()=>{
         const num=this.state.preferences.length+1;
         this.setState({preferences: [...this.state.preferences,<Preference number={num} courseNum={num-1} />]});

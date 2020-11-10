@@ -1,5 +1,6 @@
 import React from 'react'
 
+/* the changeDatesAdmin allows the admin to reset dates for branch change application start and end */
 export default class ChangeDatesAdmin extends React.Component{
   constructor(props){
     super(props);
