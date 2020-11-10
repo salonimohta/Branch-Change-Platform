@@ -3,6 +3,8 @@ import StudentHome from './core/StudentHome'
 import AdminHome from  './core/AdminHome'
 import ChangeRequestForm from './Components/ChangeRequestForm'
 
+
+//Routes for all the pages are defined here
 const routes=[
     { path: '/', exact: true, name: 'Login' },
     { path: '/studentHome', name: 'StudentHome', component: StudentHome, exact: true },
