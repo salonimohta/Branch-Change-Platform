@@ -1,6 +1,5 @@
 import React from 'react'
-import './index.css'
-import {Redirect, withRouter} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 import axios from "axios"
 import {API} from '../../config'
 import Session from 'react-session-api'
