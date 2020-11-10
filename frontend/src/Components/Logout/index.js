@@ -5,16 +5,20 @@ import Typography from '@material-ui/core/Typography';
 import {API} from '../../config'
 import Session from 'react-session-api'
 import axios from "axios"
-import {browserHistory, Redirect} from 'react-router';
+import {Redirect} from 'react-router';
 
+//style for the popup
 const useStyles = makeStyles((theme) => ({
   typography: {
     padding: theme.spacing(2),
   },
 }));
 
+//Logout function allows the user to logout of the platform and redirects to the home page
+
 export default function Logout(){
     const classes = useStyles();
+    //anchorEl state specifies if the popup should be open or closed
     const [anchorEl, setAnchorEl] = React.useState(null);
   
     const handleClick = (event) => {
