@@ -29,6 +29,12 @@ export default class AdminHome extends React.Component{
         this.changeTab=this.changeTab.bind(this);
         this.getStudentApplications=this.getStudentApplications.bind(this);
     }
+    componentDidMount(){
+        if (!localStorage.getItem('token')){
+            alert('It seems like you are not logged in, Please log in first');
+            this.props.history.push('/');
+        }
+    }
     //this method returns only those applications which have a student associated with it
     getStudentApplications=(application)=>{
         return application.currentDetails;

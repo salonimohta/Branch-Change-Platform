@@ -177,6 +177,12 @@ export default class ChangeRequestForm extends React.Component{
         this.submitForm=this.submitForm.bind(this);
         this.handleChange=this.handleChange.bind(this);
     }
+    componentDidMount(){
+      if (!localStorage.getItem('token')){
+        alert('It seems like you are not logged in, Please log in first');
+        this.props.history.push('/');
+      }
+    }
     handleChange=(event)=>{
       this.setState({[event.target.id]: event.target.value})
     }

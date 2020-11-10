@@ -10,7 +10,7 @@ export default class ChangeDatesAdmin extends React.Component{
                   <div class="card-body">
                     <div class="form-group">
                       <label>Application Start Date </label>
-                      <input type="date" min="2001-01-01" max="2030-01-01" />
+                      <input type="date" min="2001-01-01" max="2030-01-01" onChange={(e)=>{console.log(e.target.value)}} />
                     </div>
                   </div>
                   <div class="card-body">

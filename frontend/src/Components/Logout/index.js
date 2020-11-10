@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import {API} from '../../config'
 import Session from 'react-session-api'
 import axios from "axios"
-import {Redirect} from 'react-router';
+import {useHistory} from 'react-router-dom';
 
 //style for the popup
 const useStyles = makeStyles((theme) => ({
@@ -14,9 +14,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-//Logout function allows the user to logout of the platform and redirects to the home page
+//Logout function allows the user to logout of the platform and redirects to the login page
 
-export default function Logout(){
+function Logout(){
+    let history=useHistory();
     const classes = useStyles();
     //anchorEl state specifies if the popup should be open or closed
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -39,10 +40,14 @@ export default function Logout(){
           .then(response=>{
               if (response.status===200){
                 console.log(response);
-                return (<Redirect to="/" />);    
+                localStorage.clear();
+                sessionStorage.clear();
+                history.push('/');
               }
-              else alert('We could not log you out due to some internal error!');
-          })
+              else{
+                alert('We could not log you out due to some internal error!');
+              }
+            })
           .catch(error => alert(error))
     
     }
@@ -76,4 +81,5 @@ export default function Logout(){
       </div>
     );
   }
+export default Logout;
   

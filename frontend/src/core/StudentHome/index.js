@@ -21,6 +21,10 @@ export default class StudentHome extends React.Component{
     /* Whenever the Student Home page is mounted, a get request is sent to the server to 
     update the status about the branch change request submission of the student */
     componentDidMount(){
+        if (!localStorage.getItem('token')){
+            alert('It seems like you are not logged in, Please log in first');
+            this.props.history.push('/');
+        }
         //Session token is set from localStorage because on refresh the Session gets cleared
         Session.set('token',localStorage.getItem('token'));
         axios({
