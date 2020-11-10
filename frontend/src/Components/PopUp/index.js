@@ -52,8 +52,12 @@ export default class PopUp extends Component {
         }
     })
     .then(response=>{
-      console.log(response);
+      if (response.status===200){
+        alert('The branch change request has been approved! Please refresh the page to load the changes');
+      }
+      else alert('There has been an error while processing your request! Try logging in again');
     })
+    .catch(error=>alert(error));
   };
 
 render() {
