@@ -14,11 +14,11 @@ const loading = ( <
         div class = "spinner-border"
         role = "status" >
         <
-        span class = "sr-only" > Please Wait, Loading... < /span> < /
-        div > <
-        /div>
+        span class = "sr-only" > Please Wait, Loading... </span > 
+        </div> 
+        </div>
     )
-    // Pages
+
 const Login = loadable(() =>
     import ('./core/Login'));
 class App extends Component {
