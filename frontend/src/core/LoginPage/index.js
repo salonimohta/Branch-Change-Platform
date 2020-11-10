@@ -2,6 +2,8 @@ import React from 'react'
 import './index.css'
 import Login from '../../Components/Login'
 
+/* Login Page along with basic css returns only one type of component called Login for both types of users */
+
 export default class LoginPage extends React.Component{
    constructor(){
      super();
@@ -10,9 +12,13 @@ export default class LoginPage extends React.Component{
      };
      this.handleSelect=this.handleSelect.bind(this);
    }
+   //This method is used to update the state of the tab as selected by the user, can be student or admin only
    handleSelect(type){
      this.setState({activeTab:type});
    }
+   /* ComponentDidMount() is used so that all the localStorage and sessionStorage is cleared and 
+   history props only contains the path of loginPage, this.props.history.length=1 is done, so that when the user 
+   logs out of the platform and is redirected here, the user cannot get back to the last page it visited before being redirected */
    componentDidMount(){
     this.props.history[0]=this.props.history[this.props.history.length-1];
     this.props.history.length=1;
