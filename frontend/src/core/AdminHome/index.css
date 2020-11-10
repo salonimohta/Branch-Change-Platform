@@ -1,3 +1,5 @@
+/* css for the student home page, media query is used so that the page becomes responsive */
+
 .tabContents{
     box-shadow: -2px 8px 22px 0 rgba(0,0,0,.15);
     height: 100%/*500px*/;

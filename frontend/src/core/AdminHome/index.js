@@ -9,6 +9,13 @@ import axios from "axios"
 import {API} from '../../config'
 import Session from 'react-session-api'
 
+/* The AdminHome component is divided into Tabs:
+    1. Change Dates (where Admin can give dates for when the Application will start and end)
+    2. Check Status (where Admin will check status of all the branch change requests received till now)
+    3. View Statistics (where Admin will be able to view a dashboard of the branch change results of this year)
+    4. Download Result (where Admin can see the result and also download it in excel format)
+*/
+
 export default class AdminHome extends React.Component{
     constructor(){
         super();
@@ -19,18 +26,18 @@ export default class AdminHome extends React.Component{
             branchChangeApplications: [],
             results: []
         };
-        this.changeState=this.changeState.bind(this);
+        this.changeTab=this.changeTab.bind(this);
         this.getStudentApplications=this.getStudentApplications.bind(this);
     }
-    componentDidMount(){
-        
-    }
+    //this method returns only those applications which have a student associated with it
     getStudentApplications=(application)=>{
         return application.currentDetails;
-      }
-    changeState=(key)=>{
+    }
+    /*this method is used when admin changes tab, each tab change demands some information from server
+    which is sent as a get request to the server based on the tab name */
+    changeTab=(key)=>{
         Session.set('token',localStorage.getItem('token'));
-        if (key==="first"){
+        if (key==="allApplications"){
             axios({
                 method: 'get',
                 url: `${API}/users/view-all-branch-applications`,
@@ -47,7 +54,7 @@ export default class AdminHome extends React.Component{
             })
             .catch(error => alert(error));
         }
-        else if (key==="third"){
+        else if (key==="results"){
             axios({
                 method: 'get',
                 url: `${API}/users/get-results`,
@@ -76,16 +83,16 @@ export default class AdminHome extends React.Component{
                     <Col sm={3}>
                     <Nav variant="pills" className="flex-column">
                         <Nav.Item>
-                        <Nav.Link eventKey="dateChange" className="navTab" onSelect={()=>this.changeState("dateChange")}>Change Date</Nav.Link>
+                        <Nav.Link eventKey="dateChange" className="navTab" onSelect={()=>this.changeTab("dateChange")}>Change Date</Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                        <Nav.Link eventKey="first" className="navTab" onSelect={()=>this.changeState("first")}>Check Status</Nav.Link>
+                        <Nav.Link eventKey="allApplications" className="navTab" onSelect={()=>this.changeTab("allApplications")}>Check Status</Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                        <Nav.Link eventKey="second" className="navTab" onSelect={()=>this.changeState("second")}>View Statistics</Nav.Link>
+                        <Nav.Link eventKey="dashboard" className="navTab" onSelect={()=>this.changeTab("dashboard")}>View Statistics</Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link eventKey="third" className="navTab" onSelect={()=>this.changeState("third")}>Download Result</Nav.Link>
+                            <Nav.Link eventKey="results" className="navTab" onSelect={()=>this.changeTab("results")}>Download Result</Nav.Link>
                         </Nav.Item>
                     </Nav>
                     </Col>
@@ -105,13 +112,13 @@ export default class AdminHome extends React.Component{
                             <ChangeDatesAdmin />
                             </div>
                             : null }
-                        {this.state.currentTab==="first"?    
+                        {this.state.currentTab==="allApplications"?    
                             <div>
                             <CheckStatus branchChangeApplications={this.state.branchChangeApplications} />
                             </div>
                             : null }
                         
-                        {this.state.currentTab==="second"?
+                        {this.state.currentTab==="dashboard"?
                             this.state.resultDatePassed
                             ?
                             <div> 
@@ -120,7 +127,7 @@ export default class AdminHome extends React.Component{
                             </div> 
                             : "The result statistics is not available!"
                             : null }
-                        {this.state.currentTab==="third"?
+                        {this.state.currentTab==="results"?
                             this.state.resultDatePassed
                             ? 
                             <div>
