@@ -1,9 +1,10 @@
 import React from 'react';
-import {Button} from 'react-bootstrap';
-import Select from 'react-select'
 import PopUp from './../PopUp';
 
-
+/* DataRow component is a child component of Check Status, it is responsible to disaply each row of the data table
+  with adequate information and style. The details button along each data row, if enabled shows a popup containing choices of
+  students from which admin will choose.
+*/
 class DataRow extends React.Component{
   constructor(){
     super();
@@ -12,11 +13,13 @@ class DataRow extends React.Component{
     };
     this.toggleWindow=this.toggleWindow.bind(this);
   }
+  //toggleWindow is responsible to send information to its parent component Check Status about the application whose Detail button is selected
     toggleWindow=()=>{
       this.setState({seen:!this.state.seen});
       this.props.togglePop(this.props.admNo);
     }
     render(){
+      //details of students for individual rows
         const RNo=this.props.number;
         const RAdmNo=this.props.admNo;
         const RDateSubmitted=this.props.dateSubmitted.split('T')[0].split('-').reverse().join('/');
@@ -51,6 +54,11 @@ class DataRow extends React.Component{
     }
 }
 
+/* the check status component is responsible for populating the data table with all the incoming branch change applications
+and even the ones which were approved/declined earlier. the branch change applications are passed down to check status as props 
+from its parent component adminHome 
+*/
+
 export default class CheckStatus extends React.Component{
     constructor(){
       super();
@@ -61,13 +69,19 @@ export default class CheckStatus extends React.Component{
         numOfEntries: 10,
         searchTerm: ''
       };
+      this.handleNumOfEntries=this.handleNumOfEntries.bind(this);
+      this.changeSearchValue=this.changeSearchValue.bind(this);
+      this.togglePop=this.togglePop.bind(this);
     }
+    //handles number of entries as updated in select
     handleNumOfEntries=(event)=>{
       this.setState({numOfEntries: event.target.value});
     }
+    //handles any change in search box by updating the search term state
     changeSearchValue=(event)=>{
       this.setState({searchTerm: event.target.value});
     }
+    //togglePop is responsible for displaying the pop up for the selected application whose details button is selected
     togglePop=(admNo)=>{
       let currentApplication=this.props.branchChangeApplications.filter((application)=>application.currentDetails.admn_no===admNo);
       this.setState({seen:!this.state.seen,admNo:admNo,displayApplication:currentApplication[0]});
