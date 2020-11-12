@@ -24,7 +24,9 @@ export default class AdminHome extends React.Component{
             resultDatePassed: true,
             currentTab: "zero",
             branchChangeApplications: [],
-            results: []
+            results: [],
+            endDate: '',
+            startDate: ''
         };
         this.changeTab=this.changeTab.bind(this);
         this.getStudentApplications=this.getStudentApplications.bind(this);
@@ -54,9 +56,36 @@ export default class AdminHome extends React.Component{
                 }
             })
             .then(response=>{
+                if (response.status===200){
                 let applications=response.data.branchChangeApplications.filter(this.getStudentApplications);
                 this.setState({branchChangeApplications:applications});
-                //console.log(applications);
+                }
+                else{
+                    alert('There is some error, Please log back in!');
+                    this.props.history.push('/');
+                }
+            })
+            .catch(error => alert(error));
+        }
+        else if (key==="dateChange"){
+            axios({
+                method: 'get',
+                url: `${API}/users/submission-deadline`,
+                headers: {
+                Accepts:'application/json',
+                "Content-Type":"application/json",
+                Authorization: 'Bearer ' +Session.get('token')
+                }
+            })
+            .then(response=>{
+                if (response.status===200){
+                    let applicationEndDate=response.data.deadline.deadline.split('T')[0];
+                    this.setState({endDate: applicationEndDate});
+                }
+                else{
+                    alert('There is some error, Please log back in!');
+                    this.props.history.push('/');
+                }
             })
             .catch(error => alert(error));
         }
@@ -115,7 +144,7 @@ export default class AdminHome extends React.Component{
                             }
                         {this.state.currentTab==="dateChange"?    
                             <div>
-                            <ChangeDatesAdmin />
+                            <ChangeDatesAdmin applicationEndDate={this.state.endDate} applicationStartDate={this.state.startDate} />
                             </div>
                             : null }
                         {this.state.currentTab==="allApplications"?    

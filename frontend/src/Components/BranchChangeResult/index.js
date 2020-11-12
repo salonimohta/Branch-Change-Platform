@@ -19,7 +19,10 @@ export default class BranchChangeResult extends React.Component{
     let csvdata=[];
     if (this.props.results.length>0){
         this.props.results.map(result=>{
-          csvdata.push({Admission_No: result.admn_no,offeredCourse: result.offeredCourse, offeredBranch: result.offeredBranch, offeredDepartment: result.offeredDepartment, previousCourse: result.previousCourse.name, previousBranch: result.previousBranch.name, previousDept: result.previousDepartment.name });
+          var courseOffered=result.offeredCourse ? result.offeredCourse.name: "NA";
+          var branchOffered=result.offeredBranch ? result.offeredBranch.name: "NA";
+          var deptOffered=result.offeredDepartment ? result.offeredDepartment.name: "NA";
+          csvdata.push({Admission_No: result.admn_no,offeredCourse: courseOffered, offeredBranch: branchOffered, offeredDepartment: deptOffered, previousCourse: result.previousCourse.name, previousBranch: result.previousBranch.name, previousDept: result.previousDepartment.name });
 
         })
     }
@@ -50,11 +53,12 @@ export default class BranchChangeResult extends React.Component{
                           <tr>
                             <th scope="row">{index+1}</th>
                           <td>{result.admn_no}</td>
-                          <td>{result.offeredCourse}</td>
-                          <td>{result.offeredBranch}</td>
-                          <td>{result.offeredDepartment}</td>
-                          <td><button class="btn btn-lg btn-primary" onClick={()=>generateStudentPDF(result)}>Details</button></td>
-                          </tr>)
+                          <td>{result.offeredCourse ? result.offeredCourse.name : null}</td>
+                          <td>{result.offeredBranch ? result.offeredBranch.name : null}</td>
+                          <td>{result.offeredDepartment ? result.offeredDepartment.name : null}</td>
+                          <td>{
+                            <button class="btn btn-lg btn-primary" onClick={()=>generateStudentPDF(result)}>Details</button>}</td>
+                          </tr> )
                         })}
                       </tbody>
                     </table>

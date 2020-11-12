@@ -43,12 +43,14 @@ export const generateStudentPDF = detail => {
   const tableColumn = ["Admission No.", "OfferedCourse", "OfferedBranch", "OfferedDepartment","PreviousCourse","PreviousBranch","PreviousDepartment"];
   // define an empty array of rows
   const tableRows = [];
-
+    var courseOffered=detail.offeredCourse ? detail.offeredCourse.name: "NA";
+    var branchOffered=detail.offeredBranch ? detail.offeredBranch.name: "NA";
+    var deptOffered=detail.offeredDepartment ? detail.offeredDepartment.name: "NA"; 
     const studentData = [
       detail.admn_no,
-      detail.offeredCourse,
-      detail.offeredBranch,
-      detail.offeredDepartment,
+      courseOffered,
+      branchOffered,
+      deptOffered,
       detail.previousCourse.name,
       detail.previousBranch.name,
       detail.previousDepartment.name

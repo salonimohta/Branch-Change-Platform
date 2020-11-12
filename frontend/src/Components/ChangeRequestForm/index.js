@@ -34,13 +34,14 @@ For each such component, the dept and branch is disabled.
 If the student fills the course, then the department is enabled to be filled, and when the department is filled,
 the branch is enabled to be filled 
 */
+//console.log(optionsFilled);
 class Preference extends React.Component{
     constructor(props){
         super(props);
         this.state={
           preferenceFilled:[...optionsFilled,{courseFilled: false,deptFilled:false}]
         };
-        optionsFilled.push({courseFilled:false,deptFilled:false});
+        //optionsFilled.push({courseFilled:false,deptFilled:false});
         this.changeCourse=this.changeCourse.bind(this);
         this.changeDept=this.changeDept.bind(this);
         this.changeBranch=this.changeBranch.bind(this);
@@ -225,6 +226,7 @@ export default class ChangeRequestForm extends React.Component{
         alert('Invalid value for current department!');
       }
       else if(this.state.countCourse!==optionsFilled.length.toString()){
+        console.log(this.state.countCourse,optionsFilled.length)
         alert('No of courses opted does not match with number of preferences filled!');
       }
       else{
@@ -234,7 +236,7 @@ export default class ChangeRequestForm extends React.Component{
           options.push({dept_id:optionsFilled[item].deptId,branch_id:optionsFilled[item].branchId,course_id:optionsFilled[item].courseId});
         }
         Session.set('token',localStorage.getItem('token'));
-      axios({
+        axios({
         method: 'post',
         url: `${API}/users/submit-application`,
         headers: {
@@ -248,7 +250,14 @@ export default class ChangeRequestForm extends React.Component{
           }
         })
         .then(response=>{
-          console.log(response);
+          if (response.status===200){
+            alert(response.data.msg);
+            this.props.history.push('/studentHome');
+          }
+          else{
+            alert('There has been some error, please log in again!');
+            this.props.history.push('/');
+          }
         })
         .catch(error => alert(error))
 
@@ -260,7 +269,7 @@ export default class ChangeRequestForm extends React.Component{
         if (preferenceList.length===optionsFilled.length){
           let course=optionsFilled[optionsFilled.length-1].course;
           let branch=optionsFilled[optionsFilled.length-1].branch;
-          if (branch.length>0){
+          if (branch && branch.length>0){
             if (course==="BTech") BTechBranchesUsed.pop();
             else if (course==="DualDegree") DDBranchesUsed.pop();
             else IntMTechBranchesUsed.pop();
