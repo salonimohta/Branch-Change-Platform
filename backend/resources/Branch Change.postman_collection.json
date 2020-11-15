@@ -13,7 +13,11 @@
 					"script": {
 						"id": "96789303-e82b-45b8-8235-16a2757f6122",
 						"exec": [
-							""
+							"if(pm.response.code === 200){\r",
+							"    pm.environment.set('authToken', pm.response.json().token)\r",
+							"    // console.log(pm.environment.get('authToken'))\r",
+							"    // console.log(pm.response.json().token)\r",
+							"}"
 						],
 						"type": "text/javascript"
 					}
@@ -62,7 +66,11 @@
 					"script": {
 						"id": "70b6d8ef-0890-46bf-9717-e66e8f05ca8c",
 						"exec": [
-							""
+							"if(pm.response.code === 200){\r",
+							"    pm.environment.set('authToken', pm.response.json().token)\r",
+							"    // console.log(pm.environment.get('authToken'))\r",
+							"    // console.log(pm.response.json().token)\r",
+							"}"
 						],
 						"type": "text/javascript"
 					}
@@ -104,7 +112,9 @@
 					"script": {
 						"id": "5e1d10a6-5629-4bb0-9b01-e373833d0c21",
 						"exec": [
-							""
+							"if(pm.response.code === 200){\r",
+							"    pm.environment.set('authToken', pm.response.json().token)\r",
+							"}"
 						],
 						"type": "text/javascript"
 					}
@@ -216,7 +226,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"options\":[\r\n        {\r\n            \"dept_id\": \"cse\",\r\n            \"branch_id\": \"cse\",\r\n            \"course_id\": \"b.tech\"\r\n        },{\r\n            \"dept_id\": \"ee\",\r\n            \"branch_id\": \"ee\",\r\n            \"course_id\": \"b.tech\"\r\n        },{\r\n            \"dept_id\": \"ece\",\r\n            \"branch_id\": \"ece\",\r\n            \"course_id\": \"b.tech\"\r\n        }\r\n    ]\r\n}",
+					"raw": "{\r\n    \"options\":[\r\n        {\r\n            \"dept_id\": \"cse\",\r\n            \"branch_id\": \"cse\",\r\n            \"course_id\": \"b.tech\"\r\n        },{\r\n            \"dept_id\": \"ee\",\r\n            \"branch_id\": \"ee\",\r\n            \"course_id\": \"b.tech\"\r\n        },{\r\n            \"dept_id\": \"ece\",\r\n            \"branch_id\": \"ece\",\r\n            \"course_id\": \"b.tech\"\r\n        }\r\n    ],\r\n    \"number_of_options\": 3\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -232,6 +242,89 @@
 						"users",
 						"submit-application"
 					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Submission Deadline",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/submission-deadline",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"submission-deadline"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change Submission Deadline",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"deadline\": \"2020-12-03T13:59:43.275Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/submission-deadline",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"submission-deadline"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Offered(admin)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 4013\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/set-offered",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"set-offered"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-results-student",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
 				}
 			},
 			"response": []
@@ -271,12 +364,12 @@
 	],
 	"variable": [
 		{
-			"id": "92bf4640-bb67-4f0f-816c-94d7ef5f3192",
+			"id": "386fd8a7-542a-433e-8b60-2b90db449b9b",
 			"key": "url",
-			"value": "http://localhost:3001/api"
+			"value": "http://localhost:8000/api"
 		},
 		{
-			"id": "026fd712-e5a3-419b-91c9-d3a35759d88e",
+			"id": "e78e1d35-0c04-4729-bc66-d5e82d34b6d6",
 			"key": "authToken",
 			"value": ""
 		}
