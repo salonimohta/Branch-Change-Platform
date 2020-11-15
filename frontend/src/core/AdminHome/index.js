@@ -137,6 +137,7 @@ export default class AdminHome extends React.Component{
                             {this.state.TabSelected 
                                 ? null : 
                                 <ol>
+                                    <li>To view or change deadlines for application submission, click the tab titled <span style={{color:"red"}}>Change Date</span></li>
                                     <li>To check status of branch change requests, click the tab titled <span style={{color:"red"}}>Check Status</span></li>
                                     <li>To view branch change statistics and dashboard, after declaration of result, click on the tab titled <span style={{color:"red"}}>View Statistics</span></li>
                                     <li>To download the branch change result, click on the third tab titled <span style={{color:"red"}}>Download Result</span></li>
